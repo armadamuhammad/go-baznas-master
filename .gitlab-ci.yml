@@ -1,0 +1,103 @@
+variables:
+  GOOS: linux
+  GOARCH: amd64
+  CGO_ENABLED: 0
+  UPX_URL: https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz
+  GO_METALINTER_URL: https://github.com/alecthomas/gometalinter/releases/download/v3.0.0/gometalinter-3.0.0-linux-amd64.tar.gz
+  DEBIAN_FRONTEND: noninteractive
+
+stages:
+  - test
+  - build
+  - release
+  - deploy
+
+cleancode:
+  image: golang:1.18-buster
+  stage: test
+  coverage: /^Grade:\s*[A-Z]\+?\s*\((\d+.\d+)\%\)/
+  variables:
+    FAIL_ON_CONTROLLER: "1"
+  script:
+    - |
+      if [ ! -f "$GOPATH/bin/goreportcard-cli" ]; then \
+      go install github.com/gordonklaus/ineffassign@latest && \
+      go install github.com/client9/misspell/cmd/misspell@latest && \
+      go install github.com/fzipp/gocyclo/cmd/gocyclo@latest && \
+      go install golang.org/x/lint/golint@latest && \
+      go install github.com/gojp/goreportcard/cmd/goreportcard-cli@latest && \
+      curl -sSL "$GO_METALINTER_URL" -o gometalinter.tar.gz && \
+      tar -xzvpf gometalinter.tar.gz --strip-components=1 -C "$GOPATH/bin" && \
+      rm gometalinter.tar.gz ; \
+      fi
+    - goreportcard-cli -v 2>/dev/null
+    - |
+      if [ "$FAIL_ON_CONTROLLER" = "1" ]; then \
+      go test -timeout 30s -v -tags sqlite -run ^TestController$ api/app/controller ; \
+      fi
+  only:
+    changes:
+      - app/*
+      - app/**/*
+      - docs/*
+      - .gitlab-ci.yml
+      - kubernetes-deploy.yml
+      - kubernetes-deploy-dev.yml
+      - kubernetes-deploy-prod.yml
+      - Dockerfile
+      - "*.go"
+      - go.*
+
+docs:
+  image: golang:1.18-buster
+  stage: test
+  coverage: /^total:[^\d]+(\d+.\d+)\%/
+  script:
+    - |
+      if [ ! -f "$GOPATH/bin/swag" ]; then \
+      go install github.com/swaggo/swag/cmd/swag@latest; \
+      fi
+    - swag init
+  only:
+    changes:
+      - app/*
+      - app/**/*
+      - docs/*
+      - .gitlab-ci.yml
+      - kubernetes-deploy.yml
+      - kubernetes-deploy-dev.yml
+      - kubernetes-deploy-prod.yml
+      - Dockerfile
+      - "*.go"
+      - go.*
+
+unit-testing:
+  image: golang:1.18-buster
+  stage: test
+  coverage: /^total:[^\d]+(\d+.\d+)\%/
+  script:
+    - echo "Validating routes..."
+    - touch router-logs.txt
+    - |
+      find app/controller/ \
+      -maxdepth 1 \
+      -mindepth 1 \
+      -type d \
+      -exec sh -c 'cat app/routes/router.go | grep "api/{}" || echo "{}: controller defined but router not registered" >> router-logs.txt' \;
+    - if [ "`cat router-logs.txt | wc -w`" != "0" ]; then cat router-logs.txt && exit 2; fi
+    - CGO_ENABLED=1 go test -v -coverprofile cover.txt ./...
+    - go tool cover -func cover.txt
+  only:
+    changes:
+      - app/*
+      - app/**/*
+      - docs/*
+      - .gitlab-ci.yml
+      - kubernetes-deploy.yml
+      - kubernetes-deploy-dev.yml
+      - kubernetes-deploy-prod.yml
+      - Dockerfile
+      - "*.go"
+      - go.*
+
+

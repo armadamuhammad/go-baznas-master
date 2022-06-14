@@ -1,0 +1,15 @@
+/*
+!/app/
+!/docs/
+/docs/*.go
+!/tests/
+!/.env.example
+!/.gitignore
+!/.gitlab-ci.yml
+!/docker-compose.yml
+!/Dockerfile
+!/go.mod
+!/go.sum
+!/main.go
+!/README.md
+!/LICENSE

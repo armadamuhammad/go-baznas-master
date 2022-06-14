@@ -1,0 +1,6 @@
+*
+!.gitignore
+!*.md
+!*.yml
+!*.yaml
+!*.json

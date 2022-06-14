@@ -1,0 +1,73 @@
+version: '3.8'
+
+networks:
+  go: {}
+
+volumes:
+  goroot: {}
+  gocache: {}
+  pgdata: {}
+
+services:
+  go:
+    image: golang:latest
+    volumes:
+      - goroot:/go
+      - gocache:/.cache/go-build
+      - .:/project
+    ports:
+      - 8000:8000
+    working_dir: /project
+    environment:
+      - TZ=Asia/Jakarta
+      - PORT=8000
+    command:
+      - tail
+      - -f
+      - /etc/hosts
+    networks:
+      - go
+  test:
+    image: golang:latest
+    volumes:
+      - goroot:/go
+      - gocache:/.cache/go-build
+      - .:/project
+    working_dir: /project
+    command:
+      - sh
+      - -c
+      - "go get -d && go test -v -coverprofile cover.txt ./... && go tool cover -func cover.txt"
+    networks:
+      - go
+  postgres:
+    image: postgres:9.5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - TZ=Asia/Jakarta
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 55432:5432
+    networks:
+      go:
+        aliases:
+          - postgres
+  redis:
+    image: redis:alpine
+    environment:
+      - TZ=Asia/Jakarta
+    networks:
+      go:
+        aliases:
+          - redis
+  swagger:
+    image: swaggerapi/swagger-ui:latest
+    environment:
+      - URL=/docs/swagger-local.yaml
+    volumes:
+      - ./docs:/usr/share/nginx/html/docs
+    ports:
+      - 8080:8080
