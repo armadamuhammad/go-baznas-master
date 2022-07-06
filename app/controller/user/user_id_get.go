@@ -12,7 +12,6 @@ import (
 // GetUserID godoc
 // @Summary Get a User by id
 // @Description Get a User by id
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "User ID"
 // @Accept  application/json
 // @Produce application/json

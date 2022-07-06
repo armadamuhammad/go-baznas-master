@@ -13,7 +13,6 @@ import (
 // @Summary Update Balance by id
 // @Description Update Balance by id
 // @Param X-User-ID header string false "User ID"
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Balance ID"
 // @Param data body model.BalanceAPI true "Balance data"
 // @Accept  application/json
@@ -33,16 +32,10 @@ func PutBalance(c *fiber.Ctx) error {
 	}
 
 	db := services.DB
-	lang := lib.GetLanguage(c)
 	id, _ := uuid.Parse(c.Params("id"))
 
 	var data model.Balance
 	result := db.Model(&data).
-		Joins("BalanceTranslation", db.Where(&model.BalanceTranslation{
-			BalanceTranslationAPI: model.BalanceTranslationAPI{
-				LanguageCode: &lang,
-			},
-		})).
 		Where(db.Where(model.Balance{
 			Base: model.Base{
 				ID: &id,

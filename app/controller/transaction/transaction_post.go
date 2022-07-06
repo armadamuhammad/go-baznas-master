@@ -34,6 +34,10 @@ func PostTransaction(c *fiber.Ctx) error {
 	var data model.Transaction
 	lib.Merge(api, &data)
 	data.CreatorID = lib.GetXUserID(c)
+	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
+	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
+	
+
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)

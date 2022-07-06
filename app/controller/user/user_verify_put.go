@@ -1,4 +1,4 @@
-package category
+package user
 
 import (
 	"api/app/lib"
@@ -9,34 +9,28 @@ import (
 	"github.com/google/uuid"
 )
 
-// PutCategory godoc
-// @Summary Update Category by id
-// @Description Update Category by id
+// PutUserVerify godoc
+// @Summary Update status User by id
+// @Description Update User by id
 // @Param X-User-ID header string false "User ID"
-// @Param id path string true "Category ID"
-// @Param data body model.CategoryAPI true "Category data"
+// @Param id path string true "User ID"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} model.Category "Category data"
+// @Success 200 {object} model.User "User data"
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /categories/{id} [put]
-// @Tags Category
-func PutCategory(c *fiber.Ctx) error {
-	api := new(model.CategoryAPI)
-	if err := lib.BodyParser(c, api); nil != err {
-		return lib.ErrorBadRequest(c, err)
-	}
-
+// @Router /users/{id}/verify [post]
+// @Tags User
+func PutUserVerify(c *fiber.Ctx) error {
 	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))
 
-	var data model.Category
+	var data model.User
 	result := db.Model(&data).
-		Where(db.Where(model.Category{
+		Where(db.Where(model.User{
 			Base: model.Base{
 				ID: &id,
 			},
@@ -45,12 +39,10 @@ func PutCategory(c *fiber.Ctx) error {
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)
 	}
-
-	lib.Merge(api, &data)
+	data.StatusVerified = lib.Intptr(1)
 
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
-
 	return lib.OK(c, data)
 }

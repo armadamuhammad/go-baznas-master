@@ -11,7 +11,6 @@ import (
 // GetBalance godoc
 // @Summary List of Balance
 // @Description List of Balance
-// @Param Accept-Language header string false "2 character language code"
 // @Param page query int false "Page number start from zero"
 // @Param size query int false "Size per page, default `0`"
 // @Param sort query string false "Sort by field, adding dash (`-`) at the beginning means descending and vice versa"
@@ -29,14 +28,8 @@ import (
 func GetBalance(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
-	lang := lib.GetLanguage(c)
 
-	mod := db.Model(&model.Balance{}).
-		Joins("BalanceTranslation", db.Where(&model.BalanceTranslation{
-			BalanceTranslationAPI: model.BalanceTranslationAPI{
-				LanguageCode: &lang,
-			},
-		}))
+	mod := db.Model(&model.Balance{})
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Balance{})
 
 	return lib.OK(c, page)

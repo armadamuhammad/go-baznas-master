@@ -31,6 +31,12 @@ func DeleteUser(c *fiber.Ctx) error {
 		return lib.ErrorNotFound(c)
 	}
 
+	data.Status = lib.Intptr(0)
+
+	if err := db.Model(&data).Updates(&data).Error; nil != err {
+		return lib.ErrorConflict(c, err)
+	}
+
 	db.Delete(&data)
 
 	return lib.OK(c)

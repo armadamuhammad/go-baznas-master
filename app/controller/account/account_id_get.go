@@ -12,7 +12,6 @@ import (
 // GetAccountID godoc
 // @Summary Get a Account by id
 // @Description Get a Account by id
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Account ID"
 // @Accept  application/json
 // @Produce application/json

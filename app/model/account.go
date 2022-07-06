@@ -3,7 +3,7 @@ package model
 // Account Account
 type Account struct {
 	Base
-	// DataOwner
+	DataOwner
 	AccountAPI
 }
 
