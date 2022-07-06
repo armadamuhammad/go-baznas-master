@@ -67,6 +67,76 @@ definitions:
         example: 3425-3234-2341
         type: string
     type: object
+  model.Balance:
+    properties:
+      category:
+        description: Category
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      description:
+        description: Description
+        type: string
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      income:
+        description: Income
+        example: 50000
+        type: number
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      outcome:
+        description: Outcome
+        example: 40000
+        type: number
+      saldo:
+        description: Saldo
+        example: 1000000
+        type: number
+      transactionid:
+        description: TransactionID
+        format: uuid
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+    type: object
+  model.BalanceAPI:
+    properties:
+      category:
+        description: Category
+        type: string
+      description:
+        description: Description
+        type: string
+      income:
+        description: Income
+        example: 50000
+        type: number
+      outcome:
+        description: Outcome
+        example: 40000
+        type: number
+      saldo:
+        description: Saldo
+        example: 1000000
+        type: number
+      transactionid:
+        description: TransactionID
+        format: uuid
+        type: string
+    type: object
   model.Category:
     properties:
       category:
@@ -231,6 +301,306 @@ definitions:
       name:
         description: Name
         example: Cash
+        type: string
+    type: object
+  model.Transaction:
+    properties:
+      categoryid:
+        description: CategoryID
+        format: uuid
+        type: string
+      contact:
+        description: Contact
+        example: "08423423432"
+        type: string
+      contact_name:
+        description: Contact Name
+        example: pak guru
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      discount:
+        description: Discount
+        example: 2000
+        type: number
+      discount_type:
+        description: 1 = percentage 2 = amount
+        type: integer
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      income:
+        description: Income
+        example: 5000
+        type: number
+      invoice_number:
+        description: Invoice Number
+        type: integer
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      name:
+        description: Name
+        example: pembayaran infaq
+        type: string
+      no_ref:
+        description: No Ref
+        example: INFQ00001
+        type: string
+      note:
+        description: Note
+        example: lorem ipsum
+        type: string
+      outcome:
+        description: Outcome
+        example: 3000
+        type: number
+      paymentid:
+        description: PaymentID
+        format: uuid
+        type: string
+      status:
+        description: Status
+        type: string
+      tax:
+        description: Tax
+        example: 3000
+        type: number
+      tax_type:
+        description: Tax Type
+        type: integer
+      total:
+        description: Total
+        example: 8000
+        type: number
+      type:
+        description: Type
+        example: income
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+      userid:
+        description: UserID
+        format: uuid
+        type: string
+    type: object
+  model.TransactionAPI:
+    properties:
+      categoryid:
+        description: CategoryID
+        format: uuid
+        type: string
+      contact:
+        description: Contact
+        example: "08423423432"
+        type: string
+      contact_name:
+        description: Contact Name
+        example: pak guru
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      discount:
+        description: Discount
+        example: 2000
+        type: number
+      discount_type:
+        description: 1 = percentage 2 = amount
+        type: integer
+      income:
+        description: Income
+        example: 5000
+        type: number
+      invoice_number:
+        description: Invoice Number
+        type: integer
+      name:
+        description: Name
+        example: pembayaran infaq
+        type: string
+      no_ref:
+        description: No Ref
+        example: INFQ00001
+        type: string
+      note:
+        description: Note
+        example: lorem ipsum
+        type: string
+      outcome:
+        description: Outcome
+        example: 3000
+        type: number
+      paymentid:
+        description: PaymentID
+        format: uuid
+        type: string
+      status:
+        description: Status
+        type: string
+      tax:
+        description: Tax
+        example: 3000
+        type: number
+      tax_type:
+        description: Tax Type
+        type: integer
+      total:
+        description: Total
+        example: 8000
+        type: number
+      type:
+        description: Type
+        example: income
+        type: string
+      userid:
+        description: UserID
+        format: uuid
+        type: string
+    type: object
+  model.User:
+    properties:
+      address:
+        description: Address
+        example: jl. Klaten
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      email:
+        description: Email
+        example: user@mail.com
+        type: string
+      first_name:
+        description: FirstName
+        type: string
+      gender:
+        description: Gender
+        example: male
+        type: string
+      group_id:
+        description: GroupID
+        format: uuid
+        type: string
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      is_admin:
+        description: Status Verified
+        example: 0
+        type: integer
+      join_date:
+        description: JoinDate
+        format: date-time
+        type: string
+      last_name:
+        description: LastName
+        type: string
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      password:
+        description: Password
+        type: string
+      role_id:
+        description: Role
+        format: uuid
+        type: string
+      status:
+        description: Status
+        example: 0
+        type: integer
+      status_verified:
+        description: Status Verified
+        example: 0
+        type: integer
+      surname:
+        description: Surname
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+      username:
+        description: Username
+        example: armada_muhammad
+        type: string
+    type: object
+  model.UserAPI:
+    properties:
+      address:
+        description: Address
+        example: jl. Klaten
+        type: string
+      email:
+        description: Email
+        example: user@mail.com
+        type: string
+      first_name:
+        description: FirstName
+        type: string
+      gender:
+        description: Gender
+        example: male
+        type: string
+      group_id:
+        description: GroupID
+        format: uuid
+        type: string
+      is_admin:
+        description: Status Verified
+        example: 0
+        type: integer
+      join_date:
+        description: JoinDate
+        format: date-time
+        type: string
+      last_name:
+        description: LastName
+        type: string
+      password:
+        description: Password
+        type: string
+      role_id:
+        description: Role
+        format: uuid
+        type: string
+      status:
+        description: Status
+        example: 0
+        type: integer
+      status_verified:
+        description: Status Verified
+        example: 0
+        type: integer
+      surname:
+        description: Surname
+        type: string
+      username:
+        description: Username
+        example: armada_muhammad
         type: string
     type: object
 host: localhost:8000
@@ -518,6 +888,250 @@ paths:
       summary: Update Account by id
       tags:
       - Account
+  /balances:
+    get:
+      consumes:
+      - application/json
+      description: List of Balance
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Balance'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of Balance
+      tags:
+      - Balance
+    post:
+      consumes:
+      - application/json
+      description: Create new Balance
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Balance data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.BalanceAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Balance data
+          schema:
+            $ref: '#/definitions/model.Balance'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Balance
+      tags:
+      - Balance
+  /balances/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Balance by id
+      parameters:
+      - description: Balance ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete Balance by id
+      tags:
+      - Balance
+    get:
+      consumes:
+      - application/json
+      description: Get a Balance by id
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Balance ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Balance'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Balance by id
+      tags:
+      - Balance
+    put:
+      consumes:
+      - application/json
+      description: Update Balance by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Balance ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Balance data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.BalanceAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Balance data
+          schema:
+            $ref: '#/definitions/model.Balance'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Balance by id
+      tags:
+      - Balance
   /categories:
     get:
       consumes:
@@ -1038,6 +1652,494 @@ paths:
       summary: Update Payment by id
       tags:
       - Payment
+  /transactions:
+    get:
+      consumes:
+      - application/json
+      description: List of Transaction
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Transaction'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of Transaction
+      tags:
+      - Transaction
+    post:
+      consumes:
+      - application/json
+      description: Create new Transaction
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Transaction data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.TransactionAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Transaction data
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Transaction
+      tags:
+      - Transaction
+  /transactions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Transaction by id
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete Transaction by id
+      tags:
+      - Transaction
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
+    put:
+      consumes:
+      - application/json
+      description: Update Transaction by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Transaction data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.TransactionAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Transaction data
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Transaction by id
+      tags:
+      - Transaction
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: List of User
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.User'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of User
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Create new User
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new User
+      tags:
+      - User
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete User by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete User by id
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      description: Get a User by id
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a User by id
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update User by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update User by id
+      tags:
+      - User
 schemes:
 - http
 securityDefinitions:

@@ -1,12 +1,7 @@
 package model
 
 import (
-	"api/app/lib"
-	"time"
-
-	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
 // Transaction Transaction
@@ -39,11 +34,11 @@ type TransactionAPI struct {
 	CategoryID    *uuid.UUID `json:"categoryid,omitempty" swaggertype:"string" format:"uuid"`            // CategoryID
 }
 
-func (b *Transaction) BeforeCreate(tx *gorm.DB) error {
-	_, e := uuid.NewRandom()
-	now := strfmt.DateTime(time.Now())
+// func (b *Transaction) BeforeCreate(tx *gorm.DB) error {
+// 	_, e := uuid.NewRandom()
+// 	now := strfmt.DateTime(time.Now())
 
-	b.Status = lib.Intptr(0)
-	b.NoRef = lib.Intptr(0)
-	return e
-}
+// 	b.Status = lib.Intptr(0)
+// 	b.NoRef = lib.Intptr(0)
+// 	return e
+// }

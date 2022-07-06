@@ -434,6 +434,377 @@
                 }
             }
         },
+        "/balances": {
+            "get": {
+                "description": "List of Balance",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Balance"
+                ],
+                "summary": "List of Balance",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number start from zero",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size per page, default `0`",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field, adding dash (`-`) at the beginning means descending and vice versa",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Select specific fields with comma separated",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Page"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Balance"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new Balance",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Balance"
+                ],
+                "summary": "Create new Balance",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Balance data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.BalanceAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Balance data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Balance"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/balances/{id}": {
+            "get": {
+                "description": "Get a Balance by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Balance"
+                ],
+                "summary": "Get a Balance by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Balance ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Balance"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Balance by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Balance"
+                ],
+                "summary": "Update Balance by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Balance ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Balance data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.BalanceAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Balance data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Balance"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Balance by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Balance"
+                ],
+                "summary": "Delete Balance by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Balance ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "description": "List of Category",
@@ -1223,6 +1594,748 @@
                     }
                 }
             }
+        },
+        "/transactions": {
+            "get": {
+                "description": "List of Transaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "List of Transaction",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number start from zero",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size per page, default `0`",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field, adding dash (`-`) at the beginning means descending and vice versa",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Select specific fields with comma separated",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Page"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Transaction"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new Transaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Create new Transaction",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Transaction data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TransactionAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{id}": {
+            "get": {
+                "description": "Get a Transaction by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get a Transaction by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Transaction ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Transaction by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Update Transaction by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Transaction ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Transaction data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TransactionAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Transaction by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Delete Transaction by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Transaction ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "List of User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "List of User",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number start from zero",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size per page, default `0`",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field, adding dash (`-`) at the beginning means descending and vice versa",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Select specific fields with comma separated",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Page"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.User"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create new User",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "User data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User data",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Get a User by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a User by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update User by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update User by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "2 character language code",
+                        "name": "Accept-Language",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User data",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete User by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete User by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1311,6 +2424,97 @@
                     "description": "Number",
                     "type": "string",
                     "example": "3425-3234-2341"
+                }
+            }
+        },
+        "model.Balance": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "Category",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created at automatically inserted on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "creator_id": {
+                    "description": "creator id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "description": {
+                    "description": "Description",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "model ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "income": {
+                    "description": "Income",
+                    "type": "number",
+                    "example": 50000
+                },
+                "modifier_id": {
+                    "description": "modifier id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "outcome": {
+                    "description": "Outcome",
+                    "type": "number",
+                    "example": 40000
+                },
+                "saldo": {
+                    "description": "Saldo",
+                    "type": "number",
+                    "example": 1000000
+                },
+                "transactionid": {
+                    "description": "TransactionID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "updated_at": {
+                    "description": "updated at automatically changed on put or add on post",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "model.BalanceAPI": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "Category",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Description",
+                    "type": "string"
+                },
+                "income": {
+                    "description": "Income",
+                    "type": "number",
+                    "example": 50000
+                },
+                "outcome": {
+                    "description": "Outcome",
+                    "type": "number",
+                    "example": 40000
+                },
+                "saldo": {
+                    "description": "Saldo",
+                    "type": "number",
+                    "example": 1000000
+                },
+                "transactionid": {
+                    "description": "TransactionID",
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -1526,6 +2730,390 @@
                     "description": "Name",
                     "type": "string",
                     "example": "Cash"
+                }
+            }
+        },
+        "model.Transaction": {
+            "type": "object",
+            "properties": {
+                "categoryid": {
+                    "description": "CategoryID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "contact": {
+                    "description": "Contact",
+                    "type": "string",
+                    "example": "08423423432"
+                },
+                "contact_name": {
+                    "description": "Contact Name",
+                    "type": "string",
+                    "example": "pak guru"
+                },
+                "created_at": {
+                    "description": "created at automatically inserted on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "creator_id": {
+                    "description": "creator id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "description": {
+                    "description": "Description",
+                    "type": "string",
+                    "example": "lorem ipsum"
+                },
+                "discount": {
+                    "description": "Discount",
+                    "type": "number",
+                    "example": 2000
+                },
+                "discount_type": {
+                    "description": "1 = percentage 2 = amount",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "model ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "income": {
+                    "description": "Income",
+                    "type": "number",
+                    "example": 5000
+                },
+                "invoice_number": {
+                    "description": "Invoice Number",
+                    "type": "integer"
+                },
+                "modifier_id": {
+                    "description": "modifier id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string",
+                    "example": "pembayaran infaq"
+                },
+                "no_ref": {
+                    "description": "No Ref",
+                    "type": "string",
+                    "example": "INFQ00001"
+                },
+                "note": {
+                    "description": "Note",
+                    "type": "string",
+                    "example": "lorem ipsum"
+                },
+                "outcome": {
+                    "description": "Outcome",
+                    "type": "number",
+                    "example": 3000
+                },
+                "paymentid": {
+                    "description": "PaymentID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "status": {
+                    "description": "Status",
+                    "type": "string"
+                },
+                "tax": {
+                    "description": "Tax",
+                    "type": "number",
+                    "example": 3000
+                },
+                "tax_type": {
+                    "description": "Tax Type",
+                    "type": "integer"
+                },
+                "total": {
+                    "description": "Total",
+                    "type": "number",
+                    "example": 8000
+                },
+                "type": {
+                    "description": "Type",
+                    "type": "string",
+                    "example": "income"
+                },
+                "updated_at": {
+                    "description": "updated at automatically changed on put or add on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "userid": {
+                    "description": "UserID",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "model.TransactionAPI": {
+            "type": "object",
+            "properties": {
+                "categoryid": {
+                    "description": "CategoryID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "contact": {
+                    "description": "Contact",
+                    "type": "string",
+                    "example": "08423423432"
+                },
+                "contact_name": {
+                    "description": "Contact Name",
+                    "type": "string",
+                    "example": "pak guru"
+                },
+                "description": {
+                    "description": "Description",
+                    "type": "string",
+                    "example": "lorem ipsum"
+                },
+                "discount": {
+                    "description": "Discount",
+                    "type": "number",
+                    "example": 2000
+                },
+                "discount_type": {
+                    "description": "1 = percentage 2 = amount",
+                    "type": "integer"
+                },
+                "income": {
+                    "description": "Income",
+                    "type": "number",
+                    "example": 5000
+                },
+                "invoice_number": {
+                    "description": "Invoice Number",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string",
+                    "example": "pembayaran infaq"
+                },
+                "no_ref": {
+                    "description": "No Ref",
+                    "type": "string",
+                    "example": "INFQ00001"
+                },
+                "note": {
+                    "description": "Note",
+                    "type": "string",
+                    "example": "lorem ipsum"
+                },
+                "outcome": {
+                    "description": "Outcome",
+                    "type": "number",
+                    "example": 3000
+                },
+                "paymentid": {
+                    "description": "PaymentID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "status": {
+                    "description": "Status",
+                    "type": "string"
+                },
+                "tax": {
+                    "description": "Tax",
+                    "type": "number",
+                    "example": 3000
+                },
+                "tax_type": {
+                    "description": "Tax Type",
+                    "type": "integer"
+                },
+                "total": {
+                    "description": "Total",
+                    "type": "number",
+                    "example": 8000
+                },
+                "type": {
+                    "description": "Type",
+                    "type": "string",
+                    "example": "income"
+                },
+                "userid": {
+                    "description": "UserID",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "Address",
+                    "type": "string",
+                    "example": "jl. Klaten"
+                },
+                "created_at": {
+                    "description": "created at automatically inserted on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "creator_id": {
+                    "description": "creator id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "email": {
+                    "description": "Email",
+                    "type": "string",
+                    "example": "user@mail.com"
+                },
+                "first_name": {
+                    "description": "FirstName",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "Gender",
+                    "type": "string",
+                    "example": "male"
+                },
+                "group_id": {
+                    "description": "GroupID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "id": {
+                    "description": "model ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "is_admin": {
+                    "description": "Status Verified",
+                    "type": "integer",
+                    "example": 0
+                },
+                "join_date": {
+                    "description": "JoinDate",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "last_name": {
+                    "description": "LastName",
+                    "type": "string"
+                },
+                "modifier_id": {
+                    "description": "modifier id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "password": {
+                    "description": "Password",
+                    "type": "string"
+                },
+                "role_id": {
+                    "description": "Role",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "status": {
+                    "description": "Status",
+                    "type": "integer",
+                    "example": 0
+                },
+                "status_verified": {
+                    "description": "Status Verified",
+                    "type": "integer",
+                    "example": 0
+                },
+                "surname": {
+                    "description": "Surname",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "updated at automatically changed on put or add on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "username": {
+                    "description": "Username",
+                    "type": "string",
+                    "example": "armada_muhammad"
+                }
+            }
+        },
+        "model.UserAPI": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "Address",
+                    "type": "string",
+                    "example": "jl. Klaten"
+                },
+                "email": {
+                    "description": "Email",
+                    "type": "string",
+                    "example": "user@mail.com"
+                },
+                "first_name": {
+                    "description": "FirstName",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "Gender",
+                    "type": "string",
+                    "example": "male"
+                },
+                "group_id": {
+                    "description": "GroupID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "is_admin": {
+                    "description": "Status Verified",
+                    "type": "integer",
+                    "example": 0
+                },
+                "join_date": {
+                    "description": "JoinDate",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "last_name": {
+                    "description": "LastName",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password",
+                    "type": "string"
+                },
+                "role_id": {
+                    "description": "Role",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "status": {
+                    "description": "Status",
+                    "type": "integer",
+                    "example": 0
+                },
+                "status_verified": {
+                    "description": "Status Verified",
+                    "type": "integer",
+                    "example": 0
+                },
+                "surname": {
+                    "description": "Surname",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Username",
+                    "type": "string",
+                    "example": "armada_muhammad"
                 }
             }
         }
