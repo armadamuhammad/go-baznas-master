@@ -11,7 +11,7 @@ import (
 )
 
 func TestPutAccount(t *testing.T) {
-	db := services.InitDatabaseForTest()
+	db := services.DBConnectTest()
 	app := fiber.New()
 	app.Put("/accounts/:id", PutAccount)
 

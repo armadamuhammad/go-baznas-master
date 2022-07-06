@@ -4,6 +4,7 @@ import (
 	"api/app/controller"
 	"api/app/controller/account"
 	"api/app/controller/category"
+	"api/app/controller/payment"
 	"api/app/services"
 
 	"github.com/gofiber/fiber/v2"
@@ -35,5 +36,11 @@ func Handle(app *fiber.App) {
 	api.Put("/categories/:id", category.PutCategory)
 	api.Get("/categories/:id", category.GetCategoryID)
 	api.Delete("/categories/:id", category.DeleteCategory)
+
+	api.Post("/payments", payment.PostPayment)
+	api.Get("/payments", payment.GetPayment)
+	api.Put("/payments/:id", payment.PutPayment)
+	api.Get("/payments/:id", payment.GetPaymentID)
+	api.Delete("/payments/:id", payment.DeletePayment)
 
 }

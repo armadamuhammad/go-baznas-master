@@ -14,7 +14,7 @@ import (
 
 func TestGetAPIInfo(t *testing.T) {
 	// example connection
-	services.InitDatabaseForTest()
+	services.DBConnectTest()
 	// db := services.DB
 	app := fiber.New()
 	app.Get("/info.json", GetAPIInfo)

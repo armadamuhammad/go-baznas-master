@@ -1,4 +1,4 @@
-package account
+package payment
 
 import (
 	"api/app/lib"
@@ -10,23 +10,22 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestGetAccount(t *testing.T) {
+func TestGetPayment(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Get("/accounts", GetAccount)
+	app.Get("/payments", GetPayment)
 
-	initial := model.Account{
-		AccountAPI: model.AccountAPI{
+	initial := model.Payment{
+		PaymentAPI: model.PaymentAPI{
 			Name:        nil,
 			Code:        nil,
-			Number:      nil,
 			Description: nil,
 		},
 	}
 
 	db.Create(&initial)
 
-	uri := "/accounts?page=0&size=1"
+	uri := "/payments?page=0&size=1"
 	response, body, err := lib.GetTest(app, uri, nil)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 200, response.StatusCode, "getting response code")

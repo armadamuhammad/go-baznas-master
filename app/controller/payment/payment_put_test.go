@@ -1,4 +1,4 @@
-package category
+package payment
 
 import (
 	"api/app/lib"
@@ -10,48 +10,36 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestPutCategory(t *testing.T) {
+func TestPutPayment(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Put("/categories/:id", PutCategory)
+	app.Put("/payments/:id", PutPayment)
 
-	initial := model.Category{
-		CategoryAPI: model.CategoryAPI{
+	initial := model.Payment{
+		PaymentAPI: model.PaymentAPI{
 			Name:        nil,
 			Code:        nil,
-			Level:       nil,
-			Category:    nil,
-			IsPemasukan: nil,
 			Description: nil,
-			ParentID:    nil,
 		},
 	}
 
-	initial2 := model.Category{
-		CategoryAPI: model.CategoryAPI{
+	initial2 := model.Payment{
+		PaymentAPI: model.PaymentAPI{
 			Name:        nil,
 			Code:        nil,
-			Level:       nil,
-			Category:    nil,
-			IsPemasukan: nil,
 			Description: nil,
-			ParentID:    nil,
 		},
 	}
 
 	db.Create(&initial)
 	db.Create(&initial2)
 
-	uri := "/categories/" + initial.ID.String()
+	uri := "/payments/" + initial.ID.String()
 
 	payload := `{
 		"name": null,
 		"code": null,
-		"level": null,
-		"category": null,
-		"ispemasukan": null,
-		"description": null,
-		"parentid": null
+		"description": null
 	}`
 
 	headers := map[string]string{
@@ -71,13 +59,13 @@ func TestPutCategory(t *testing.T) {
 	utils.AssertEqual(t, 400, response.StatusCode, "getting response code")
 
 	// test update with non existing id
-	uri = "/categories/non-existing-id"
+	uri = "/payments/non-existing-id"
 	response, _, err = lib.PutTest(app, uri, headers, payload)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 404, response.StatusCode, "getting response code")
 
 	// test duplicate data
-	uri = "/categories/" + initial2.ID.String()
+	uri = "/payments/" + initial2.ID.String()
 	response, _, err = lib.PutTest(app, uri, headers, payload)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 409, response.StatusCode, "getting response code")

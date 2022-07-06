@@ -10,7 +10,7 @@ import (
 )
 
 func TestPostCategory(t *testing.T) {
-	db := services.InitDatabaseForTest()
+	db := services.DBConnectTest()
 	app := fiber.New()
 	app.Post("/categories", PostCategory)
 

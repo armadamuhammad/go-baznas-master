@@ -1,4 +1,4 @@
-package category
+package payment
 
 import (
 	"api/app/lib"
@@ -10,26 +10,22 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestDeleteCategory(t *testing.T) {
+func TestDeletePayment(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Delete("/categories/:id", DeleteCategory)
+	app.Delete("/payments/:id", DeletePayment)
 
-	initial := model.Category{
-		CategoryAPI: model.CategoryAPI{
+	initial := model.Payment{
+		PaymentAPI: model.PaymentAPI{
 			Name:        nil,
 			Code:        nil,
-			Level:       nil,
-			Category:    nil,
-			IsPemasukan: nil,
 			Description: nil,
-			ParentID:    nil,
 		},
 	}
 
 	db.Create(&initial)
 
-	uri := "/categories/" + initial.ID.String()
+	uri := "/payments/" + initial.ID.String()
 	response, _, err := lib.DeleteTest(app, uri, nil)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 200, response.StatusCode, "getting response code")

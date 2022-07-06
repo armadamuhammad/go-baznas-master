@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetCategoryID(t *testing.T) {
-	db := services.InitDatabaseForTest()
+	db := services.DBConnectTest()
 	app := fiber.New()
 	app.Get("/categories/:id", GetCategoryID)
 

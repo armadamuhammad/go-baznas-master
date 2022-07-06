@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetCategory(t *testing.T) {
-	db := services.InitDatabaseForTest()
+	db := services.DBConnectTest()
 	app := fiber.New()
 	app.Get("/categories", GetCategory)
 

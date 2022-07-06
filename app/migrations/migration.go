@@ -6,4 +6,7 @@ import "api/app/model"
 var ModelMigrations = []interface{}{
 	&model.Sample{},
 	&model.Account{},
+	&model.Payment{},
+	&model.Category{},
+
 }

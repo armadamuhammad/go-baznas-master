@@ -1,4 +1,4 @@
-package account
+package payment
 
 import (
 	"api/app/lib"
@@ -9,17 +9,16 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestPostAccount(t *testing.T) {
+func TestPostPayment(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Post("/accounts", PostAccount)
+	app.Post("/payments", PostPayment)
 
-	uri := "/accounts"
+	uri := "/payments"
 
 	payload := `{
 		"name": null,
 		"code": null,
-		"number": null,
 		"description": null
 	}`
 

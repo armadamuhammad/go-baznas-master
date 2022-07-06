@@ -13,8 +13,8 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-// InitDatabaseForTest test
-func InitDatabaseForTest(database ...string) *gorm.DB {
+// DBConnectTest test
+func DBConnectTest(database ...string) *gorm.DB {
 	dbPath := "file::memory:"
 	if len(database) > 0 {
 		dbPath = database[0]

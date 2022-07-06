@@ -19,12 +19,20 @@ definitions:
         description: created at automatically inserted on post
         format: date-time
         type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
       description:
         description: Description
         example: lorem ipsum
         type: string
       id:
         description: model ID
+        format: uuid
+        type: string
+      modifier_id:
+        description: modifier id
         format: uuid
         type: string
       name:
@@ -57,6 +65,84 @@ definitions:
       number:
         description: Number
         example: 3425-3234-2341
+        type: string
+    type: object
+  model.Category:
+    properties:
+      category:
+        description: Category
+        type: string
+      code:
+        description: Code
+        example: "12"
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      is_pemasukan:
+        description: IsPemasukan
+        example: true
+        type: boolean
+      level:
+        description: Level
+        type: integer
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      name:
+        description: Name
+        example: infaq
+        type: string
+      parent_id:
+        description: ParentID
+        format: uuid
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+    type: object
+  model.CategoryAPI:
+    properties:
+      category:
+        description: Category
+        type: string
+      code:
+        description: Code
+        example: "12"
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      is_pemasukan:
+        description: IsPemasukan
+        example: true
+        type: boolean
+      level:
+        description: Level
+        type: integer
+      name:
+        description: Name
+        example: infaq
+        type: string
+      parent_id:
+        description: ParentID
+        format: uuid
         type: string
     type: object
   model.Page:
@@ -96,6 +182,56 @@ definitions:
         description: current length
         example: 10
         type: integer
+    type: object
+  model.Payment:
+    properties:
+      code:
+        description: Code
+        example: CSH
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      name:
+        description: Name
+        example: Cash
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+    type: object
+  model.PaymentAPI:
+    properties:
+      code:
+        description: Code
+        example: CSH
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      name:
+        description: Name
+        example: Cash
+        type: string
     type: object
 host: localhost:8000
 info:
@@ -382,6 +518,250 @@ paths:
       summary: Update Account by id
       tags:
       - Account
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: List of Category
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Category'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of Category
+      tags:
+      - Category
+    post:
+      consumes:
+      - application/json
+      description: Create new Category
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Category data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CategoryAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Category data
+          schema:
+            $ref: '#/definitions/model.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Category
+      tags:
+      - Category
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Category by id
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete Category by id
+      tags:
+      - Category
+    get:
+      consumes:
+      - application/json
+      description: Get a Category by id
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Category by id
+      tags:
+      - Category
+    put:
+      consumes:
+      - application/json
+      description: Update Category by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Category data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CategoryAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Category data
+          schema:
+            $ref: '#/definitions/model.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Category by id
+      tags:
+      - Category
   /info.json:
     get:
       consumes:
@@ -414,6 +794,250 @@ paths:
       summary: show info response
       tags:
       - API
+  /payments:
+    get:
+      consumes:
+      - application/json
+      description: List of Payment
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Payment'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of Payment
+      tags:
+      - Payment
+    post:
+      consumes:
+      - application/json
+      description: Create new Payment
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Payment data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.PaymentAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment data
+          schema:
+            $ref: '#/definitions/model.Payment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Payment
+      tags:
+      - Payment
+  /payments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Payment by id
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete Payment by id
+      tags:
+      - Payment
+    get:
+      consumes:
+      - application/json
+      description: Get a Payment by id
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Payment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Payment by id
+      tags:
+      - Payment
+    put:
+      consumes:
+      - application/json
+      description: Update Payment by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Payment data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.PaymentAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment data
+          schema:
+            $ref: '#/definitions/model.Payment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Payment by id
+      tags:
+      - Payment
 schemes:
 - http
 securityDefinitions:
