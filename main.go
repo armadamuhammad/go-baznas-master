@@ -14,13 +14,13 @@ func init() {
 	lib.LoadEnvironment(config.Environment)
 }
 
-// @title My Project
+// @title Baznas Master Service
 // @version 1.0.0
 // @description API Documentation
 // @termsOfService https://dospecs.monstercode.net/en/guide/tnc.html
-// @contact.name Developer
-// @contact.email developer.team.tog@gmail.com
-// @host localhost:9000
+// @contact.name Armada Muhammad
+// @contact.email armada_muhammad@student.uns.ac.id
+// @host localhost:8000
 // @schemes http
 // @BasePath /api/v1
 // @securityDefinitions.apikey ApiKeyAuth

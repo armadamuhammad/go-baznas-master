@@ -1,0 +1,424 @@
+basePath: /api/v1
+definitions:
+  lib.Response:
+    properties:
+      message:
+        description: response message
+        type: string
+      status:
+        description: http status
+        type: integer
+    type: object
+  model.Account:
+    properties:
+      code:
+        description: Code
+        example: BBCA
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      name:
+        description: Name
+        example: Bank BCA
+        type: string
+      number:
+        description: Number
+        example: 3425-3234-2341
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+    type: object
+  model.AccountAPI:
+    properties:
+      code:
+        description: Code
+        example: BBCA
+        type: string
+      description:
+        description: Description
+        example: lorem ipsum
+        type: string
+      name:
+        description: Name
+        example: Bank BCA
+        type: string
+      number:
+        description: Number
+        example: 3425-3234-2341
+        type: string
+    type: object
+  model.Page:
+    properties:
+      first:
+        description: indicate first value
+        example: true
+        type: boolean
+      items:
+        description: items of data
+        type: object
+      last:
+        description: indicate last value
+        example: false
+        type: boolean
+      max_page:
+        description: maximum pages for current schema
+        example: 9
+        type: integer
+      page:
+        description: current page, start from zero
+        example: 0
+        type: integer
+      size:
+        description: size per page, default `10`
+        example: 10
+        type: integer
+      total:
+        description: total data without filters
+        example: 100
+        type: integer
+      total_pages:
+        description: total pages
+        example: 10
+        type: integer
+      visible:
+        description: current length
+        example: 10
+        type: integer
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: armada_muhammad@student.uns.ac.id
+    name: Armada Muhammad
+  description: API Documentation
+  termsOfService: https://dospecs.monstercode.net/en/guide/tnc.html
+  title: Baznas Master Service
+  version: 1.0.0
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: show basic response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: show basic response
+      tags:
+      - API
+  /accounts:
+    get:
+      consumes:
+      - application/json
+      description: List of Account
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Account'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of Account
+      tags:
+      - Account
+    post:
+      consumes:
+      - application/json
+      description: Create new Account
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Account data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.AccountAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Account data
+          schema:
+            $ref: '#/definitions/model.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Account
+      tags:
+      - Account
+  /accounts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Account by id
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete Account by id
+      tags:
+      - Account
+    get:
+      consumes:
+      - application/json
+      description: Get a Account by id
+      parameters:
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Account by id
+      tags:
+      - Account
+    put:
+      consumes:
+      - application/json
+      description: Update Account by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: 2 character language code
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Account data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.AccountAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Account data
+          schema:
+            $ref: '#/definitions/model.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Account by id
+      tags:
+      - Account
+  /info.json:
+    get:
+      consumes:
+      - application/json
+      description: show info response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: show info response
+      tags:
+      - API
+schemes:
+- http
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
