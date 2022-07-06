@@ -3,6 +3,7 @@ module api
 go 1.16
 
 require (
+	github.com/dikhimartin/filters v1.0.4
 	github.com/go-openapi/strfmt v0.21.2
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/go-redis/redis/v8 v8.11.5
