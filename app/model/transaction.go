@@ -1,10 +1,18 @@
 package model
 
-import "github.com/google/uuid"
+import (
+	"api/app/lib"
+	"time"
+
+	"github.com/go-openapi/strfmt"
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
 
 // Transaction Transaction
 type Transaction struct {
 	Base
+	DataOwner
 	TransactionAPI
 }
 
@@ -29,4 +37,13 @@ type TransactionAPI struct {
 	UserID        *uuid.UUID `json:"userid,omitempty" swaggertype:"string" format:"uuid"`                // UserID
 	PaymentID     *uuid.UUID `json:"paymentid,omitempty" swaggertype:"string" format:"uuid"`             // PaymentID
 	CategoryID    *uuid.UUID `json:"categoryid,omitempty" swaggertype:"string" format:"uuid"`            // CategoryID
+}
+
+func (b *Transaction) BeforeCreate(tx *gorm.DB) error {
+	_, e := uuid.NewRandom()
+	now := strfmt.DateTime(time.Now())
+
+	b.Status = lib.Intptr(0)
+	b.NoRef = lib.Intptr(0)
+	return e
 }

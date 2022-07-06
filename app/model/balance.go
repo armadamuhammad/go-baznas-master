@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 // Balance Balance
 type Balance struct {
 	Base
+	DataOwner
 	BalanceAPI
 }
 

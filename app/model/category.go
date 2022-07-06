@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 // Category Category
 type Category struct {
 	Base
+	DataOwner
 	CategoryAPI
 }
 

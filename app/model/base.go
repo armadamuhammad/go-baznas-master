@@ -14,8 +14,6 @@ type Base struct {
 	CreatedAt  *strfmt.DateTime `json:"created_at,omitempty" gorm:"type:timestamptz" format:"date-time" swaggertype:"string"` // created at automatically inserted on post
 	UpdatedAt  *strfmt.DateTime `json:"updated_at,omitempty" gorm:"type:timestamptz" format:"date-time" swaggertype:"string"` // updated at automatically changed on put or add on post
 	DeletedAt  gorm.DeletedAt   `json:"-" gorm:"index" swaggerignore:"true"`
-	CreatorID  *uuid.UUID       `json:"creator_id,omitempty" gorm:"type:varchar(36)" format:"uuid"`  // creator id
-	ModifierID *uuid.UUID       `json:"modifier_id,omitempty" gorm:"type:varchar(36)" format:"uuid"` // modifier id
 }
 
 // BeforeCreate Data

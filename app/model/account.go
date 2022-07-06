@@ -1,9 +1,18 @@
 package model
 
+import (
+	"api/app/lib"
+	"time"
+
+	"github.com/go-openapi/strfmt"
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
+
 // Account Account
 type Account struct {
 	Base
-	// DataOwner
+	DataOwner
 	AccountAPI
 }
 
@@ -14,3 +23,4 @@ type AccountAPI struct {
 	Number      *string `json:"number,omitempty" example:"3425-3234-2341" gorm:"type:varchar(256)"`                                        // Number
 	Description *string `json:"description,omitempty" example:"lorem ipsum" gorm:"type:text"`                                              // Description
 }
+

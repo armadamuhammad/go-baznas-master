@@ -3,6 +3,7 @@ package model
 // Payment Payment
 type Payment struct {
 	Base
+	DataOwner
 	PaymentAPI
 }
 

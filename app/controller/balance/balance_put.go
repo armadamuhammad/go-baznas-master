@@ -33,16 +33,10 @@ func PutBalance(c *fiber.Ctx) error {
 	}
 
 	db := services.DB
-	lang := lib.GetLanguage(c)
 	id, _ := uuid.Parse(c.Params("id"))
 
 	var data model.Balance
 	result := db.Model(&data).
-		Joins("BalanceTranslation", db.Where(&model.BalanceTranslation{
-			BalanceTranslationAPI: model.BalanceTranslationAPI{
-				LanguageCode: &lang,
-			},
-		})).
 		Where(db.Where(model.Balance{
 			Base: model.Base{
 				ID: &id,

@@ -29,14 +29,8 @@ import (
 func GetBalance(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
-	lang := lib.GetLanguage(c)
 
-	mod := db.Model(&model.Balance{}).
-		Joins("BalanceTranslation", db.Where(&model.BalanceTranslation{
-			BalanceTranslationAPI: model.BalanceTranslationAPI{
-				LanguageCode: &lang,
-			},
-		}))
+	mod := db.Model(&model.Balance{})
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Balance{})
 
 	return lib.OK(c, page)
