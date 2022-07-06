@@ -32,8 +32,9 @@ type TransactionAPI struct {
 	Discount     *float64   `json:"discount,omitempty" example:"2000"`                                  // Discount
 	DiscountType *int       `json:"discount_type,omitempty" gorm:"type:smallint"`                       // 1 = percentage 2 = amount
 	UserID       *uuid.UUID `json:"userid,omitempty" swaggertype:"string" format:"uuid"`                // UserID
-	PaymentID    *uuid.UUID `json:"paymentid,omitempty" swaggertype:"string" format:"uuid"`             // PaymentID
-	CategoryID   *uuid.UUID `json:"categoryid,omitempty" swaggertype:"string" format:"uuid"`            // CategoryID
+	PaymentID    *uuid.UUID `json:"payment_id,omitempty" swaggertype:"string" format:"uuid"`            // PaymentID
+	CategoryID   *uuid.UUID `json:"category_id,omitempty" swaggertype:"string" format:"uuid"`           // CategoryID
+	BalanceID    *uuid.UUID `json:"balance_id,omitempty" swaggertype:"string" format:"uuid"`            // BalanceID
 }
 
 func (b *Transaction) BeforeCreate(tx *gorm.DB) error {
