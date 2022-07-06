@@ -17,27 +17,37 @@ func TestPutTransaction(t *testing.T) {
 
 	initial := model.Transaction{
 		TransactionAPI: model.TransactionAPI{
-			Name:          nil,
-			Description:   nil,
-			InvoiceNumber: nil,
-			NoRef:         nil,
-			Type:          nil,
-			Income:        nil,
-			Outcome:       nil,
-			Total:         nil,
+			Name:         nil,
+			Description:  nil,
+			Type:         nil,
+			Amount:       new(float64),
+			IsIncome:     new(int),
+			Note:         new(string),
+			Tax:          new(float64),
+			TaxType:      new(int),
+			Contact:      new(string),
+			ContactName:  new(string),
+			Discount:     new(float64),
+			DiscountType: new(int),
+
 		},
 	}
 
 	initial2 := model.Transaction{
 		TransactionAPI: model.TransactionAPI{
-			Name:          nil,
-			Description:   nil,
-			InvoiceNumber: nil,
-			NoRef:         nil,
-			Type:          nil,
-			Income:        nil,
-			Outcome:       nil,
-			Total:         nil,
+			Name:         nil,
+			Description:  nil,
+			Type:         nil,
+			Amount:       new(float64),
+			IsIncome:     new(int),
+			Note:         new(string),
+			Tax:          new(float64),
+			TaxType:      new(int),
+			Contact:      new(string),
+			ContactName:  new(string),
+			Discount:     new(float64),
+			DiscountType: new(int),
+
 		},
 	}
 

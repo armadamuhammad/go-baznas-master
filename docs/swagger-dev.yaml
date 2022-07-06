@@ -43,6 +43,10 @@ definitions:
         description: Number
         example: 3425-3234-2341
         type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
       updated_at:
         description: updated at automatically changed on put or add on post
         format: date-time
@@ -103,6 +107,10 @@ definitions:
         description: Saldo
         example: 1000000
         type: number
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
       transactionid:
         description: TransactionID
         format: uuid
@@ -181,6 +189,10 @@ definitions:
         description: ParentID
         format: uuid
         type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
       updated_at:
         description: updated at automatically changed on put or add on post
         format: date-time
@@ -283,6 +295,10 @@ definitions:
         description: Name
         example: Cash
         type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
       updated_at:
         description: updated at automatically changed on put or add on post
         format: date-time
@@ -371,6 +387,10 @@ definitions:
         description: PaymentID
         format: uuid
         type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
       status:
         description: Status
         type: string
@@ -528,6 +548,10 @@ definitions:
         description: Role
         format: uuid
         type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
       status:
         description: Status
         example: 0

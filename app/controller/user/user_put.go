@@ -13,7 +13,6 @@ import (
 // @Summary Update User by id
 // @Description Update User by id
 // @Param X-User-ID header string false "User ID"
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "User ID"
 // @Param data body model.UserAPI true "User data"
 // @Accept  application/json

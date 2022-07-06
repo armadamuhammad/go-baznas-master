@@ -12,7 +12,6 @@ import (
 // GetTransactionID godoc
 // @Summary Get a Transaction by id
 // @Description Get a Transaction by id
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Transaction ID"
 // @Accept  application/json
 // @Produce application/json

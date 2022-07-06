@@ -12,7 +12,6 @@ import (
 // GetBalanceID godoc
 // @Summary Get a Balance by id
 // @Description Get a Balance by id
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Balance ID"
 // @Accept  application/json
 // @Produce application/json

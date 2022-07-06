@@ -11,7 +11,6 @@ import (
 // GetAccount godoc
 // @Summary List of Account
 // @Description List of Account
-// @Param Accept-Language header string false "2 character language code"
 // @Param page query int false "Page number start from zero"
 // @Param size query int false "Size per page, default `0`"
 // @Param sort query string false "Sort by field, adding dash (`-`) at the beginning means descending and vice versa"

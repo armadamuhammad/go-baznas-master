@@ -13,7 +13,6 @@ import (
 // @Summary Update Payment by id
 // @Description Update Payment by id
 // @Param X-User-ID header string false "User ID"
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Payment ID"
 // @Param data body model.PaymentAPI true "Payment data"
 // @Accept  application/json

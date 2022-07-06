@@ -12,7 +12,6 @@ import (
 // GetCategoryID godoc
 // @Summary Get a Category by id
 // @Description Get a Category by id
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Category ID"
 // @Accept  application/json
 // @Produce application/json

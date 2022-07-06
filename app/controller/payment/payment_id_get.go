@@ -12,7 +12,6 @@ import (
 // GetPaymentID godoc
 // @Summary Get a Payment by id
 // @Description Get a Payment by id
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Payment ID"
 // @Accept  application/json
 // @Produce application/json

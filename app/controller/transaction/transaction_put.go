@@ -13,7 +13,6 @@ import (
 // @Summary Update Transaction by id
 // @Description Update Transaction by id
 // @Param X-User-ID header string false "User ID"
-// @Param Accept-Language header string false "2 character language code"
 // @Param id path string true "Transaction ID"
 // @Param data body model.TransactionAPI true "Transaction data"
 // @Accept  application/json

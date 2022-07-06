@@ -53,6 +53,7 @@ func Handle(app *fiber.App) {
 	api.Put("/users/:id", user.PutUser)
 	api.Get("/users/:id", user.GetUserID)
 	api.Delete("/users/:id", user.DeleteUser)
+	api.Put("/users/:id/verify", user.PutUserVerify)
 
 	// Transaction
 	api.Post("/transactions", transaction.PostTransaction)

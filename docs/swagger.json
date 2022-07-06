@@ -2395,6 +2395,11 @@
                     "type": "string",
                     "example": "3425-3234-2341"
                 },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -2472,6 +2477,11 @@
                     "description": "Saldo",
                     "type": "number",
                     "example": 1000000
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
                 },
                 "transactionid": {
                     "description": "TransactionID",
@@ -2573,6 +2583,11 @@
                     "description": "ParentID",
                     "type": "string",
                     "format": "uuid"
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
                 },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
@@ -2706,6 +2721,11 @@
                     "type": "string",
                     "example": "Cash"
                 },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -2818,6 +2838,11 @@
                     "description": "PaymentID",
                     "type": "string",
                     "format": "uuid"
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "Status",
@@ -3019,6 +3044,11 @@
                     "description": "Role",
                     "type": "string",
                     "format": "uuid"
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "Status",
