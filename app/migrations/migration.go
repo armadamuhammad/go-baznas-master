@@ -8,5 +8,8 @@ var ModelMigrations = []interface{}{
 	&model.Account{},
 	&model.Payment{},
 	&model.Category{},
+	&model.User{},
+	&model.Transaction{},
+	&model.Balance{},
 
 }
