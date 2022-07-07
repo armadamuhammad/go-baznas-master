@@ -7,6 +7,9 @@ type Input struct {
 	Base
 	DataOwner
 	InputAPI
+	Group    *Group    `json:"group" gorm:"foreignKey:GroupID;references:ID"`
+	User     *User     `json:"user" gorm:"foreignKey:UserID;references:ID"`
+	Category *Category `json:"category" gorm:"foreignKey:CategoryID;references:ID"`
 }
 
 // InputAPI Input API

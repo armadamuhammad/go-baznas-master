@@ -1977,6 +1977,359 @@
                 }
             }
         },
+        "/inputs": {
+            "get": {
+                "description": "List of Input",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Input"
+                ],
+                "summary": "List of Input",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number start from zero",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size per page, default `0`",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field, adding dash (`-`) at the beginning means descending and vice versa",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Select specific fields with comma separated",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Page"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Input"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new Input",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Input"
+                ],
+                "summary": "Create new Input",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Input data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.InputAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Input"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/inputs/{id}": {
+            "get": {
+                "description": "Get a Input by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Input"
+                ],
+                "summary": "Get a Input by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Input ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Input"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Input by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Input"
+                ],
+                "summary": "Update Input by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Input ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Input data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.InputAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Input data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Input"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Input by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Input"
+                ],
+                "summary": "Delete Input by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Input ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/payments": {
             "get": {
                 "description": "List of Payment",
@@ -2285,6 +2638,359 @@
                     {
                         "type": "string",
                         "description": "Payment ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles": {
+            "get": {
+                "description": "List of Role",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "List of Role",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number start from zero",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size per page, default `0`",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field, adding dash (`-`) at the beginning means descending and vice versa",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Select specific fields with comma separated",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Page"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Role"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new Role",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Create new Role",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "Role data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RoleAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Role"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{id}": {
+            "get": {
+                "description": "Get a Role by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get a Role by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Role ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Role"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Role by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Update Role by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Role ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Role data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RoleAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Role"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Role by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Delete Role by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Role ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -3246,14 +3952,6 @@
                     "type": "integer",
                     "example": 1
                 },
-                "transaction": {
-                    "$ref": "#/definitions/model.Transaction"
-                },
-                "transaction_id": {
-                    "description": "BalanceID",
-                    "type": "string",
-                    "format": "uuid"
-                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -3282,11 +3980,6 @@
                     "description": "Name",
                     "type": "string",
                     "example": "Kas Amil"
-                },
-                "transaction_id": {
-                    "description": "BalanceID",
-                    "type": "string",
-                    "format": "uuid"
                 }
             }
         },
@@ -3297,6 +3990,9 @@
                     "description": "Amount",
                     "type": "number",
                     "example": 200000
+                },
+                "balance": {
+                    "$ref": "#/definitions/model.Balance"
                 },
                 "balance_id": {
                     "description": "Balance ID",
@@ -3332,6 +4028,9 @@
                     "description": "sort (increment)",
                     "type": "integer",
                     "example": 1
+                },
+                "transaction": {
+                    "$ref": "#/definitions/model.Transaction"
                 },
                 "transaction_id": {
                     "description": "Transaction ID",
@@ -3544,6 +4243,85 @@
                 }
             }
         },
+        "model.Input": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/model.Category"
+                },
+                "category_id": {
+                    "description": "Category ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "created_at": {
+                    "description": "created at automatically inserted on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "creator_id": {
+                    "description": "creator id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "group": {
+                    "$ref": "#/definitions/model.Group"
+                },
+                "group_id": {
+                    "description": "Group ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "id": {
+                    "description": "model ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "modifier_id": {
+                    "description": "modifier id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "updated_at": {
+                    "description": "updated at automatically changed on put or add on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "user": {
+                    "$ref": "#/definitions/model.User"
+                },
+                "user_id": {
+                    "description": "User ID",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "model.InputAPI": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "description": "Category ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "group_id": {
+                    "description": "Group ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "user_id": {
+                    "description": "User ID",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
         "model.Page": {
             "type": "object",
             "properties": {
@@ -3663,6 +4441,70 @@
                 }
             }
         },
+        "model.Role": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Code",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "created at automatically inserted on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "creator_id": {
+                    "description": "creator id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "description": {
+                    "description": "Description",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "model ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "modifier_id": {
+                    "description": "modifier id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string"
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "updated_at": {
+                    "description": "updated at automatically changed on put or add on post",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "model.RoleAPI": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Code",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Description",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string"
+                }
+            }
+        },
         "model.Transaction": {
             "type": "object",
             "properties": {
@@ -3671,10 +4513,16 @@
                     "type": "number",
                     "example": 5000
                 },
+                "balance": {
+                    "$ref": "#/definitions/model.Balance"
+                },
                 "balance_id": {
                     "description": "BalanceID",
                     "type": "string",
                     "format": "uuid"
+                },
+                "category": {
+                    "$ref": "#/definitions/model.Category"
                 },
                 "category_id": {
                     "description": "CategoryID",
@@ -3749,6 +4597,9 @@
                     "type": "string",
                     "example": "lorem ipsum"
                 },
+                "payment": {
+                    "$ref": "#/definitions/model.Payment"
+                },
                 "payment_id": {
                     "description": "PaymentID",
                     "type": "string",
@@ -3786,6 +4637,9 @@
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
                     "format": "date-time"
+                },
+                "user": {
+                    "$ref": "#/definitions/model.User"
                 },
                 "user_id": {
                     "description": "UserID",
@@ -3909,6 +4763,9 @@
                     "type": "string",
                     "example": "male"
                 },
+                "group": {
+                    "$ref": "#/definitions/model.Group"
+                },
                 "group_id": {
                     "description": "GroupID",
                     "type": "string",
@@ -3941,6 +4798,9 @@
                 "password": {
                     "description": "Password",
                     "type": "string"
+                },
+                "role": {
+                    "$ref": "#/definitions/model.Role"
                 },
                 "role_id": {
                     "description": "Role",
