@@ -11,5 +11,4 @@ var ModelMigrations = []interface{}{
 	&model.User{},
 	&model.Transaction{},
 	&model.Balance{},
-
 }

@@ -27,9 +27,9 @@ type UserAPI struct {
 	Address        *string          `json:"address,omitempty" example:"jl. Klaten" gorm:"type:text"`                                                                       // Address
 	JoinDate       *strfmt.DateTime `json:"join_date,omitempty" format:"date-time" swaggertype:"string" gorm:"type:timestamptz"`                                           // JoinDate
 	Gender         *string          `json:"gender,omitempty" example:"male" gorm:"type:varchar(256)"`                                                                      // Gender
-	Status         *int             `json:"status,omitempty" example:"0" gorm:"type:smallint"`                                                                          // Status
-	StatusVerified *int             `json:"status_verified,omitempty" example:"0" gorm:"type:smallint"`                                                                 // Status Verified
-	IsAdmin        *int             `json:"is_admin,omitempty" gorm:"type:smallint" example:"0"`                                                                        // Status Verified
+	Status         *int             `json:"status,omitempty" example:"0" gorm:"type:smallint"`                                                                             // Status
+	StatusVerified *int             `json:"status_verified,omitempty" example:"0" gorm:"type:smallint"`                                                                    // Status Verified
+	IsAdmin        *int             `json:"is_admin,omitempty" gorm:"type:smallint" example:"0"`                                                                           // Status Verified
 	RoleID         *uuid.UUID       `json:"role_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                                  // Role
 	GroupID        *uuid.UUID       `json:"group_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                                 // GroupID
 }
@@ -40,7 +40,7 @@ func (b *User) BeforeCreate(tx *gorm.DB) error {
 
 	b.Status = lib.Intptr(1)
 	b.StatusVerified = lib.Intptr(0)
-	b.IsAdmin= lib.Intptr(0)
+	b.IsAdmin = lib.Intptr(0)
 	b.JoinDate = &now
 	return e
 }

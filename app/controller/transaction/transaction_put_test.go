@@ -29,7 +29,6 @@ func TestPutTransaction(t *testing.T) {
 			ContactName:  new(string),
 			Discount:     new(float64),
 			DiscountType: new(int),
-
 		},
 	}
 
@@ -47,7 +46,6 @@ func TestPutTransaction(t *testing.T) {
 			ContactName:  new(string),
 			Discount:     new(float64),
 			DiscountType: new(int),
-
 		},
 	}
 

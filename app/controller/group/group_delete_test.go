@@ -1,4 +1,4 @@
-package user
+package group
 
 import (
 	"api/app/lib"
@@ -10,32 +10,22 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestDeleteUser(t *testing.T) {
+func TestDeleteGroup(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Delete("/users/:id", DeleteUser)
+	app.Delete("/groups/:id", DeleteGroup)
 
-	initial := model.User{
-		UserAPI: model.UserAPI{
-			FirstName:      nil,
-			LastName:       nil,
-			Surname:        nil,
-			Email:          nil,
-			Username:       nil,
-			Password:       nil,
-			Address:        nil,
-			JoinDate:       nil,
-			Gender:         nil,
-			Status:         nil,
-			StatusVerified: nil,
-			RoleID:         nil,
-			GroupID:        nil,
+	initial := model.Group{
+		GroupAPI: model.GroupAPI{
+			Name:        nil,
+			Code:        nil,
+			Description: nil,
 		},
 	}
 
 	db.Create(&initial)
 
-	uri := "/users/" + initial.ID.String()
+	uri := "/groups/" + initial.ID.String()
 	response, _, err := lib.DeleteTest(app, uri, nil)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 200, response.StatusCode, "getting response code")

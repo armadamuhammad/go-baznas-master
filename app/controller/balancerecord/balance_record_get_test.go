@@ -1,4 +1,4 @@
-package user
+package balancerecord
 
 import (
 	"api/app/lib"
@@ -10,32 +10,23 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestGetUser(t *testing.T) {
+func TestGetBalanceRecord(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Get("/users", GetUser)
+	app.Get("/balance-records", GetBalanceRecord)
 
-	initial := model.User{
-		UserAPI: model.UserAPI{
-			FirstName:      nil,
-			LastName:       nil,
-			Surname:        nil,
-			Email:          nil,
-			Username:       nil,
-			Password:       nil,
-			Address:        nil,
-			JoinDate:       nil,
-			Gender:         nil,
-			Status:         nil,
-			StatusVerified: nil,
-			RoleID:         nil,
-			GroupID:        nil,
+	initial := model.BalanceRecord{
+		BalanceRecordAPI: model.BalanceRecordAPI{
+			Amount:        nil,
+			Datetime:      nil,
+			BalanceID:     nil,
+			TransactionID: nil,
 		},
 	}
 
 	db.Create(&initial)
 
-	uri := "/users?page=0&size=1"
+	uri := "/balance-records?page=0&size=1"
 	response, body, err := lib.GetTest(app, uri, nil)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 200, response.StatusCode, "getting response code")

@@ -17,12 +17,10 @@ func TestGetBalanceID(t *testing.T) {
 
 	initial := model.Balance{
 		BalanceAPI: model.BalanceAPI{
-			Saldo:         nil,
-			Category:      nil,
-			Income:        nil,
-			Outcome:       nil,
-			TransactionID: nil,
-			Description:   nil,
+			Amount:      new(float64),
+			Name:        new(string),
+			Code:        new(string),
+			Description: nil,
 		},
 	}
 

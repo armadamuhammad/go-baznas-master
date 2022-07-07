@@ -1,4 +1,4 @@
-package transaction
+package balancerecord
 
 import (
 	"api/app/lib"
@@ -8,34 +8,32 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// PostTransaction godoc
-// @Summary Create new Transaction
-// @Description Create new Transaction
+// PostBalanceRecord godoc
+// @Summary Create new Balance Record
+// @Description Create new Balance Record
 // @Param X-User-ID header string false "User ID"
-// @Param data body model.TransactionAPI true "Transaction data"
+// @Param data body model.BalanceRecordAPI true "Balance Record data"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} model.Transaction "Transaction data"
+// @Success 200 {object} model.BalanceRecord "Balance Record data"
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /transactions [post]
-// @Tags Transaction
-func PostTransaction(c *fiber.Ctx) error {
-	api := new(model.TransactionAPI)
+// @Router /balance-records [post]
+// @Tags BalanceRecord
+func PostBalanceRecord(c *fiber.Ctx) error {
+	api := new(model.BalanceRecordAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
 
 	db := services.DB
 
-	var data model.Transaction
+	var data model.BalanceRecord
 	lib.Merge(api, &data)
 	data.CreatorID = lib.GetXUserID(c)
-	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
-	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
