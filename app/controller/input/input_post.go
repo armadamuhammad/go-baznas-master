@@ -1,4 +1,4 @@
-package category
+package input
 
 import (
 	"api/app/lib"
@@ -6,39 +6,34 @@ import (
 	"api/app/services"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
-
 )
 
-// PostCategory godoc
-// @Summary Create new Category
-// @Description Create new Category
+// PostInput godoc
+// @Summary Create new Input
+// @Description Create new Input
 // @Param X-User-ID header string false "User ID"
-// @Param data body model.CategoryAPI true "Category data"
+// @Param data body model.InputAPI true "Input data"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} model.Category "Category data"
+// @Success 200 {object} model.Input "Input data"
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /categories [post]
-// @Tags Category
-func PostCategory(c *fiber.Ctx) error {
-	api := new(model.CategoryAPI)
+// @Router /inputs [post]
+// @Tags Input
+func PostInput(c *fiber.Ctx) error {
+	api := new(model.InputAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
 
 	db := services.DB
 
-	parentID, _ := uuid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6")
-	var data model.Category
+	var data model.Input
 	lib.Merge(api, &data)
-	if data.Level == lib.Intptr(1) {
-		data.ParentID = &parentID
-	}
+	data.CreatorID = lib.GetXUserID(c)
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)

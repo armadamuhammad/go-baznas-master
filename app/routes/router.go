@@ -6,7 +6,10 @@ import (
 	"api/app/controller/balance"
 	"api/app/controller/balancerecord"
 	"api/app/controller/category"
+	"api/app/controller/group"
+	"api/app/controller/input"
 	"api/app/controller/payment"
+	"api/app/controller/role"
 	"api/app/controller/transaction"
 	"api/app/controller/user"
 	"api/app/services"
@@ -54,6 +57,7 @@ func Handle(app *fiber.App) {
 	api.Put("/categories/:id", category.PutCategory)
 	api.Get("/categories/:id", category.GetCategoryID)
 	api.Delete("/categories/:id", category.DeleteCategory)
+	api.Get("/categories/:id/group", category.GetCategoryGroup)
 
 	// Group
 	api.Post("/groups", group.PostGroup)
@@ -62,12 +66,33 @@ func Handle(app *fiber.App) {
 	api.Get("/groups/:id", group.GetGroupID)
 	api.Delete("/groups/:id", group.DeleteGroup)
 
+	// Input
+	api.Post("/inputs", input.PostInput)
+	api.Get("/inputs", input.GetInput)
+	api.Put("/inputs/:id", input.PutInput)
+	api.Get("/inputs/:id", input.GetInputID)
+	api.Delete("/inputs/:id", input.DeleteInput)
+
 	// payment
 	api.Post("/payments", payment.PostPayment)
 	api.Get("/payments", payment.GetPayment)
 	api.Put("/payments/:id", payment.PutPayment)
 	api.Get("/payments/:id", payment.GetPaymentID)
 	api.Delete("/payments/:id", payment.DeletePayment)
+
+	// Role
+	api.Post("/roles", role.PostRole)
+	api.Get("/roles", role.GetRole)
+	api.Put("/roles/:id", role.PutRole)
+	api.Get("/roles/:id", role.GetRoleID)
+	api.Delete("/roles/:id", role.DeleteRole)
+
+	// Transaction
+	api.Post("/transactions", transaction.PostTransaction)
+	api.Get("/transactions", transaction.GetTransaction)
+	api.Put("/transactions/:id", transaction.PutTransaction)
+	api.Get("/transactions/:id", transaction.GetTransactionID)
+	api.Delete("/transactions/:id", transaction.DeleteTransaction)
 
 	// User
 	api.Post("/users", user.PostUser)
@@ -76,12 +101,5 @@ func Handle(app *fiber.App) {
 	api.Get("/users/:id", user.GetUserID)
 	api.Delete("/users/:id", user.DeleteUser)
 	api.Put("/users/:id/verify", user.PutUserVerify)
-
-	// Transaction
-	api.Post("/transactions", transaction.PostTransaction)
-	api.Get("/transactions", transaction.GetTransaction)
-	api.Put("/transactions/:id", transaction.PutTransaction)
-	api.Get("/transactions/:id", transaction.GetTransactionID)
-	api.Delete("/transactions/:id", transaction.DeleteTransaction)
 
 }
