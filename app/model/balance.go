@@ -5,7 +5,6 @@ type Balance struct {
 	Base
 	DataOwner
 	BalanceAPI
-	Transaction *Transaction `json:"transaction" gorm:"foreignKey:TransactionID;references:ID"`
 }
 
 // BalanceAPI Balance API

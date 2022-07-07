@@ -1,4 +1,4 @@
-package category
+package role
 
 import (
 	"api/app/lib"
@@ -6,38 +6,34 @@ import (
 	"api/app/services"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
-// PostCategory godoc
-// @Summary Create new Category
-// @Description Create new Category
+// PostRole godoc
+// @Summary Create new Role
+// @Description Create new Role
 // @Param X-User-ID header string false "User ID"
-// @Param data body model.CategoryAPI true "Category data"
+// @Param data body model.RoleAPI true "Role data"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} model.Category "Category data"
+// @Success 200 {object} model.Role "Role data"
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /categories [post]
-// @Tags Category
-func PostCategory(c *fiber.Ctx) error {
-	api := new(model.CategoryAPI)
+// @Router /roles [post]
+// @Tags Role
+func PostRole(c *fiber.Ctx) error {
+	api := new(model.RoleAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
 
 	db := services.DB
 
-	parentID, _ := uuid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6")
-	var data model.Category
+	var data model.Role
 	lib.Merge(api, &data)
-	if data.Level == lib.Intptr(1) {
-		data.ParentID = &parentID
-	}
+	data.CreatorID = lib.GetXUserID(c)
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
