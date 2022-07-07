@@ -1,4 +1,4 @@
-package balance
+package balancerecord
 
 import (
 	"api/app/lib"
@@ -10,41 +10,39 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestPutBalance(t *testing.T) {
+func TestPutBalanceRecord(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Put("/balances/:id", PutBalance)
+	app.Put("/balance-records/:id", PutBalanceRecord)
 
-	initial := model.Balance{
-		BalanceAPI: model.BalanceAPI{
-			Amount:      new(float64),
-			Name:        new(string),
-			Code:        new(string),
-			Description: nil,
+	initial := model.BalanceRecord{
+		BalanceRecordAPI: model.BalanceRecordAPI{
+			Amount:        nil,
+			Datetime:      nil,
+			BalanceID:     nil,
+			TransactionID: nil,
 		},
 	}
 
-	initial2 := model.Balance{
-		BalanceAPI: model.BalanceAPI{
-			Amount:      new(float64),
-			Name:        new(string),
-			Code:        new(string),
-			Description: nil,
+	initial2 := model.BalanceRecord{
+		BalanceRecordAPI: model.BalanceRecordAPI{
+			Amount:        nil,
+			Datetime:      nil,
+			BalanceID:     nil,
+			TransactionID: nil,
 		},
 	}
 
 	db.Create(&initial)
 	db.Create(&initial2)
 
-	uri := "/balances/" + initial.ID.String()
+	uri := "/balance-records/" + initial.ID.String()
 
 	payload := `{
-		"saldo": null,
-		"category": null,
-		"income": null,
-		"outcome": null,
-		"transactionid": null,
-		"description": null
+		"amount": null,
+		"datetime": null,
+		"balance_id": null,
+		"transaction_id": null
 	}`
 
 	headers := map[string]string{
@@ -64,13 +62,13 @@ func TestPutBalance(t *testing.T) {
 	utils.AssertEqual(t, 400, response.StatusCode, "getting response code")
 
 	// test update with non existing id
-	uri = "/balances/non-existing-id"
+	uri = "/balance-records/non-existing-id"
 	response, _, err = lib.PutTest(app, uri, headers, payload)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 404, response.StatusCode, "getting response code")
 
 	// test duplicate data
-	uri = "/balances/" + initial2.ID.String()
+	uri = "/balance-records/" + initial2.ID.String()
 	response, _, err = lib.PutTest(app, uri, headers, payload)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 409, response.StatusCode, "getting response code")

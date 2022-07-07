@@ -28,7 +28,7 @@ func TestPutUser(t *testing.T) {
 			Gender:         nil,
 			Status:         nil,
 			StatusVerified: nil,
-			RoleID:           nil,
+			RoleID:         nil,
 			GroupID:        nil,
 		},
 	}
@@ -46,7 +46,7 @@ func TestPutUser(t *testing.T) {
 			Gender:         nil,
 			Status:         nil,
 			StatusVerified: nil,
-			RoleID:           nil,
+			RoleID:         nil,
 			GroupID:        nil,
 		},
 	}

@@ -1,4 +1,4 @@
-package balance
+package group
 
 import (
 	"api/app/lib"
@@ -10,25 +10,23 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestPutBalance(t *testing.T) {
+func TestPutGroup(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Put("/balances/:id", PutBalance)
+	app.Put("/groups/:id", PutGroup)
 
-	initial := model.Balance{
-		BalanceAPI: model.BalanceAPI{
-			Amount:      new(float64),
-			Name:        new(string),
-			Code:        new(string),
+	initial := model.Group{
+		GroupAPI: model.GroupAPI{
+			Name:        nil,
+			Code:        nil,
 			Description: nil,
 		},
 	}
 
-	initial2 := model.Balance{
-		BalanceAPI: model.BalanceAPI{
-			Amount:      new(float64),
-			Name:        new(string),
-			Code:        new(string),
+	initial2 := model.Group{
+		GroupAPI: model.GroupAPI{
+			Name:        nil,
+			Code:        nil,
 			Description: nil,
 		},
 	}
@@ -36,14 +34,11 @@ func TestPutBalance(t *testing.T) {
 	db.Create(&initial)
 	db.Create(&initial2)
 
-	uri := "/balances/" + initial.ID.String()
+	uri := "/groups/" + initial.ID.String()
 
 	payload := `{
-		"saldo": null,
-		"category": null,
-		"income": null,
-		"outcome": null,
-		"transactionid": null,
+		"name": null,
+		"code": null,
 		"description": null
 	}`
 
@@ -64,13 +59,13 @@ func TestPutBalance(t *testing.T) {
 	utils.AssertEqual(t, 400, response.StatusCode, "getting response code")
 
 	// test update with non existing id
-	uri = "/balances/non-existing-id"
+	uri = "/groups/non-existing-id"
 	response, _, err = lib.PutTest(app, uri, headers, payload)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 404, response.StatusCode, "getting response code")
 
 	// test duplicate data
-	uri = "/balances/" + initial2.ID.String()
+	uri = "/groups/" + initial2.ID.String()
 	response, _, err = lib.PutTest(app, uri, headers, payload)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 409, response.StatusCode, "getting response code")

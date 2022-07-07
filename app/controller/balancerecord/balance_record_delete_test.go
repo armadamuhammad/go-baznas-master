@@ -1,4 +1,4 @@
-package user
+package balancerecord
 
 import (
 	"api/app/lib"
@@ -10,32 +10,23 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 )
 
-func TestDeleteUser(t *testing.T) {
+func TestDeleteBalanceRecord(t *testing.T) {
 	db := services.DBConnectTest()
 	app := fiber.New()
-	app.Delete("/users/:id", DeleteUser)
+	app.Delete("/balance-records/:id", DeleteBalanceRecord)
 
-	initial := model.User{
-		UserAPI: model.UserAPI{
-			FirstName:      nil,
-			LastName:       nil,
-			Surname:        nil,
-			Email:          nil,
-			Username:       nil,
-			Password:       nil,
-			Address:        nil,
-			JoinDate:       nil,
-			Gender:         nil,
-			Status:         nil,
-			StatusVerified: nil,
-			RoleID:         nil,
-			GroupID:        nil,
+	initial := model.BalanceRecord{
+		BalanceRecordAPI: model.BalanceRecordAPI{
+			Amount:        nil,
+			Datetime:      nil,
+			BalanceID:     nil,
+			TransactionID: nil,
 		},
 	}
 
 	db.Create(&initial)
 
-	uri := "/users/" + initial.ID.String()
+	uri := "/balance-records/" + initial.ID.String()
 	response, _, err := lib.DeleteTest(app, uri, nil)
 	utils.AssertEqual(t, nil, err, "sending request")
 	utils.AssertEqual(t, 200, response.StatusCode, "getting response code")
