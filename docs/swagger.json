@@ -769,6 +769,62 @@
                 }
             }
         },
+        "/balance-records/{id}/group": {
+            "get": {
+                "description": "Get a Balance Record by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "BalanceRecord"
+                ],
+                "summary": "Get Gorup Balance Record by id_balanc",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Balance Record ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.BalanceRecord"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/balances": {
             "get": {
                 "description": "List of Balance",
@@ -4037,6 +4093,11 @@
                     "type": "string",
                     "format": "uuid"
                 },
+                "type": {
+                    "description": "Type",
+                    "type": "string",
+                    "example": "Income"
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -4066,6 +4127,11 @@
                     "description": "Transaction ID",
                     "type": "string",
                     "format": "uuid"
+                },
+                "type": {
+                    "description": "Type",
+                    "type": "string",
+                    "example": "Income"
                 }
             }
         },

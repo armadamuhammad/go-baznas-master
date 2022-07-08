@@ -173,6 +173,10 @@ definitions:
         description: Transaction ID
         format: uuid
         type: string
+      type:
+        description: Type
+        example: Income
+        type: string
       updated_at:
         description: updated at automatically changed on put or add on post
         format: date-time
@@ -195,6 +199,10 @@ definitions:
       transaction_id:
         description: Transaction ID
         format: uuid
+        type: string
+      type:
+        description: Type
+        example: Income
         type: string
     type: object
   model.Category:
@@ -1348,6 +1356,43 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Update Balance Record by id
+      tags:
+      - BalanceRecord
+  /balance-records/{id}/group:
+    get:
+      consumes:
+      - application/json
+      description: Get a Balance Record by id
+      parameters:
+      - description: Balance Record ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BalanceRecord'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get Gorup Balance Record by id_balanc
       tags:
       - BalanceRecord
   /balances:

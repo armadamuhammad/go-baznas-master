@@ -7,18 +7,25 @@ import (
 	"github.com/google/uuid"
 )
 
-func ChangeBalance(trx model.Transaction) *model.Balance {
+func IncomeBalance(trx *model.Transaction) *model.Balance {
 	data := getBalance(trx.BalanceID)
 
-	// data.Amount = data.Amount - trx.Total
-	// if trx.IsIncome == lib.Intptr(1) {
+	amount := *data.Amount
+	total := *trx.Total
+	*data.Amount = amount + total
 
-	// }
-
-	return &data
+	return data
 }
 
-func getBalance(id *uuid.UUID) model.Balance {
+func OutcomeBalance() {
+
+}
+
+func DeletedBalance() {
+
+}
+
+func getBalance(id *uuid.UUID) *model.Balance {
 	db := services.DB
 	var data model.Balance
 
@@ -29,5 +36,5 @@ func getBalance(id *uuid.UUID) model.Balance {
 			},
 		})).
 		First(&data)
-	return data
+	return &data
 }
