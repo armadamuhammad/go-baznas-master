@@ -17,6 +17,7 @@ type BalanceRecord struct {
 // BalanceRecordAPI Balance Record API
 type BalanceRecordAPI struct {
 	Amount        *float64         `json:"amount,omitempty" example:"200000"`                                                  // Amount
+	Type          *string          `json:"type,omitempty" example:"Income" gorm:"type:varchar(256)"`                           // Type
 	Datetime      *strfmt.DateTime `json:"datetime,omitempty" format:"date-time" swaggertype:"string" gorm:"type:timestamptz"` // Datetime
 	BalanceID     *uuid.UUID       `json:"balance_id,omitempty" swaggertype:"string" format:"uuid"`                            // Balance ID
 	TransactionID *uuid.UUID       `json:"transaction_id,omitempty" swaggertype:"string" format:"uuid"`                        // Transaction ID

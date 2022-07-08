@@ -35,7 +35,8 @@ func PostCategory(c *fiber.Ctx) error {
 	parentID, _ := uuid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6")
 	var data model.Category
 	lib.Merge(api, &data)
-	if data.Level == lib.Intptr(1) {
+
+	if *data.Level == 1 {
 		data.ParentID = &parentID
 	}
 
