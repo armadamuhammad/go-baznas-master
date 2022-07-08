@@ -13,7 +13,7 @@ type Transaction struct {
 	Status        *string   `json:"status,omitempty" gorm:"type:varchar(256)"`                     // Status
 	NoRef         *string   `json:"no_ref,omitempty" example:"INFQ00001" gorm:"type:varchar(256)"` // No Ref
 	InvoiceNumber *int64    `json:"invoice_number,omitempty" gorm:"default:0"`                     // Invoice Number
-	User          *User     `json:"user" gorm:"foreignKey:userID;references:ID"`
+	User          *User     `json:"user" gorm:"foreignKey:UserID;references:ID"`
 	Payment       *Payment  `json:"payment" gorm:"foreignKey:PaymentID;references:ID"`
 	Category      *Category `json:"category" gorm:"foreignKey:CategoryID;references:ID"`
 	Balance       *Balance  `json:"balance" gorm:"foreignKey:BalanceID;references:ID"`
