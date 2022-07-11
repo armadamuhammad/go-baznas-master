@@ -30,7 +30,13 @@ func GetTransaction(c *fiber.Ctx) error {
 	pg := services.PG
 
 	mod := db.Model(&model.Transaction{}).
-	Joins("User")
+		Joins("User").
+		Joins("Payment").
+		Joins("Category").
+		Joins("Balance")
+	// Joins(`LEFT JOIN "user" a on a.id = "user".role_id`).
+	// Joins(`INNER JOIN "role" b on b.id = u.role_id`)
+
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
 
 	return lib.OK(c, page)

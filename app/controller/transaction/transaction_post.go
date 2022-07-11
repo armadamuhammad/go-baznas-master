@@ -1,7 +1,7 @@
 package transaction
 
 import (
-	// balance "api/app/controller/balance"
+	balance "api/app/controller/balance"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -60,6 +60,6 @@ func PostTransaction(c *fiber.Ctx) error {
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
-	// balance.UpdateBalance(data.BalanceID, data.Total, data.IsIncome)
+	balance.UpdateBalance(data.BalanceID, data.Total, data.IsIncome)
 	return lib.OK(c, data)
 }

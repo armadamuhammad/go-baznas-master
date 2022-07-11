@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	balance "api/app/controller/balance"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -30,6 +31,7 @@ func DeleteTransaction(c *fiber.Ctx) error {
 	if result1.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)
 	}
+	balance.DeletedBalance(data.BalanceID, data.Total, data.IsIncome)
 
 	db.Delete(&data)
 

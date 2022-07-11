@@ -33,6 +33,10 @@ func GetTransactionID(c *fiber.Ctx) error {
 				ID: &id,
 			},
 		})).
+		Joins("User").
+		Joins("Payment").
+		Joins("Category").
+		Joins("Balance").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)

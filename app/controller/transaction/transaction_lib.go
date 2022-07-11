@@ -1,5 +1,6 @@
 package transaction
 
+// GetDiscount func
 func GetDiscount(amount, disc float64, discType int) *float64 {
 	var t float64
 	t = amount - disc
@@ -10,6 +11,7 @@ func GetDiscount(amount, disc float64, discType int) *float64 {
 	return &t
 }
 
+// GetTax func
 func GetTax(amount, tax float64, discType int) *float64 {
 	var t float64
 	t = tax + amount

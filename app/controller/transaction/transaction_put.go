@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"api/app/controller/balance"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -46,9 +47,13 @@ func PutTransaction(c *fiber.Ctx) error {
 		return lib.ErrorNotFound(c)
 	}
 
+	balance.DeletedBalance(data.BalanceID, data.Amount, data.IsIncome)
 	lib.Merge(api, &data)
 	data.ModifierID = lib.GetXUserID(c)
+	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
+	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
 
+	balance.UpdateBalance(data.BalanceID, data.Amount, data.IsIncome)
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
