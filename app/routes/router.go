@@ -6,6 +6,7 @@ import (
 	"api/app/controller/balance"
 	"api/app/controller/balancerecord"
 	"api/app/controller/category"
+	"api/app/controller/login"
 	"api/app/controller/group"
 	"api/app/controller/input"
 	"api/app/controller/payment"
@@ -65,6 +66,9 @@ func Handle(app *fiber.App) {
 	api.Put("/groups/:id", group.PutGroup)
 	api.Get("/groups/:id", group.GetGroupID)
 	api.Delete("/groups/:id", group.DeleteGroup)
+
+	// Login 
+	api.Post("/logins", login.PostLogin)
 
 	// Input
 	api.Post("/inputs", input.PostInput)
