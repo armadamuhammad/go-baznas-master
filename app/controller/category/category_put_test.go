@@ -21,7 +21,7 @@ func TestPutCategory(t *testing.T) {
 			Code:        nil,
 			Level:       nil,
 			Category:    nil,
-			IsPemasukan: nil,
+			IsIncome: nil,
 			Description: nil,
 			ParentID:    nil,
 		},
@@ -33,7 +33,7 @@ func TestPutCategory(t *testing.T) {
 			Code:        nil,
 			Level:       nil,
 			Category:    nil,
-			IsPemasukan: nil,
+			IsIncome: nil,
 			Description: nil,
 			ParentID:    nil,
 		},
@@ -49,7 +49,7 @@ func TestPutCategory(t *testing.T) {
 		"code": null,
 		"level": null,
 		"category": null,
-		"ispemasukan": null,
+		"IsIncome": null,
 		"description": null,
 		"parentid": null
 	}`

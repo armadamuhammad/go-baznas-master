@@ -508,74 +508,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Create new Balance Record",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "BalanceRecord"
-                ],
-                "summary": "Create new Balance Record",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User-ID",
-                        "in": "header"
-                    },
-                    {
-                        "description": "Balance Record data",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.BalanceRecordAPI"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Balance Record data",
-                        "schema": {
-                            "$ref": "#/definitions/model.BalanceRecord"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    }
-                }
             }
         },
         "/balance-records/{id}": {
@@ -615,81 +547,6 @@
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update Balance Record by id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "BalanceRecord"
-                ],
-                "summary": "Update Balance Record by id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User-ID",
-                        "in": "header"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Balance Record ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Balance Record data",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.BalanceRecordAPI"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Balance Record data",
-                        "schema": {
-                            "$ref": "#/definitions/model.BalanceRecord"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/lib.Response"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
                         "schema": {
                             "$ref": "#/definitions/lib.Response"
                         }
@@ -4105,39 +3962,14 @@
                 }
             }
         },
-        "model.BalanceRecordAPI": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "description": "Amount",
-                    "type": "number",
-                    "example": 200000
-                },
-                "balance_id": {
-                    "description": "Balance ID",
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "datetime": {
-                    "description": "Datetime",
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "transaction_id": {
-                    "description": "Transaction ID",
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "type": {
-                    "description": "Type",
-                    "type": "string",
-                    "example": "Income"
-                }
-            }
-        },
         "model.Category": {
             "type": "object",
             "properties": {
+                "balance_id": {
+                    "description": "BalanceID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "category": {
                     "description": "Category",
                     "type": "string"
@@ -4167,10 +3999,10 @@
                     "type": "string",
                     "format": "uuid"
                 },
-                "is_pemasukan": {
-                    "description": "IsPemasukan",
-                    "type": "boolean",
-                    "example": true
+                "is_income": {
+                    "description": "1 = income 0 = outcome",
+                    "type": "integer",
+                    "example": 1
                 },
                 "level": {
                     "description": "Level",
@@ -4206,6 +4038,11 @@
         "model.CategoryAPI": {
             "type": "object",
             "properties": {
+                "balance_id": {
+                    "description": "BalanceID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "category": {
                     "description": "Category",
                     "type": "string"
@@ -4220,10 +4057,10 @@
                     "type": "string",
                     "example": "lorem ipsum"
                 },
-                "is_pemasukan": {
-                    "description": "IsPemasukan",
-                    "type": "boolean",
-                    "example": true
+                "is_income": {
+                    "description": "1 = income 0 = outcome",
+                    "type": "integer",
+                    "example": 1
                 },
                 "level": {
                     "description": "Level",
@@ -4312,6 +4149,11 @@
         "model.Input": {
             "type": "object",
             "properties": {
+                "amount": {
+                    "description": "Amount",
+                    "type": "number",
+                    "example": 5000
+                },
                 "category": {
                     "$ref": "#/definitions/model.Category"
                 },
@@ -4371,6 +4213,11 @@
         "model.InputAPI": {
             "type": "object",
             "properties": {
+                "amount": {
+                    "description": "Amount",
+                    "type": "number",
+                    "example": 5000
+                },
                 "category_id": {
                     "description": "Category ID",
                     "type": "string",
@@ -4636,10 +4483,10 @@
                 },
                 "invoice_number": {
                     "description": "Invoice Number",
-                    "type": "integer"
+                    "type": "string"
                 },
                 "is_income": {
-                    "description": "Outcome",
+                    "description": "1 = income 0 = uoutcome",
                     "type": "integer",
                     "example": 1
                 },
@@ -4686,7 +4533,7 @@
                     "example": 3000
                 },
                 "tax_type": {
-                    "description": "Tax Type",
+                    "description": "0 = amount, 1 percentage",
                     "type": "integer"
                 },
                 "total": {
@@ -4757,7 +4604,7 @@
                     "type": "integer"
                 },
                 "is_income": {
-                    "description": "Outcome",
+                    "description": "1 = income 0 = uoutcome",
                     "type": "integer",
                     "example": 1
                 },
@@ -4782,7 +4629,7 @@
                     "example": 3000
                 },
                 "tax_type": {
-                    "description": "Tax Type",
+                    "description": "0 = amount, 1 percentage",
                     "type": "integer"
                 },
                 "type": {

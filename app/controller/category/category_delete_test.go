@@ -21,7 +21,7 @@ func TestDeleteCategory(t *testing.T) {
 			Code:        nil,
 			Level:       nil,
 			Category:    nil,
-			IsPemasukan: nil,
+			IsIncome:    nil,
 			Description: nil,
 			ParentID:    nil,
 		},

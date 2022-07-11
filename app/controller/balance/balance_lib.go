@@ -7,14 +7,23 @@ import (
 	"github.com/google/uuid"
 )
 
-func IncomeBalance(trx *model.Transaction) *model.Balance {
-	data := getBalance(trx.BalanceID)
+func UpdateBalance(trx *uuid.UUID, amount *float64, isIncome *int) error{
+	data := getBalance(trx)
 
-	amount := *data.Amount
-	total := *trx.Total
-	*data.Amount = amount + total
+	if *isIncome == 1 {
+		trxAmount := *amount
+		total := *data.Amount
+		x := total + trxAmount
+		data.Amount = &x
+	} else {
+		trxAmount := *amount
+		total := *data.Amount
+		x := total - trxAmount
+		data.Amount = &x
+	}
 
-	return data
+	
+	return nil
 }
 
 func OutcomeBalance() {

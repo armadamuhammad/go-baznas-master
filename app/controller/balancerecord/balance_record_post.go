@@ -23,6 +23,7 @@ import (
 // @Failure default {object} lib.Response
 // @Router /balance-records [post]
 // @Tags BalanceRecord
+
 func PostBalanceRecord(c *fiber.Ctx) error {
 	api := new(model.BalanceRecordAPI)
 	if err := lib.BodyParser(c, api); nil != err {

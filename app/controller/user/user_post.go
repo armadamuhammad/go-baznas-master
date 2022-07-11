@@ -4,7 +4,9 @@ import (
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
+	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -28,12 +30,17 @@ func PostUser(c *fiber.Ctx) error {
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+	now := strfmt.DateTime(time.Now())
 
 	db := services.DB
 
 	var data model.User
 	lib.Merge(api, &data)
 	data.CreatorID = lib.GetXUserID(c)
+	data.Status = lib.Intptr(1)
+	data.StatusVerified = lib.Intptr(0)
+	data.IsAdmin = lib.Intptr(0)
+	data.JoinDate = &now
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
@@ -41,3 +48,4 @@ func PostUser(c *fiber.Ctx) error {
 
 	return lib.OK(c, data)
 }
+
