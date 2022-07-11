@@ -17,4 +17,6 @@ type InputAPI struct {
 	GroupID    *uuid.UUID `json:"group_id,omitempty" swaggertype:"string" format:"uuid"`    // Group ID
 	UserID     *uuid.UUID `json:"user_id,omitempty" swaggertype:"string" format:"uuid"`     // User ID
 	CategoryID *uuid.UUID `json:"category_id,omitempty" swaggertype:"string" format:"uuid"` // Category ID
+	Amount     *float64   `json:"amount,omitempty" example:"5000"`                          // Amount
+
 }

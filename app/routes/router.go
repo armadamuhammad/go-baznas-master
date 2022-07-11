@@ -45,9 +45,9 @@ func Handle(app *fiber.App) {
 	api.Delete("/balances/:id", balance.DeleteBalance)
 
 	// Balance Record
-	api.Post("/balance-records", balancerecord.PostBalanceRecord)
+	// api.Post("/balance-records", balancerecord.PostBalanceRecord)
 	api.Get("/balance-records", balancerecord.GetBalanceRecord)
-	api.Put("/balance-records/:id", balancerecord.PutBalanceRecord)
+	// api.Put("/balance-records/:id", balancerecord.PutBalanceRecord)
 	api.Get("/balance-records/:id", balancerecord.GetBalanceRecordID)
 	api.Delete("/balance-records/:id", balancerecord.DeleteBalanceRecord)
 

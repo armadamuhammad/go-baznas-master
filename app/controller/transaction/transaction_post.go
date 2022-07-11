@@ -1,9 +1,11 @@
 package transaction
 
 import (
+	// balance "api/app/controller/balance"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -33,6 +35,18 @@ func PostTransaction(c *fiber.Ctx) error {
 
 	var data model.Transaction
 	lib.Merge(api, &data)
+	if nil == data.BalanceID {
+		id := data.CategoryID
+		var cat model.Category
+		db.Model(&cat).
+			Where(db.Where(model.Category{
+				Base: model.Base{
+					ID: id,
+				},
+			})).
+			First(&cat)
+		data.BalanceID = cat.BalanceID
+	}
 	data.CreatorID = lib.GetXUserID(c)
 	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
 	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
@@ -40,6 +54,12 @@ func PostTransaction(c *fiber.Ctx) error {
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
+	inv := "0000" + fmt.Sprint(data.Sort)
+	data.InvoiceNumber = &inv
 
+	if err := db.Model(&data).Updates(&data).Error; nil != err {
+		return lib.ErrorConflict(c, err)
+	}
+	// balance.UpdateBalance(data.BalanceID, data.Total, data.IsIncome)
 	return lib.OK(c, data)
 }

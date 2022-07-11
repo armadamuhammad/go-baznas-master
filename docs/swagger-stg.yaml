@@ -182,31 +182,12 @@ definitions:
         format: date-time
         type: string
     type: object
-  model.BalanceRecordAPI:
-    properties:
-      amount:
-        description: Amount
-        example: 200000
-        type: number
-      balance_id:
-        description: Balance ID
-        format: uuid
-        type: string
-      datetime:
-        description: Datetime
-        format: date-time
-        type: string
-      transaction_id:
-        description: Transaction ID
-        format: uuid
-        type: string
-      type:
-        description: Type
-        example: Income
-        type: string
-    type: object
   model.Category:
     properties:
+      balance_id:
+        description: BalanceID
+        format: uuid
+        type: string
       category:
         description: Category
         type: string
@@ -230,10 +211,10 @@ definitions:
         description: model ID
         format: uuid
         type: string
-      is_pemasukan:
-        description: IsPemasukan
-        example: true
-        type: boolean
+      is_income:
+        description: 1 = income 0 = outcome
+        example: 1
+        type: integer
       level:
         description: Level
         type: integer
@@ -260,6 +241,10 @@ definitions:
     type: object
   model.CategoryAPI:
     properties:
+      balance_id:
+        description: BalanceID
+        format: uuid
+        type: string
       category:
         description: Category
         type: string
@@ -271,10 +256,10 @@ definitions:
         description: Description
         example: lorem ipsum
         type: string
-      is_pemasukan:
-        description: IsPemasukan
-        example: true
-        type: boolean
+      is_income:
+        description: 1 = income 0 = outcome
+        example: 1
+        type: integer
       level:
         description: Level
         type: integer
@@ -341,6 +326,10 @@ definitions:
     type: object
   model.Input:
     properties:
+      amount:
+        description: Amount
+        example: 5000
+        type: number
       category:
         $ref: '#/definitions/model.Category'
       category_id:
@@ -386,6 +375,10 @@ definitions:
     type: object
   model.InputAPI:
     properties:
+      amount:
+        description: Amount
+        example: 5000
+        type: number
       category_id:
         description: Category ID
         format: uuid
@@ -590,9 +583,9 @@ definitions:
         type: string
       invoice_number:
         description: Invoice Number
-        type: integer
+        type: string
       is_income:
-        description: Outcome
+        description: 1 = income 0 = uoutcome
         example: 1
         type: integer
       modifier_id:
@@ -629,7 +622,7 @@ definitions:
         example: 3000
         type: number
       tax_type:
-        description: Tax Type
+        description: 0 = amount, 1 percentage
         type: integer
       total:
         description: Total
@@ -684,7 +677,7 @@ definitions:
         description: 1 = percentage 2 = amount
         type: integer
       is_income:
-        description: Outcome
+        description: 1 = income 0 = uoutcome
         example: 1
         type: integer
       name:
@@ -704,7 +697,7 @@ definitions:
         example: 3000
         type: number
       tax_type:
-        description: Tax Type
+        description: 0 = amount, 1 percentage
         type: integer
       type:
         description: Type
@@ -1186,51 +1179,6 @@ paths:
       summary: List of Balance Record
       tags:
       - BalanceRecord
-    post:
-      consumes:
-      - application/json
-      description: Create new Balance Record
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User-ID
-        type: string
-      - description: Balance Record data
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/model.BalanceRecordAPI'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Balance Record data
-          schema:
-            $ref: '#/definitions/model.BalanceRecord'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/lib.Response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/lib.Response'
-      summary: Create new Balance Record
-      tags:
-      - BalanceRecord
   /balance-records/{id}:
     delete:
       consumes:
@@ -1306,56 +1254,6 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Get a Balance Record by id
-      tags:
-      - BalanceRecord
-    put:
-      consumes:
-      - application/json
-      description: Update Balance Record by id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User-ID
-        type: string
-      - description: Balance Record ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Balance Record data
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/model.BalanceRecordAPI'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Balance Record data
-          schema:
-            $ref: '#/definitions/model.BalanceRecord'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/lib.Response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/lib.Response'
-      summary: Update Balance Record by id
       tags:
       - BalanceRecord
   /balance-records/{id}/group:

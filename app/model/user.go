@@ -1,12 +1,8 @@
 package model
 
 import (
-	"api/app/lib"
-	"time"
-
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
 // User User
@@ -36,13 +32,13 @@ type UserAPI struct {
 	GroupID        *uuid.UUID       `json:"group_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                                 // GroupID
 }
 
-func (b *User) BeforeCreate(tx *gorm.DB) error {
-	_, e := uuid.NewRandom()
-	now := strfmt.DateTime(time.Now())
+// func (b *User) BeforeCreate(tx *gorm.DB) error {
+// 	_, e := uuid.NewRandom()
+// 	now := strfmt.DateTime(time.Now())
 
-	b.Status = lib.Intptr(1)
-	b.StatusVerified = lib.Intptr(0)
-	b.IsAdmin = lib.Intptr(0)
-	b.JoinDate = &now
-	return e
-}
+// 	b.Status = lib.Intptr(1)
+// 	b.StatusVerified = lib.Intptr(0)
+// 	b.IsAdmin = lib.Intptr(0)
+// 	b.JoinDate = &now
+// 	return e
+// }

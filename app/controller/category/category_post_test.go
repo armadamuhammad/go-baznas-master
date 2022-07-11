@@ -21,7 +21,7 @@ func TestPostCategory(t *testing.T) {
 		"code": null,
 		"level": null,
 		"category": null,
-		"ispemasukan": null,
+		"IsIncome": null,
 		"description": null,
 		"parentid": null
 	}`
