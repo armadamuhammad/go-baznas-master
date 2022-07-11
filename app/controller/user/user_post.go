@@ -48,4 +48,3 @@ func PostUser(c *fiber.Ctx) error {
 
 	return lib.OK(c, data)
 }
-

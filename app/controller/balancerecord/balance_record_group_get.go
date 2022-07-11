@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// GetBalanceRecordID godoc
+// GetBalanceRecordGroup godoc
 // @Summary Get Gorup Balance Record by id_balanc
 // @Description Get a Balance Record by id
 // @Param id path string true "Balance Record ID"
