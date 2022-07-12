@@ -30,6 +30,8 @@ func PostUser(c *fiber.Ctx) error {
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+	salt := "salt"
+	key := "CIPHER_SECRETKEY_MUST_HAVE_32BIT"
 	now := strfmt.DateTime(time.Now())
 
 	db := services.DB
@@ -37,6 +39,9 @@ func PostUser(c *fiber.Ctx) error {
 	var data model.User
 	lib.Merge(api, &data)
 	data.CreatorID = lib.GetXUserID(c)
+	raw := *data.Password
+	pass := lib.PasswordEncrypt(raw,salt,key)
+	data.Password = &pass
 	data.Status = lib.Intptr(1)
 	data.StatusVerified = lib.Intptr(0)
 	data.IsAdmin = lib.Intptr(0)

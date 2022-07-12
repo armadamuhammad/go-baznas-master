@@ -42,3 +42,8 @@ type UserAPI struct {
 // 	b.JoinDate = &now
 // 	return e
 // }
+
+type UserLogin struct {
+	Email    *string `json:"email,omitempty"`
+	Password *string `json:"password,omitempty"`
+}
