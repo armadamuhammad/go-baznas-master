@@ -6,9 +6,9 @@ import (
 	"api/app/controller/balance"
 	"api/app/controller/balancerecord"
 	"api/app/controller/category"
-	"api/app/controller/login"
 	"api/app/controller/group"
 	"api/app/controller/input"
+	"api/app/controller/login"
 	"api/app/controller/payment"
 	"api/app/controller/role"
 	"api/app/controller/transaction"
@@ -50,6 +50,7 @@ func Handle(app *fiber.App) {
 	api.Get("/balance-records", balancerecord.GetBalanceRecord)
 	// api.Put("/balance-records/:id", balancerecord.PutBalanceRecord)
 	api.Get("/balance-records/:id", balancerecord.GetBalanceRecordID)
+	api.Get("/balance-records/balance/:id/", balancerecord.GetBalanceRecordBalance)
 	api.Delete("/balance-records/:id", balancerecord.DeleteBalanceRecord)
 
 	// Category
@@ -58,7 +59,8 @@ func Handle(app *fiber.App) {
 	api.Put("/categories/:id", category.PutCategory)
 	api.Get("/categories/:id", category.GetCategoryID)
 	api.Delete("/categories/:id", category.DeleteCategory)
-	api.Get("/categories/:id/group", category.GetCategoryGroup)
+	api.Get("/categories/group/:id", category.GetCategoryGroup)
+	api.Get("/categories/balance/:id", category.GetCategoryBalance)
 
 	// Group
 	api.Post("/groups", group.PostGroup)
@@ -67,7 +69,7 @@ func Handle(app *fiber.App) {
 	api.Get("/groups/:id", group.GetGroupID)
 	api.Delete("/groups/:id", group.DeleteGroup)
 
-	// Login 
+	// Login
 	api.Post("/login", login.PostLogin)
 
 	// Input
@@ -97,6 +99,9 @@ func Handle(app *fiber.App) {
 	api.Put("/transactions/:id", transaction.PutTransaction)
 	api.Get("/transactions/:id", transaction.GetTransactionID)
 	api.Delete("/transactions/:id", transaction.DeleteTransaction)
+	api.Get("/transactions/user/:id", transaction.GetTransactionUser)
+	api.Get("/transactions/category/:id", transaction.GetTransactionCategory)
+	api.Get("/transactions/balance/:id", transaction.GetTransactionBalance)
 
 	// User
 	api.Post("/users", user.PostUser)
