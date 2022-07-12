@@ -184,6 +184,8 @@ definitions:
     type: object
   model.Category:
     properties:
+      balance:
+        $ref: '#/definitions/model.Balance'
       balance_id:
         description: BalanceID
         format: uuid
@@ -1263,13 +1265,13 @@ paths:
       summary: Get a Balance Record by id
       tags:
       - BalanceRecord
-  /balance-records/{id}/group:
+  /balance-records/balance/{id}:
     get:
       consumes:
       - application/json
       description: Get a Balance Record by id
       parameters:
-      - description: Balance Record ID
+      - description: Balance ID
         in: path
         name: id
         required: true
@@ -1297,7 +1299,7 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/lib.Response'
-      summary: Get Gorup Balance Record by id_balanc
+      summary: Get Gorup Balance Record by id_balance
       tags:
       - BalanceRecord
   /balances:
@@ -1764,7 +1766,7 @@ paths:
       summary: Update Category by id
       tags:
       - Category
-  /categories/{id}/group:
+  /categories/Balance/{id}:
     get:
       consumes:
       - application/json
@@ -1791,7 +1793,72 @@ paths:
         in: query
         name: filters
         type: string
-      - description: Category ID
+      - description: balance ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Category'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of Category from balance ID
+      tags:
+      - Category
+  /categories/group/{id}:
+    get:
+      consumes:
+      - application/json
+      description: List of Category
+      parameters:
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      - description: Category ID level to child
         in: path
         name: id
         required: true
@@ -2343,7 +2410,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/lib.Response'
+            $ref: '#/definitions/model.User'
         "400":
           description: Bad Request
           schema:
@@ -3061,6 +3128,117 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Update Transaction by id
+      tags:
+      - Transaction
+  /transactions/balance/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
+  /transactions/category/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
+  /transactions/user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
       tags:
       - Transaction
   /users:

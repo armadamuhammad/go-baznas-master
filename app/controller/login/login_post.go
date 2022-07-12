@@ -14,7 +14,7 @@ import (
 // @Param data body model.UserLogin true "User Login"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} lib.Response
+// @Success 200 {object} model.User User data
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
@@ -53,5 +53,5 @@ func PostLogin(c *fiber.Ctx) error {
 	if !b {
 		return lib.ErrorBadRequest(c)
 	} 
-	return lib.OK(c)
+	return lib.OK(c, &data)
 }

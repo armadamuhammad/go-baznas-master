@@ -7,6 +7,7 @@ type Category struct {
 	Base
 	DataOwner
 	CategoryAPI
+	Balance *Balance `json:"balance,omitempty"`
 }
 
 // CategoryAPI Category API

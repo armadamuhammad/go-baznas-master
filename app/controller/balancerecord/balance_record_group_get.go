@@ -9,10 +9,10 @@ import (
 	"github.com/google/uuid"
 )
 
-// GetBalanceRecordGroup godoc
-// @Summary Get Gorup Balance Record by id_balanc
+// GetBalanceRecordBalance godoc
+// @Summary Get Gorup Balance Record by id_balance
 // @Description Get a Balance Record by id
-// @Param id path string true "Balance Record ID"
+// @Param id path string true "Balance ID"
 // @Accept  application/json
 // @Produce application/json
 // @Success 200 {object} model.BalanceRecord Balance Record data
@@ -20,10 +20,12 @@ import (
 // @Failure 404 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /balance-records/{id}/group [get]
+// @Router /balance-records/balance/{id} [get]
 // @Tags BalanceRecord
-func GetBalanceRecordGroup(c *fiber.Ctx) error {
+func GetBalanceRecordBalance(c *fiber.Ctx) error {
 	db := services.DB
+	pg := services.PG
+
 	balanceID, _ := uuid.Parse(c.Params("id"))
 
 	var data model.BalanceRecord
@@ -33,10 +35,9 @@ func GetBalanceRecordGroup(c *fiber.Ctx) error {
 				BalanceID: &balanceID,
 			},
 		})).
-		Find(&data)
-	if result.RowsAffected < 1 {
-		return lib.ErrorNotFound(c)
-	}
+		Joins("Balance").
+		Joins("Transaction")
+	page := pg.With(result).Request(c.Request()).Response(&[]model.BalanceRecord{})
 
-	return lib.OK(c, data)
+	return lib.OK(c, page)
 }
