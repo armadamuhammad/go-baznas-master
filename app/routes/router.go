@@ -68,7 +68,7 @@ func Handle(app *fiber.App) {
 	api.Delete("/groups/:id", group.DeleteGroup)
 
 	// Login 
-	api.Post("/logins", login.PostLogin)
+	api.Post("/login", login.PostLogin)
 
 	// Input
 	api.Post("/inputs", input.PostInput)
