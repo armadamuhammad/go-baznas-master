@@ -34,7 +34,7 @@ func PostLogin(c *fiber.Ctx) error {
 	email := api.Email
 	raw := *api.Password
 	// password := lib.PasswordEncrypt(raw, salt, key)
-	password := raw + "//" + salt + "//" + key
+	// password := raw + "//" + salt + "//" + key
 
 	var data model.User
 	result := db.Model(&data).
@@ -48,7 +48,7 @@ func PostLogin(c *fiber.Ctx) error {
 		return lib.ErrorNotFound(c)
 	}
 	hashed := *data.Password
-	b := lib.PasswordCompare(hashed, password, salt, key)
+	b := lib.PasswordCompare(hashed, raw, salt, key)
 
 	if !b {
 		return lib.ErrorBadRequest(c)
