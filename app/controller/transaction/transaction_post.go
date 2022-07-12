@@ -60,6 +60,8 @@ func PostTransaction(c *fiber.Ctx) error {
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
-	balance.UpdateBalance(data.BalanceID, data.Total, data.IsIncome)
+	if err := balance.UpdateBalance(data.BalanceID, data.Total, data.IsIncome, data.ID); nil != err {
+		return lib.ErrorBadRequest(c, err)
+	}
 	return lib.OK(c, data)
 }
