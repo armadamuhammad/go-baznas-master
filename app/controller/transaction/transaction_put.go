@@ -53,7 +53,7 @@ func PutTransaction(c *fiber.Ctx) error {
 	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
 	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
 
-	balance.UpdateBalance(data.BalanceID, data.Amount, data.IsIncome)
+	balance.UpdateBalance(data.BalanceID, data.Amount, data.IsIncome, data.ID)
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}

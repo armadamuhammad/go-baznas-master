@@ -29,7 +29,9 @@ func GetBalanceRecord(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
 
-	mod := db.Model(&model.BalanceRecord{})
+	mod := db.Model(&model.BalanceRecord{}).
+	Joins("Balance").
+	Joins("Transaction")
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.BalanceRecord{})
 
 	return lib.OK(c, page)

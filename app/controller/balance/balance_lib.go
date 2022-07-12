@@ -11,8 +11,11 @@ import (
 )
 
 // UpdateBalance func
-func UpdateBalance(trx *uuid.UUID, amount *float64, isIncome *int) error {
-	data := getBalance(trx)
+func UpdateBalance(id *uuid.UUID, amount *float64, isIncome *int, trx *uuid.UUID) error {
+	data, err := getBalance(id)
+	if nil != err {
+		return err
+	}
 	db := services.DB
 	var types string
 
@@ -40,7 +43,10 @@ func UpdateBalance(trx *uuid.UUID, amount *float64, isIncome *int) error {
 
 // DeletedBalance func for delete and put transaction
 func DeletedBalance(trx *uuid.UUID, amount *float64, isIncome *int) error {
-	data := getBalance(trx)
+	data, err := getBalance(trx)
+	if nil != err {
+		return err
+	}
 	db := services.DB
 
 	if *isIncome == 1 {
@@ -64,18 +70,21 @@ func DeletedBalance(trx *uuid.UUID, amount *float64, isIncome *int) error {
 }
 
 // getBalance by id
-func getBalance(id *uuid.UUID) *model.Balance {
+func getBalance(id *uuid.UUID) (*model.Balance, error) {
 	db := services.DB
 	var data model.Balance
 
-	db.Model(&data).
+	res := db.Model(&data).
 		Where(db.Where(model.Balance{
 			Base: model.Base{
 				ID: id,
 			},
 		})).
 		First(&data)
-	return &data
+	if res.RowsAffected < 1 {
+		return nil, res.Error
+	}
+	return &data, nil
 }
 
 // BalanceRecord create balance record in every action
