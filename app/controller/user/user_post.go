@@ -40,7 +40,7 @@ func PostUser(c *fiber.Ctx) error {
 	lib.Merge(api, &data)
 	data.CreatorID = lib.GetXUserID(c)
 	raw := *data.Password
-	pass := lib.PasswordEncrypt(raw,salt,key)
+	pass := lib.PasswordEncrypt(raw, salt, key)
 	data.Password = &pass
 	data.Status = lib.Intptr(1)
 	data.StatusVerified = lib.Intptr(0)
