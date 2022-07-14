@@ -15,7 +15,7 @@ import (
 // @Summary Create new Transaction
 // @Description Create new Transaction
 // @Param X-User-ID header string false "User ID"
-// @Param data body []model.TransactionAPI true "Transaction data"
+// @Param data body model.TransactionMass true "Transaction data"
 // @Accept  application/json
 // @Produce application/json
 // @Success 200 {object} model.Transaction "Transaction data"
@@ -27,7 +27,7 @@ import (
 // @Router /transaction/mass [post]
 // @Tags Transaction
 func PostTransactionMass(c *fiber.Ctx) error {
-	api := new([]model.TransactionAPI)
+	api := new(model.TransactionMass)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
@@ -36,7 +36,7 @@ func PostTransactionMass(c *fiber.Ctx) error {
 	getUser := lib.GetXUserID(c)
 
 
-	apis := *api
+	apis := *api.Items
 	for _, mass := range apis {
 		var data model.Transaction
 		lib.Merge(mass, &data)

@@ -727,6 +727,13 @@ definitions:
         format: uuid
         type: string
     type: object
+  model.TransactionMass:
+    properties:
+      item:
+        items:
+          $ref: '#/definitions/model.TransactionAPI'
+        type: array
+    type: object
   model.User:
     properties:
       address:
@@ -3146,9 +3153,7 @@ paths:
         name: data
         required: true
         schema:
-          items:
-            $ref: '#/definitions/model.TransactionAPI'
-          type: array
+          $ref: '#/definitions/model.TransactionMass'
       produces:
       - application/json
       responses:

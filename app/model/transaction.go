@@ -41,3 +41,7 @@ type TransactionAPI struct {
 	CategoryID   *uuid.UUID `json:"category_id,omitempty" swaggertype:"string" format:"uuid"`           // CategoryID
 	BalanceID    *uuid.UUID `json:"balance_id,omitempty" swaggertype:"string" format:"uuid"`            // BalanceID
 }
+
+type TransactionMass struct {
+	Items *[]TransactionAPI `json:"item"`
+}
