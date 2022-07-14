@@ -182,6 +182,21 @@ definitions:
         format: date-time
         type: string
     type: object
+  model.BalanceTransfer:
+    properties:
+      amount:
+        description: Amount
+        example: 1000000
+        type: number
+      from:
+        description: From balance
+        format: uuid
+        type: string
+      to:
+        description: To balance
+        format: uuid
+        type: string
+    type: object
   model.Category:
     properties:
       balance:
@@ -1386,6 +1401,52 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Total of Balance
+      tags:
+      - Balance
+  /balance/transfer:
+    post:
+      consumes:
+      - application/json
+      description: Create new Balance
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Balance data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.BalanceTransfer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Balance data
+          schema:
+            $ref: '#/definitions/model.BalanceTransfer'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Balance
       tags:
       - Balance
   /balances:
@@ -3039,6 +3100,116 @@ paths:
       summary: Update Role by id
       tags:
       - Role
+  /transaction/income/:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction total income
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a total income Transaction
+      tags:
+      - Transaction
+  /transaction/mass:
+    post:
+      consumes:
+      - application/json
+      description: Create new Transaction
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: Transaction data
+        in: body
+        name: data
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.TransactionAPI'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Transaction data
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new Transaction
+      tags:
+      - Transaction
+  /transaction/outcome/:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction total income
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a total income Transaction
+      tags:
+      - Transaction
   /transactions:
     get:
       consumes:

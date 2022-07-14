@@ -45,6 +45,7 @@ func Handle(app *fiber.App) {
 	api.Get("/balances/:id", balance.GetBalanceID)
 	api.Delete("/balances/:id", balance.DeleteBalance)
 	api.Get("/balance/total", balance.GetBalanceTotal)
+	api.Post("/balance/transfer", balance.PostBalanceTransfer)
 
 	// Balance Record
 	// api.Post("/balance-records", balancerecord.PostBalanceRecord)
@@ -74,7 +75,6 @@ func Handle(app *fiber.App) {
 	// Login
 	api.Post("/login", login.PostLogin)
 	api.Put("/change-password/:id", login.ChangePassword)
-
 
 	// Input
 	api.Post("/inputs", input.PostInput)
@@ -107,6 +107,10 @@ func Handle(app *fiber.App) {
 	api.Get("/transactions/category/:id", transaction.GetTransactionCategory)
 	api.Get("/transactions/balance/:id", transaction.GetTransactionBalance)
 	api.Get("/transactions/:date/date", transaction.GetTransactionDate)
+	api.Get("/transaction/income", transaction.GetTransactionIncome)
+	api.Get("/transaction/outcome", transaction.GetTransactionOutcome)
+	api.Post("/transaction/mass", transaction.PostTransactionMass)
+
 
 	// User
 	api.Post("/users", user.PostUser)

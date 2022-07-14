@@ -30,6 +30,21 @@ import (
 func GetCategoryGroup(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
+	
+	level := c.Params("id")
+	if level == "1" {
+		mod := db.Model(&model.Category{}).
+			Where(db.Where(model.Category{
+				CategoryAPI: model.CategoryAPI{
+					Level: lib.Intptr(1),
+				},
+			})).
+			Joins("Balance")
+		page := pg.With(mod).Request(c.Request()).Response(&[]model.Category{})
+
+		return lib.OK(c, page)
+	}
+
 	parentID, _ := uuid.Parse(c.Params("id"))
 
 	mod := db.Model(&model.Category{}).
