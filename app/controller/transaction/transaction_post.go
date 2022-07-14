@@ -60,7 +60,7 @@ func PostTransaction(c *fiber.Ctx) error {
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
-	inv := "0000" + fmt.Sprint(data.Sort)
+	inv := "0000" + fmt.Sprint(*data.Sort)
 	data.InvoiceNumber = &inv
 
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
