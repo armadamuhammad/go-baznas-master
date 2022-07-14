@@ -82,6 +82,9 @@ func Handle(app *fiber.App) {
 	api.Put("/inputs/:id", input.PutInput)
 	api.Get("/inputs/:id", input.GetInputID)
 	api.Delete("/inputs/:id", input.DeleteInput)
+	api.Get("/inputs/user/:id", input.GetInputUser)
+	api.Get("/inputs/category/:id", input.GetInputCategory)
+	api.Get("/inputs/group/:id", input.GetInputGroup)
 
 	// payment
 	api.Post("/payments", payment.PostPayment)
@@ -110,7 +113,6 @@ func Handle(app *fiber.App) {
 	api.Get("/transaction/income", transaction.GetTransactionIncome)
 	api.Get("/transaction/outcome", transaction.GetTransactionOutcome)
 	api.Post("/transaction/mass", transaction.PostTransactionMass)
-
 
 	// User
 	api.Post("/users", user.PostUser)

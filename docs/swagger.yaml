@@ -1018,6 +1018,10 @@ paths:
       - application/json
       description: Delete Account by id
       parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
       - description: Account ID
         in: path
         name: id
@@ -2599,6 +2603,117 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Update Input by id
+      tags:
+      - Input
+  /inputs/category/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Input by id
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Input'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get group input by category id
+      tags:
+      - Input
+  /inputs/group/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Input by id
+      parameters:
+      - description: Group ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Input'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get group input by Group id
+      tags:
+      - Input
+  /inputs/user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Input by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Input'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Input by id
       tags:
       - Input
   /login:
