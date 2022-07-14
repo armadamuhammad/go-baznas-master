@@ -10,8 +10,8 @@ type User struct {
 	Base
 	DataOwner
 	UserAPI
-	Role  *Role  `json:"role,omitempty"`
-	Group *Group `json:"group,omitempty"`
+	Role  *Role  `json:"role,omitempty" gorm:"foreignKey:RoleID;references:ID"`
+	Group *Group `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
 }
 
 // UserAPI User API

@@ -14,3 +14,7 @@ type BalanceAPI struct {
 	Code        *string  `json:"code,omitempty" example:"KAML" gorm:"type:varchar(10)"`      // Code
 	Description *string  `json:"description,omitempty" gorm:"type:text"`                     // Description
 }
+
+type BalanceTotal struct {
+	Amount *float64 `json:"amount,omitempty" example:"1000000"` // Saldo
+}
