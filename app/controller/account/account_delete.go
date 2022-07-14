@@ -32,7 +32,7 @@ func DeleteAccount(c *fiber.Ctx) error {
 	if *ver.Super != 1 {
 		return lib.ErrorUnauthorized(c)
 	}
-	
+
 	var data model.Account
 	result1 := db.Model(&data).Where("id = ?", c.Params("id")).First(&data)
 	if result1.RowsAffected < 1 {

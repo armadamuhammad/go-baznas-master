@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// GetTransactionGroup godoc
+// GetTransactionUser godoc
 // @Summary Get a Transaction by id
 // @Description Get a Transaction by id
 // @Param id path string true "User ID"
@@ -44,7 +44,7 @@ func GetTransactionUser(c *fiber.Ctx) error {
 	return lib.OK(c, page)
 }
 
-// GetTransactionGroup godoc
+// GetTransactionCategory godoc
 // @Summary Get a Transaction by id
 // @Description Get a Transaction by id
 // @Param id path string true "User ID"
@@ -79,7 +79,7 @@ func GetTransactionCategory(c *fiber.Ctx) error {
 	return lib.OK(c, page)
 }
 
-// GetTransactionGroup godoc
+// GetTransactionBalance godoc
 // @Summary Get a Transaction by id
 // @Description Get a Transaction by id
 // @Param id path string true "User ID"

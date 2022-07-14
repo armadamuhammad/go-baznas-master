@@ -33,6 +33,7 @@ func GetCategoryID(c *fiber.Ctx) error {
 				ID: &id,
 			},
 		})).
+		Joins("Balance").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)

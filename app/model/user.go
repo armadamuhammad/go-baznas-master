@@ -33,11 +33,13 @@ type UserAPI struct {
 	GroupID   *uuid.UUID `json:"group_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                                 // GroupID
 }
 
+// UserLogin struct
 type UserLogin struct {
 	Email    *string `json:"email,omitempty"`
 	Password *string `json:"password,omitempty"`
 }
 
+// UserPassword struct
 type UserPassword struct {
 	PasswordOld *string `json:"password_old,omitempty"`
 	PasswordNew *string `json:"password_new,omitempty"`

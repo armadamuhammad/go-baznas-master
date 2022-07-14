@@ -17,10 +17,12 @@ type BalanceAPI struct {
 	Description *string  `json:"description,omitempty" gorm:"type:text"`                     // Description
 }
 
+// BalanceTotal struct
 type BalanceTotal struct {
 	Amount *float64 `json:"amount,omitempty" example:"1000000"` // Saldo
 }
 
+// BalanceTransfer struct
 type BalanceTransfer struct {
 	From   *uuid.UUID `json:"from,omitempty" swaggertype:"string" format:"uuid"` // From balance
 	To     *uuid.UUID `json:"to,omitempty" swaggertype:"string" format:"uuid"`   // To balance

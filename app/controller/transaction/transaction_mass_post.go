@@ -35,7 +35,6 @@ func PostTransactionMass(c *fiber.Ctx) error {
 	db := services.DB
 	getUser := lib.GetXUserID(c)
 
-
 	apis := *api.Items
 	for _, mass := range apis {
 		var data model.Transaction
@@ -69,7 +68,7 @@ func PostTransactionMass(c *fiber.Ctx) error {
 
 		inv := "0000" + fmt.Sprint(*data.Sort)
 		data.InvoiceNumber = &inv
-	
+
 		if err := db.Model(&data).Updates(&data).Error; nil != err {
 			return lib.ErrorConflict(c, err)
 		}

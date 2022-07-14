@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// PostBalance godoc
+// PostBalanceTransfer godoc
 // @Summary Create new Balance
 // @Description Create new Balance
 // @Param X-User-ID header string false "User ID"

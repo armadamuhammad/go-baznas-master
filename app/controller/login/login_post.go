@@ -22,7 +22,7 @@ import (
 // @Failure default {object} lib.Response
 // @Router /login [post]
 // @Tags Login
-func PostLogin(c *fiber.Ctx) error {
+func Login(c *fiber.Ctx) error {
 	salt := "salt"
 	key := "CIPHER_SECRETKEY_MUST_HAVE_32BIT"
 	db := services.DB
@@ -52,6 +52,6 @@ func PostLogin(c *fiber.Ctx) error {
 
 	if !b {
 		return lib.ErrorBadRequest(c)
-	} 
+	}
 	return lib.OK(c, &data)
 }

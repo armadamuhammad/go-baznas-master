@@ -73,7 +73,7 @@ func Handle(app *fiber.App) {
 	api.Delete("/groups/:id", group.DeleteGroup)
 
 	// Login
-	api.Post("/login", login.PostLogin)
+	api.Post("/login", login.Login)
 	api.Put("/change-password/:id", login.ChangePassword)
 
 	// Input

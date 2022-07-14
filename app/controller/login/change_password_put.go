@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// PutUserChangePassword godoc
+// ChangePassword godoc
 // @Summary Update Password user
 // @Description Update User by id
 // @Param X-User-ID header string false "User ID"
@@ -48,9 +48,9 @@ func ChangePassword(c *fiber.Ctx) error {
 		return lib.ErrorNotFound(c)
 	}
 	hashed := *data.Password
-	 if b := lib.PasswordCompare(hashed, old, salt, key); !b{
+	if b := lib.PasswordCompare(hashed, old, salt, key); !b {
 		return lib.ErrorBadRequest(c)
-	 }
+	}
 	raw := *api.PasswordNew
 	newPassword := lib.PasswordEncrypt(raw, salt, key)
 	data.Password = &newPassword

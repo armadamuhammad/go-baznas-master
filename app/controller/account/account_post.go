@@ -29,7 +29,6 @@ func PostAccount(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c, err)
 	}
 
-	
 	db := services.DB
 
 	var data model.Account
