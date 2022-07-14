@@ -1,6 +1,7 @@
 package balancerecord
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -11,6 +12,7 @@ import (
 // DeleteBalanceRecord godoc
 // @Summary Delete Balance Record by id
 // @Description Delete Balance Record by id
+// @Param X-User-ID header string false "User ID"
 // @Param id path string true "Balance Record ID"
 // @Accept  application/json
 // @Produce application/json
@@ -22,8 +24,15 @@ import (
 // @Failure default {object} lib.Response
 // @Router /balance-records/{id} [delete]
 // @Tags BalanceRecord
+
 func DeleteBalanceRecord(c *fiber.Ctx) error {
 	db := services.DB
+
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.Super != 1 {
+		return lib.ErrorUnauthorized(c)
+	}
 
 	var data model.BalanceRecord
 	result1 := db.Model(&data).Where("id = ?", c.Params("id")).First(&data)

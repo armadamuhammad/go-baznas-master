@@ -1,6 +1,7 @@
 package balancerecord
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -16,6 +17,7 @@ import (
 // @Param sort query string false "Sort by field, adding dash (`-`) at the beginning means descending and vice versa"
 // @Param fields query string false "Select specific fields with comma separated"
 // @Param filters query string false "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)"
+// @Param X-User-ID header string false "User ID"
 // @Accept  application/json
 // @Produce application/json
 // @Success 200 {object} model.Page{items=[]model.BalanceRecord} List of Balance Record
@@ -29,9 +31,15 @@ func GetBalanceRecord(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
 
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.Super != 1 {
+		return lib.ErrorUnauthorized(c)
+	}
+
 	mod := db.Model(&model.BalanceRecord{}).
-	Joins("Balance").
-	Joins("Transaction")
+		Joins("Balance").
+		Joins("Transaction")
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.BalanceRecord{})
 
 	return lib.OK(c, page)

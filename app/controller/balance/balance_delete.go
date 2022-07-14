@@ -1,6 +1,7 @@
 package balance
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -26,6 +27,12 @@ import (
 func DeleteBalance(c *fiber.Ctx) error {
 	db := services.DB
 
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.Super != 1 {
+		return lib.ErrorUnauthorized(c)
+	}
+	
 	var data model.Balance
 	result1 := db.Model(&data).Where("id = ?", c.Params("id")).First(&data)
 	if result1.RowsAffected < 1 {
