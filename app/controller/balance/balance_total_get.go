@@ -23,14 +23,17 @@ import (
 // @Failure 404 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /balances [get]
+// @Router /balance/total [get]
 // @Tags Balance
 func GetBalanceTotal(c *fiber.Ctx) error {
 	db := services.DB
-	pg := services.PG
+	// pg := services.PG
 
-	mod := db.Model(&model.Balance{})
-	page := pg.With(mod).Request(c.Request()).Response(&[]model.Balance{})
+	// mod := db.Model(&model.Balance{})
+	// page := pg.With(mod).Request(c.Request()).Response(&[]model.Balance{})
+	var total float64
+	row := db.Model(&model.Balance{}).Select(`SUM(amount)`).Row()
+	row.Scan(&total)
 
-	return lib.OK(c, page)
+	return lib.OK(c, total)
 }

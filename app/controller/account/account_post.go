@@ -29,11 +29,12 @@ func PostAccount(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c, err)
 	}
 
+	
 	db := services.DB
 
 	var data model.Account
 	lib.Merge(api, &data)
-	// data.CreatorID = lib.GetXUserID(c)
+	data.CreatorID = lib.GetXUserID(c)
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)

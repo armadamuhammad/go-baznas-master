@@ -134,6 +134,14 @@ func ErrorBadRequest(c *fiber.Ctx, message ...interface{}) error {
 	return Send(c, 400, message[0])
 }
 
+func ErrorUnauthorized(c *fiber.Ctx, message ...interface{}) error {
+	if len(message) == 0 {
+		message = append(message, "Unauthorized")
+	}
+
+	return Send(c, 401, message[0])
+}
+
 // ErrorNotFound send http 404 not found
 func ErrorNotFound(c *fiber.Ctx, message ...string) error {
 	if len(message) == 0 {
