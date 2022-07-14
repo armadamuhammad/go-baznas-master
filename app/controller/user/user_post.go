@@ -34,7 +34,6 @@ func PostUser(c *fiber.Ctx) error {
 	key := "CIPHER_SECRETKEY_MUST_HAVE_32BIT"
 	raw := "password"
 	now := strfmt.DateTime(time.Now())
-	
 
 	db := services.DB
 
@@ -44,7 +43,9 @@ func PostUser(c *fiber.Ctx) error {
 	pass := lib.PasswordEncrypt(raw, salt, key)
 	data.Password = &pass
 	data.Status = lib.Intptr(1)
-	data.StatusVerified = lib.Intptr(0)
+	if nil == data.StatusVerified {
+		data.StatusVerified = lib.Intptr(1)
+	}
 	data.IsAdmin = lib.Intptr(0)
 	data.JoinDate = &now
 	data.Super = lib.Intptr(0)

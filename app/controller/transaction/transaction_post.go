@@ -2,6 +2,7 @@ package transaction
 
 import (
 	balance "api/app/controller/balance"
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -32,6 +33,11 @@ func PostTransaction(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c, err)
 	}
 	now := time.Now()
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.StatusVerified != 1 {
+		return lib.ErrorUnauthorized(c)
+	}
 
 	db := services.DB
 
@@ -49,9 +55,9 @@ func PostTransaction(c *fiber.Ctx) error {
 			First(&cat)
 		data.BalanceID = cat.BalanceID
 	}
-	data.CreatorID = lib.GetXUserID(c)
+	data.CreatorID = userID
 	if nil == data.UserID {
-		data.UserID = lib.GetXUserID(c)
+		data.UserID = userID
 	}
 	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
 	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
