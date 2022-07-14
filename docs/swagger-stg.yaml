@@ -1170,6 +1170,10 @@ paths:
         in: query
         name: filters
         type: string
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
       produces:
       - application/json
       responses:
@@ -1204,46 +1208,6 @@ paths:
       tags:
       - BalanceRecord
   /balance-records/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete Balance Record by id
-      parameters:
-      - description: Balance Record ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/lib.Response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/lib.Response'
-      summary: Delete Balance Record by id
-      tags:
-      - BalanceRecord
     get:
       consumes:
       - application/json

@@ -1,6 +1,7 @@
 package balance
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -26,14 +27,19 @@ import (
 // @Router /balances/{id} [put]
 // @Tags Balance
 func PutBalance(c *fiber.Ctx) error {
+	db := services.DB
 	api := new(model.BalanceAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
 
-	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))
-
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.Super != 1 && api.Amount != nil{
+		return lib.ErrorUnauthorized(c)
+	}
+	
 	var data model.Balance
 	result := db.Model(&data).
 		Where(db.Where(model.Balance{

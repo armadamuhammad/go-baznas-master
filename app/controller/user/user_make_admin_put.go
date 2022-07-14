@@ -28,6 +28,12 @@ func PutUserMakeAdmin(c *fiber.Ctx) error {
 	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))
 
+	userID := lib.GetXUserID(c)
+	ver, _ := GetUserData(userID)
+	if *ver.Super != 1 {
+		return lib.ErrorUnauthorized(c)
+	}
+
 	var data model.User
 	result := db.Model(&data).
 		Where(db.Where(model.User{
