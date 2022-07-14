@@ -6,6 +6,7 @@ import (
 	"api/app/model"
 	"api/app/services"
 	"fmt"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,6 +31,7 @@ func PostTransaction(c *fiber.Ctx) error {
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+	now := time.Now()
 
 	db := services.DB
 
@@ -48,8 +50,12 @@ func PostTransaction(c *fiber.Ctx) error {
 		data.BalanceID = cat.BalanceID
 	}
 	data.CreatorID = lib.GetXUserID(c)
+	if nil == data.UserID {
+		data.UserID = lib.GetXUserID(c)
+	}
 	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
 	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
+	data.Date = &now
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)

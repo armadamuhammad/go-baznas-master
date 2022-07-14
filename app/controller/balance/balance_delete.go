@@ -11,6 +11,7 @@ import (
 // DeleteBalance godoc
 // @Summary Delete Balance by id
 // @Description Delete Balance by id
+// @Param X-User-ID header string false "User ID"
 // @Param id path string true "Balance ID"
 // @Accept  application/json
 // @Produce application/json

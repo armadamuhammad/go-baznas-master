@@ -1,6 +1,7 @@
 package balance
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -27,6 +28,12 @@ func PostBalance(c *fiber.Ctx) error {
 	api := new(model.BalanceAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
+	}
+
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.Super != 1 {
+		return lib.ErrorUnauthorized(c)
 	}
 
 	db := services.DB

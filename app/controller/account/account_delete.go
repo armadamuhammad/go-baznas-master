@@ -24,6 +24,7 @@ import (
 // @Tags Account
 func DeleteAccount(c *fiber.Ctx) error {
 	db := services.DB
+	
 
 	var data model.Account
 	result1 := db.Model(&data).Where("id = ?", c.Params("id")).First(&data)

@@ -39,6 +39,7 @@ func PostCategory(c *fiber.Ctx) error {
 	if *data.Level == 1 {
 		data.ParentID = &parentID
 	}
+	data.CreatorID = lib.GetXUserID(c)
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)

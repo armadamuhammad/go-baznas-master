@@ -17,19 +17,15 @@ func TestGetUserID(t *testing.T) {
 
 	initial := model.User{
 		UserAPI: model.UserAPI{
-			FirstName:      nil,
-			LastName:       nil,
-			Surname:        nil,
-			Email:          nil,
-			Username:       nil,
-			Password:       nil,
-			Address:        nil,
-			JoinDate:       nil,
-			Gender:         nil,
-			Status:         nil,
-			StatusVerified: nil,
-			RoleID:         nil,
-			GroupID:        nil,
+			FirstName: nil,
+			LastName:  nil,
+			Surname:   nil,
+			Email:     nil,
+			Username:  nil,
+			Address:   nil,
+			Gender:    nil,
+			RoleID:    nil,
+			GroupID:   nil,
 		},
 	}
 

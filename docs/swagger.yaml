@@ -568,6 +568,8 @@ definitions:
         description: creator id
         format: uuid
         type: string
+      date:
+        type: string
       description:
         description: Description
         example: lorem ipsum
@@ -624,7 +626,7 @@ definitions:
         example: 3000
         type: number
       tax_type:
-        description: 0 = amount, 1 percentage
+        description: 1 = percentage, 2 = amount
         type: integer
       total:
         description: Total
@@ -699,7 +701,7 @@ definitions:
         example: 3000
         type: number
       tax_type:
-        description: 0 = amount, 1 percentage
+        description: 1 = percentage, 2 = amount
         type: integer
       type:
         description: Type
@@ -746,8 +748,7 @@ definitions:
         format: uuid
         type: string
       is_admin:
-        description: Status Verified
-        example: 0
+        description: is admin
         type: integer
       join_date:
         description: JoinDate
@@ -814,32 +815,13 @@ definitions:
         description: GroupID
         format: uuid
         type: string
-      is_admin:
-        description: Status Verified
-        example: 0
-        type: integer
-      join_date:
-        description: JoinDate
-        format: date-time
-        type: string
       last_name:
         description: LastName
-        type: string
-      password:
-        description: Password
         type: string
       role_id:
         description: Role
         format: uuid
         type: string
-      status:
-        description: Status
-        example: 0
-        type: integer
-      status_verified:
-        description: Status Verified
-        example: 0
-        type: integer
       surname:
         description: Surname
         type: string
@@ -853,6 +835,13 @@ definitions:
       email:
         type: string
       password:
+        type: string
+    type: object
+  model.UserPassword:
+    properties:
+      password_new:
+        type: string
+      password_old:
         type: string
     type: object
 host: localhost:8000
@@ -1302,6 +1291,103 @@ paths:
       summary: Get Gorup Balance Record by id_balance
       tags:
       - BalanceRecord
+  /balance-records/transaction/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Balance Record by id
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BalanceRecord'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get Gorup Balance Record by transaction ID
+      tags:
+      - BalanceRecord
+  /balance/total:
+    get:
+      consumes:
+      - application/json
+      description: List of Balance
+      parameters:
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.Balance'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Total of Balance
+      tags:
+      - Balance
   /balances:
     get:
       consumes:
@@ -1413,6 +1499,10 @@ paths:
       - application/json
       description: Delete Balance by id
       parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
       - description: Balance ID
         in: path
         name: id
@@ -1896,6 +1986,57 @@ paths:
       summary: List of Category on same level
       tags:
       - Category
+  /change-password/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update User by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserPassword'
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Password user
+      tags:
+      - Login
   /groups:
     get:
       consumes:
@@ -3003,6 +3144,43 @@ paths:
       summary: Create new Transaction
       tags:
       - Transaction
+  /transactions/{date}/date:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
   /transactions/{id}:
     delete:
       consumes:
@@ -3471,6 +3649,51 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Update User by id
+      tags:
+      - User
+  /users/{id}/make-admin:
+    post:
+      consumes:
+      - application/json
+      description: Update User by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update status User by id
       tags:
       - User
   /users/{id}/verify:

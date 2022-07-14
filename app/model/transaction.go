@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 )
 
@@ -9,14 +11,15 @@ type Transaction struct {
 	Base
 	DataOwner
 	TransactionAPI
-	Total         *float64  `json:"total,omitempty" example:"8000"`                                // Total
-	Status        *string   `json:"status,omitempty" gorm:"type:varchar(256)"`                     // Status
-	NoRef         *string   `json:"no_ref,omitempty" example:"INFQ00001" gorm:"type:varchar(256)"` // No Ref
-	InvoiceNumber *string   `json:"invoice_number,omitempty" gorm:"default:0"`                     // Invoice Number
-	User          *User     `json:"user,omitempty" gorm:"foreignKey:UserID;references:ID"`
-	Payment       *Payment  `json:"payment,omitempty" gorm:"foreignKey:PaymentID;references:ID"`
-	Category      *Category `json:"category,omitempty" gorm:"foreignKey:CategoryID;references:ID"`
-	Balance       *Balance  `json:"balance,omitempty" gorm:"foreignKey:BalanceID;references:ID"`
+	Total         *float64   `json:"total,omitempty" example:"8000"`                                // Total
+	Status        *string    `json:"status,omitempty" gorm:"type:varchar(256)"`                     // Status
+	NoRef         *string    `json:"no_ref,omitempty" example:"INFQ00001" gorm:"type:varchar(256)"` // No Ref
+	InvoiceNumber *string    `json:"invoice_number,omitempty" gorm:"default:0"`                     // Invoice Number
+	Date          *time.Time `json:"date,omitempty" gorm:"type:date"`
+	User          *User      `json:"user,omitempty" gorm:"foreignKey:UserID;references:ID"`
+	Payment       *Payment   `json:"payment,omitempty" gorm:"foreignKey:PaymentID;references:ID"`
+	Category      *Category  `json:"category,omitempty" gorm:"foreignKey:CategoryID;references:ID"`
+	Balance       *Balance   `json:"balance,omitempty" gorm:"foreignKey:BalanceID;references:ID"`
 }
 
 // TransactionAPI Transaction API
@@ -28,7 +31,7 @@ type TransactionAPI struct {
 	IsIncome     *int       `json:"is_income,omitempty" example:"1" gorm:"smallint"`                    // 1 = income 0 = uoutcome
 	Note         *string    `json:"note,omitempty" example:"lorem ipsum" gorm:"type:text"`              // Note
 	Tax          *float64   `json:"tax,omitempty" example:"3000"`                                       // Tax
-	TaxType      *int       `json:"tax_type,omitempty" gorm:"type:smallint"`                            // 0 = amount, 1 percentage
+	TaxType      *int       `json:"tax_type,omitempty" gorm:"type:smallint"`                            // 1 = percentage, 2 = amount
 	Contact      *string    `json:"contact,omitempty" example:"08423423432" gorm:"type:varchar(256)"`   // Contact
 	ContactName  *string    `json:"contact_name,omitempty" example:"pak guru" gorm:"type:varchar(256)"` // Contact Name
 	Discount     *float64   `json:"discount,omitempty" example:"2000"`                                  // Discount
