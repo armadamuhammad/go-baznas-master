@@ -3490,10 +3490,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.TransactionAPI"
-                            }
+                            "$ref": "#/definitions/model.TransactionMass"
                         }
                     }
                 ],
@@ -5594,6 +5591,17 @@
                     "description": "UserID",
                     "type": "string",
                     "format": "uuid"
+                }
+            }
+        },
+        "model.TransactionMass": {
+            "type": "object",
+            "properties": {
+                "item": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.TransactionAPI"
+                    }
                 }
             }
         },
