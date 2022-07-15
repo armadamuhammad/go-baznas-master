@@ -1,8 +1,11 @@
 package model
 
 import (
+	"api/app/lib"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // User User
@@ -43,4 +46,32 @@ type UserLogin struct {
 type UserPassword struct {
 	PasswordOld *string `json:"password_old,omitempty"`
 	PasswordNew *string `json:"password_new,omitempty"`
+}
+
+func (s *User) Seed() *User {
+	seed := User{
+		Base:      Base{},
+		DataOwner: DataOwner{},
+		UserAPI: UserAPI{
+			FirstName: lib.Strptr("Hamba"),
+			LastName:  lib.Strptr("Allah"),
+			Surname:   nil,
+			Email:     lib.Strptr("hambaallah@baznas.com"),
+			Username:  lib.Strptr(viper.GetString("USER_ANON")),
+			Address:   lib.Strptr("bumi"),
+			Gender:    nil,
+			RoleID:    nil,
+			GroupID:   nil,
+		},
+		Status:         lib.Intptr(1),
+		StatusVerified: lib.Intptr(1),
+		IsAdmin:        lib.Intptr(0),
+		JoinDate:       nil,
+		Super:          lib.Intptr(0),
+		Password:       nil,
+		Role:           nil,
+		Group:          nil,
+	}
+	lib.Merge(seed, &s)
+	return s
 }
