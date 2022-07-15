@@ -31,6 +31,11 @@ func PostBalanceTransfer(c *fiber.Ctx) error {
 	}
 	userID := lib.GetXUserID(c)
 
+	neg,_ := getBalance(api.From)
+	if (*neg.Amount - *api.Amount) < 0 {
+		return lib.ErrorBadRequest(c)
+	}
+
 	trx := model.Transaction{
 		TransactionAPI: model.TransactionAPI{
 			Name:         lib.Strptr("Transfer Balance"),
