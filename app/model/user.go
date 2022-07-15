@@ -18,22 +18,22 @@ type User struct {
 	IsAdmin        *int             `json:"is_admin" gorm:"type:smallint"`                                                       // is admin
 	JoinDate       *strfmt.DateTime `json:"join_date,omitempty" format:"date-time" swaggertype:"string" gorm:"type:timestamptz"` // JoinDate
 	Super          *int             `json:"super" gorm:"type:smallint"`                                                          // is Super Admin
-	Password       *string          `json:"password,omitempty" gorm:"type:varchar(256)"`                                         // Password
+	Password       *string          `json:"-" gorm:"type:varchar(256)"`                                                          // Password
 	Role           *Role            `json:"role,omitempty" gorm:"foreignKey:RoleID;references:ID"`
 	Group          *Group           `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
 }
 
 // UserAPI User API
 type UserAPI struct {
-	FirstName *string    `json:"first_name,omitempty" gorm:"type:varchar(256)"`                                                                                 // FirstName
-	LastName  *string    `json:"last_name,omitempty" gorm:"type:varchar(256)"`                                                                                  // LastName
-	Surname   *string    `json:"surname,omitempty" gorm:"type:varchar(256)"`                                                                                    // Surname
-	Email     *string    `json:"email,omitempty" example:"user@mail.com" gorm:"type:varchar(256);index:,unique,where:deleted_at is null;not null"`         // Email
+	FirstName *string    `json:"first_name,omitempty" gorm:"type:varchar(256)"`                                                                         // FirstName
+	LastName  *string    `json:"last_name,omitempty" gorm:"type:varchar(256)"`                                                                          // LastName
+	Surname   *string    `json:"surname,omitempty" gorm:"type:varchar(256)"`                                                                            // Surname
+	Email     *string    `json:"email,omitempty" example:"user@mail.com" gorm:"type:varchar(256);index:,unique,where:deleted_at is null;not null"`      // Email
 	Username  *string    `json:"username,omitempty" example:"armada_muhammad" gorm:"type:varchar(256);index:,unique,where:deleted_at is null;not null"` // Username
-	Address   *string    `json:"address,omitempty" example:"jl. Klaten" gorm:"type:text"`                                                                       // Address
-	Gender    *string    `json:"gender,omitempty" example:"male" gorm:"type:varchar(256)"`                                                                      // Gender
-	RoleID    *uuid.UUID `json:"role_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                                  // Role
-	GroupID   *uuid.UUID `json:"group_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                                 // GroupID
+	Address   *string    `json:"address,omitempty" example:"jl. Klaten" gorm:"type:text"`                                                               // Address
+	Gender    *string    `json:"gender,omitempty" example:"male" gorm:"type:varchar(256)"`                                                              // Gender
+	RoleID    *uuid.UUID `json:"role_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                          // Role
+	GroupID   *uuid.UUID `json:"group_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                         // GroupID
 }
 
 // UserLogin struct
@@ -52,7 +52,7 @@ func (s *User) Seed() *[]User {
 	data := []User{}
 	salt := "salt"
 	key := "CIPHER_SECRETKEY_MUST_HAVE_32BIT"
-	hamba := lib.PasswordEncrypt("password", salt, key)
+	hamba := lib.PasswordEncrypt(viper.GetString("DEF_PASS"), salt, key)
 	super := lib.PasswordEncrypt("super", salt, key)
 
 	seed := []User{

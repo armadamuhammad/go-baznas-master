@@ -199,6 +199,10 @@ definitions:
     type: object
   model.Category:
     properties:
+      Anonym:
+        description: 1 = can be anonym transaction 0 = should login
+        example: 1
+        type: integer
       balance:
         $ref: '#/definitions/model.Balance'
       balance_id:
@@ -258,6 +262,10 @@ definitions:
     type: object
   model.CategoryAPI:
     properties:
+      Anonym:
+        description: 1 = can be anonym transaction 0 = should login
+        example: 1
+        type: integer
       balance_id:
         description: BalanceID
         format: uuid
@@ -783,9 +791,6 @@ definitions:
         description: modifier id
         format: uuid
         type: string
-      password:
-        description: Password
-        type: string
       role:
         $ref: '#/definitions/model.Role'
       role_id:
@@ -803,6 +808,9 @@ definitions:
       status_verified:
         description: Status Verified
         example: 0
+        type: integer
+      super:
+        description: is Super Admin
         type: integer
       surname:
         description: Surname

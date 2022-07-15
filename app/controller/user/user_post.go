@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/spf13/viper"
 )
 
 // PostUser godoc
@@ -32,7 +33,7 @@ func PostUser(c *fiber.Ctx) error {
 	}
 	salt := "salt"
 	key := "CIPHER_SECRETKEY_MUST_HAVE_32BIT"
-	raw := "password"
+	raw := viper.GetString("DEF_PASS")
 	now := strfmt.DateTime(time.Now())
 
 	db := services.DB

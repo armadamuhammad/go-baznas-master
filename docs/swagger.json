@@ -5029,6 +5029,11 @@
         "model.Category": {
             "type": "object",
             "properties": {
+                "Anonym": {
+                    "description": "1 = can be anonym transaction 0 = should login",
+                    "type": "integer",
+                    "example": 1
+                },
                 "balance": {
                     "$ref": "#/definitions/model.Balance"
                 },
@@ -5105,6 +5110,11 @@
         "model.CategoryAPI": {
             "type": "object",
             "properties": {
+                "Anonym": {
+                    "description": "1 = can be anonym transaction 0 = should login",
+                    "type": "integer",
+                    "example": 1
+                },
                 "balance_id": {
                     "description": "BalanceID",
                     "type": "string",
@@ -5788,10 +5798,6 @@
                     "type": "string",
                     "format": "uuid"
                 },
-                "password": {
-                    "description": "Password",
-                    "type": "string"
-                },
                 "role": {
                     "$ref": "#/definitions/model.Role"
                 },
@@ -5814,6 +5820,10 @@
                     "description": "Status Verified",
                     "type": "integer",
                     "example": 0
+                },
+                "super": {
+                    "description": "is Super Admin",
+                    "type": "integer"
                 },
                 "surname": {
                     "description": "Surname",

@@ -21,4 +21,7 @@ var Environment = map[string]interface{}{
 	"redis_index":     0,
 	"prefork":         false,
 	"user_anon":       "hambaallah",
+	"user_super":      "superadmin",
+	"parent_lv1":      "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	"def_pass":        "password",
 }
