@@ -7,6 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // PostCategory godoc
@@ -32,7 +33,7 @@ func PostCategory(c *fiber.Ctx) error {
 
 	db := services.DB
 
-	parentID, _ := uuid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6")
+	parentID, _ := uuid.Parse(viper.GetString("PARENT_LV1"))
 	var data model.Category
 	lib.Merge(api, &data)
 

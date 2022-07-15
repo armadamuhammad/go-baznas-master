@@ -41,3 +41,21 @@ func GetCategoryID(c *fiber.Ctx) error {
 
 	return lib.OK(c, data)
 }
+
+func GetCategoryData(id *uuid.UUID) (*model.Category, error) {
+	db := services.DB
+
+	var data model.Category
+	result := db.Model(&data).
+		Where(db.Where(model.Category{
+			Base: model.Base{
+				ID: id,
+			},
+		})).
+		Joins("Balance").
+		First(&data)
+	if result.RowsAffected < 1 {
+		return nil, result.Error
+	}
+	return &data, nil
+}
