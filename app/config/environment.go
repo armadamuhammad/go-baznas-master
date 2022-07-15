@@ -20,4 +20,5 @@ var Environment = map[string]interface{}{
 	"redis_pass":      "",
 	"redis_index":     0,
 	"prefork":         false,
+	"user_anon":       "hambaallah",
 }

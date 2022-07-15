@@ -87,6 +87,15 @@ func getBalance(id *uuid.UUID) (*model.Balance, error) {
 	return &data, nil
 }
 
+func CheckBalance(id *uuid.UUID, amount *float64, isIncome *int) bool {
+	if *isIncome == 1 {
+		return true
+	}
+	valid, _ := getBalance(id)
+	return (*valid.Amount - *amount) >= 0
+
+}
+
 // BalanceRecord create balance record in every action
 func BalanceRecord(balanceID *uuid.UUID, amount *float64, trxID *uuid.UUID, tipe *string) {
 	db := services.DB

@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// PostBalance godoc
+// PostBalanceTransfer godoc
 // @Summary Create new Balance
 // @Description Create new Balance
 // @Param X-User-ID header string false "User ID"
@@ -29,7 +29,15 @@ func PostBalanceTransfer(c *fiber.Ctx) error {
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+	if !CheckBalance(api.From, api.Amount, lib.Intptr(1)) {
+		return lib.ErrorBadRequest(c)
+	}
 	userID := lib.GetXUserID(c)
+
+	neg,_ := getBalance(api.From)
+	if (*neg.Amount - *api.Amount) < 0 {
+		return lib.ErrorBadRequest(c)
+	}
 
 	trx := model.Transaction{
 		TransactionAPI: model.TransactionAPI{

@@ -5,9 +5,9 @@ import (
 	"api/app/services"
 
 	"github.com/google/uuid"
-
 )
 
+// GetUserData func
 func GetUserData(id *uuid.UUID) (*model.User, error) {
 	db := services.DB
 	var data model.User

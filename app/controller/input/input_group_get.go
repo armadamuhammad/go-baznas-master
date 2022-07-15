@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// GetInputID godoc
+// GetInputUser godoc
 // @Summary Get a Input by id
 // @Description Get a Input by id
 // @Param id path string true "User ID"

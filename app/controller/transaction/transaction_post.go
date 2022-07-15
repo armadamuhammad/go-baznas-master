@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 // PostTransaction godoc
@@ -28,31 +29,42 @@ import (
 // @Router /transactions [post]
 // @Tags Transaction
 func PostTransaction(c *fiber.Ctx) error {
+	db := services.DB
 	api := new(model.TransactionAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+
+	var data model.Transaction
+	lib.Merge(api, &data)
+
+	id := data.CategoryID
+	var cat model.Category
+	db.Model(&cat).
+		Where(db.Where(model.Category{
+			Base: model.Base{
+				ID: id,
+			},
+		})).
+		First(&cat)
+
 	now := time.Now()
+	dummyUser, _ := uuid.Parse("cfe3c941-11f4-4f5d-b7f7-fe6a7b0c9ec0")
 	userID := lib.GetXUserID(c)
+
 	ver, _ := user.GetUserData(userID)
+	if nil == userID {
+		if cat.Anonym == lib.Intptr(1) {
+			data.UserID = &dummyUser
+		} else {
+			return lib.ErrorUnauthorized(c)
+		}
+	}
 	if *ver.StatusVerified != 1 {
 		return lib.ErrorUnauthorized(c)
 	}
 
-	db := services.DB
-
-	var data model.Transaction
-	lib.Merge(api, &data)
 	if nil == data.BalanceID {
-		id := data.CategoryID
-		var cat model.Category
-		db.Model(&cat).
-			Where(db.Where(model.Category{
-				Base: model.Base{
-					ID: id,
-				},
-			})).
-			First(&cat)
 		data.BalanceID = cat.BalanceID
 	}
 	data.CreatorID = userID
@@ -61,6 +73,9 @@ func PostTransaction(c *fiber.Ctx) error {
 	}
 	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
 	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
+	if !balance.CheckBalance(data.BalanceID, data.Total, data.IsIncome) {
+		return lib.ErrorBadRequest(c)
+	}
 	data.Date = &now
 
 	if err := db.Create(&data).Error; nil != err {

@@ -30,7 +30,7 @@ import (
 func GetCategoryGroup(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
-	
+
 	level := c.Params("id")
 	if level == "1" {
 		mod := db.Model(&model.Category{}).

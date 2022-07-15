@@ -36,10 +36,10 @@ func PutBalance(c *fiber.Ctx) error {
 	id, _ := uuid.Parse(c.Params("id"))
 	userID := lib.GetXUserID(c)
 	ver, _ := user.GetUserData(userID)
-	if *ver.Super != 1 && api.Amount != nil{
+	if *ver.Super != 1 && api.Amount != nil {
 		return lib.ErrorUnauthorized(c)
 	}
-	
+
 	var data model.Balance
 	result := db.Model(&data).
 		Where(db.Where(model.Balance{
