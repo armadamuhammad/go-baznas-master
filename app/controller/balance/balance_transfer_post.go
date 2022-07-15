@@ -29,6 +29,9 @@ func PostBalanceTransfer(c *fiber.Ctx) error {
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+	if !CheckBalance(api.From, api.Amount, lib.Intptr(1)) {
+		return lib.ErrorBadRequest(c)
+	}
 	userID := lib.GetXUserID(c)
 
 	trx := model.Transaction{

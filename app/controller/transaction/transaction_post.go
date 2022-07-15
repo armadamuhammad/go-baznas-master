@@ -34,6 +34,7 @@ func PostTransaction(c *fiber.Ctx) error {
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
+
 	var data model.Transaction
 	lib.Merge(api, &data)
 
@@ -72,6 +73,9 @@ func PostTransaction(c *fiber.Ctx) error {
 	}
 	data.Total = GetDiscount(*data.Amount, *data.Discount, *data.DiscountType)
 	data.Total = GetTax(*data.Total, *data.Tax, *data.TaxType)
+	if !balance.CheckBalance(data.BalanceID, data.Total, data.IsIncome) {
+		return lib.ErrorBadRequest(c)
+	}
 	data.Date = &now
 
 	if err := db.Create(&data).Error; nil != err {
