@@ -11,6 +11,7 @@ import (
 	"api/app/controller/login"
 	"api/app/controller/payment"
 	"api/app/controller/role"
+	"api/app/controller/setting"
 	"api/app/controller/transaction"
 	"api/app/controller/user"
 	"api/app/services"
@@ -99,6 +100,9 @@ func Handle(app *fiber.App) {
 	api.Put("/roles/:id", role.PutRole)
 	api.Get("/roles/:id", role.GetRoleID)
 	api.Delete("/roles/:id", role.DeleteRole)
+
+	// Setting
+	api.Post("/settings/view/category", setting.PostViewCategory)
 
 	// Transaction
 	api.Post("/transactions", transaction.PostTransaction)

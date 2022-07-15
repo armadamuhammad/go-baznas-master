@@ -3537,6 +3537,76 @@
                 }
             }
         },
+        "/settings/view/category": {
+            "post": {
+                "description": "Create new setting view by caegory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Create new view by caegory",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "User data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ViewAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/transaction/income/": {
             "get": {
                 "description": "Get a Transaction total income",
@@ -5556,6 +5626,14 @@
                     "description": "1 = percentage 2 = amount",
                     "type": "integer"
                 },
+                "group": {
+                    "$ref": "#/definitions/model.Group"
+                },
+                "group_id": {
+                    "description": "BalanceID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "id": {
                     "description": "model ID",
                     "type": "string",
@@ -5569,6 +5647,11 @@
                     "description": "1 = income 0 = uoutcome",
                     "type": "integer",
                     "example": 1
+                },
+                "media": {
+                    "description": "Media",
+                    "type": "string",
+                    "example": "pembayaran infaq"
                 },
                 "modifier_id": {
                     "description": "modifier id",
@@ -5683,10 +5766,20 @@
                     "description": "1 = percentage 2 = amount",
                     "type": "integer"
                 },
+                "group_id": {
+                    "description": "BalanceID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "is_income": {
                     "description": "1 = income 0 = uoutcome",
                     "type": "integer",
                     "example": 1
+                },
+                "media": {
+                    "description": "Media",
+                    "type": "string",
+                    "example": "pembayaran infaq"
                 },
                 "name": {
                     "description": "Name",
@@ -5907,6 +6000,22 @@
                 },
                 "password_old": {
                     "type": "string"
+                }
+            }
+        },
+        "model.ViewAPI": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "user_id": {
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         }

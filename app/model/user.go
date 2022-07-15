@@ -48,6 +48,12 @@ type UserPassword struct {
 	PasswordNew *string `json:"password_new,omitempty"`
 }
 
+type UserAfterLogin struct {
+	User
+	Category *[]string `json:"category,omitempty"`
+	Group    *[]string `json:"group,omitempty"`
+}
+
 func (s *User) Seed() *[]User {
 	data := []User{}
 	salt := "salt"

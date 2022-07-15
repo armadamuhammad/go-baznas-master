@@ -604,6 +604,12 @@ definitions:
       discount_type:
         description: 1 = percentage 2 = amount
         type: integer
+      group:
+        $ref: '#/definitions/model.Group'
+      group_id:
+        description: BalanceID
+        format: uuid
+        type: string
       id:
         description: model ID
         format: uuid
@@ -615,6 +621,10 @@ definitions:
         description: 1 = income 0 = uoutcome
         example: 1
         type: integer
+      media:
+        description: Media
+        example: pembayaran infaq
+        type: string
       modifier_id:
         description: modifier id
         format: uuid
@@ -703,10 +713,18 @@ definitions:
       discount_type:
         description: 1 = percentage 2 = amount
         type: integer
+      group_id:
+        description: BalanceID
+        format: uuid
+        type: string
       is_income:
         description: 1 = income 0 = uoutcome
         example: 1
         type: integer
+      media:
+        description: Media
+        example: pembayaran infaq
+        type: string
       name:
         description: Name
         example: pembayaran infaq
@@ -872,6 +890,17 @@ definitions:
       password_new:
         type: string
       password_old:
+        type: string
+    type: object
+  model.ViewAPI:
+    properties:
+      items:
+        items:
+          format: uuid
+          type: string
+        type: array
+      user_id:
+        format: uuid
         type: string
     type: object
 host: localhost:8000
@@ -3194,6 +3223,52 @@ paths:
       summary: Update Role by id
       tags:
       - Role
+  /settings/view/category:
+    post:
+      consumes:
+      - application/json
+      description: Create new setting view by caegory
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ViewAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new view by caegory
+      tags:
+      - Setting
   /transaction/income/:
     get:
       consumes:

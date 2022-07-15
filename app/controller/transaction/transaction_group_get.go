@@ -107,7 +107,8 @@ func GetTransactionBalance(c *fiber.Ctx) error {
 		Joins("User").
 		Joins("Payment").
 		Joins("Category").
-		Joins("Balance")
+		Joins("Balance").
+		Joins("Group")
 
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
 

@@ -14,4 +14,6 @@ var ModelMigrations = []interface{}{
 	&model.Group{},
 	&model.Input{},
 	&model.Role{},
+	&model.ViewCategory{},
+	&model.ViewGroup{},
 }

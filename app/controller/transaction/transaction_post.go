@@ -77,6 +77,7 @@ func PostTransaction(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c)
 	}
 	data.Date = &now
+	data.GroupID = ver.GroupID
 
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
