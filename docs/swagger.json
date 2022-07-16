@@ -4459,7 +4459,7 @@
         },
         "/transactions/view/category": {
             "get": {
-                "description": "Get a Transaction by id",
+                "description": "Get a Transaction by category",
                 "consumes": [
                     "application/json"
                 ],
@@ -4469,13 +4469,70 @@
                 "tags": [
                     "Transaction"
                 ],
-                "summary": "Get a Transaction by id",
+                "summary": "Get a Transaction by category",
                 "parameters": [
                     {
                         "type": "string",
                         "description": "User ID",
                         "name": "X-User-ID",
-                        "in": "header"
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/view/group": {
+            "get": {
+                "description": "Get a Transaction by group user view",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get Transaction view by group user view",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {

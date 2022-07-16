@@ -4096,11 +4096,12 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get a Transaction by id
+      description: Get a Transaction by category
       parameters:
       - description: User ID
         in: header
         name: X-User-ID
+        required: true
         type: string
       produces:
       - application/json
@@ -4125,7 +4126,44 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/lib.Response'
-      summary: Get a Transaction by id
+      summary: Get a Transaction by category
+      tags:
+      - Transaction
+  /transactions/view/group:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by group user view
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get Transaction view by group user view
       tags:
       - Transaction
   /users:
