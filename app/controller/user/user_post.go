@@ -41,6 +41,7 @@ func PostUser(c *fiber.Ctx) error {
 	var data model.User
 	lib.Merge(api, &data)
 	data.CreatorID = lib.GetXUserID(c)
+	data.GroupAssignedID = lib.GetXUserID(c)
 	pass := lib.PasswordEncrypt(raw, salt, key)
 	data.Password = &pass
 	data.Status = lib.Intptr(1)
@@ -51,9 +52,54 @@ func PostUser(c *fiber.Ctx) error {
 	data.JoinDate = &now
 	data.Super = lib.Intptr(0)
 
+	if data.RoleID == nil {
+		defRole := getRoleDefault()
+		data.RoleID = defRole.ID
+	}
+	if data.GroupID == nil {
+		defGroup := getGroupDefault()
+		data.GroupID = defGroup.ID
+	}
+
 	if err := db.Create(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
 	}
 
 	return lib.OK(c, data)
+}
+
+func getRoleDefault() *model.Role {
+	db := services.DB
+	code := viper.GetString("DEF_ROLE")
+	var data model.Role
+	result := db.Model(&data).
+		Where(db.Where(model.Role{
+			RoleAPI: model.RoleAPI{
+				Code: &code,
+			},
+		})).
+		First(&data)
+	if result.RowsAffected < 1 {
+		return nil
+	}
+	return &data
+
+}
+
+func getGroupDefault() *model.Group {
+	db := services.DB
+	code := viper.GetString("DEF_GROUP")
+	var data model.Group
+	result := db.Model(&data).
+		Where(db.Where(model.Group{
+			GroupAPI: model.GroupAPI{
+				Code: &code,
+			},
+		})).
+		First(&data)
+	if result.RowsAffected < 1 {
+		return nil
+	}
+	return &data
+
 }

@@ -1,6 +1,7 @@
-package user
+package setting
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -22,14 +23,14 @@ import (
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /users/{id}/make-admin [post]
-// @Tags User
+// @Router /setting/user/{id}/make-admin [post]
+// @Tags Setting
 func PutUserMakeAdmin(c *fiber.Ctx) error {
 	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))
 
 	userID := lib.GetXUserID(c)
-	ver, _ := GetUserData(userID)
+	ver, _ := user.GetUserData(userID)
 	if *ver.Super != 1 {
 		return lib.ErrorUnauthorized(c)
 	}

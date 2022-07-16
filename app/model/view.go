@@ -15,6 +15,6 @@ type ViewGroup struct {
 }
 
 type ViewAPI struct {
-	UserID *uuid.UUID `json:"user_id,omitempty" swaggertype:"string" format:"uuid"`
+	// UserID *uuid.UUID `json:"user_id,omitempty" swaggertype:"string" format:"uuid"`
 	Items  *[]string  `json:"items,omitempty" format:"uuid"`
 }

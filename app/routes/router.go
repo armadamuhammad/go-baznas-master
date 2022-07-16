@@ -103,6 +103,11 @@ func Handle(app *fiber.App) {
 
 	// Setting
 	api.Post("/settings/view/category", setting.PostViewCategory)
+	api.Post("/settings/view/group", setting.PostViewGroup)
+	api.Put("/settings/user/:id/group/:group_id", setting.PutUserGroup)
+	api.Put("/settings/user/:id/role/:role_id", setting.PutUserRole)
+	api.Put("/settings/user/:id/verify", setting.PutUserVerify)
+	api.Put("/settings/user/:id/make-admin", setting.PutUserMakeAdmin)
 
 	// Transaction
 	api.Post("/transactions", transaction.PostTransaction)
@@ -117,6 +122,8 @@ func Handle(app *fiber.App) {
 	api.Get("/transaction/income", transaction.GetTransactionIncome)
 	api.Get("/transaction/outcome", transaction.GetTransactionOutcome)
 	api.Post("/transaction/mass", transaction.PostTransactionMass)
+	api.Get("/transactions/view/category", transaction.GetTransactionViewCategory)
+
 
 	// User
 	api.Post("/users", user.PostUser)
@@ -124,7 +131,5 @@ func Handle(app *fiber.App) {
 	api.Put("/users/:id", user.PutUser)
 	api.Get("/users/:id", user.GetUserID)
 	api.Delete("/users/:id", user.DeleteUser)
-	api.Put("/users/:id/verify", user.PutUserVerify)
-	api.Put("/users/:id/make-admin", user.PutUserMakeAdmin)
 
 }
