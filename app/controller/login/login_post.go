@@ -4,8 +4,10 @@ import (
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 // Login godoc
@@ -14,7 +16,7 @@ import (
 // @Param data body model.UserLogin true "User Login"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} model.User User data
+// @Success 200 {object} model.UserAfterLogin User data
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
@@ -43,6 +45,9 @@ func Login(c *fiber.Ctx) error {
 				Email: email,
 			},
 		})).
+		Joins("Role").
+		Joins("Group").
+		Joins("GroupAssigned").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)
@@ -53,5 +58,56 @@ func Login(c *fiber.Ctx) error {
 	if !b {
 		return lib.ErrorBadRequest(c)
 	}
-	return lib.OK(c, &data)
+	var res model.UserAfterLogin
+	lib.Merge(data, &res)
+	res.CategoryView = GetCategory(res.ID)
+	res.GroupView = GetGroup(res.ID)
+
+	return lib.OK(c, &res)
 }
+
+func GetCategory(userID *uuid.UUID) *[]string {
+	db := services.DB
+	rows, err := db.Model(&model.ViewCategory{}).
+		Where(db.Where(&model.ViewCategory{
+			UserID: userID,
+		})).Rows()
+	result := []string{}
+	if nil == err {
+		for rows.Next() {
+			each := model.ViewCategory{}
+			db.ScanRows(rows, &each)
+			var desc string
+			if each.CategoryID != nil {
+				desc = fmt.Sprint(*each.CategoryID)
+			}
+			result = append(result, desc)
+		}
+		defer rows.Close()
+	}
+	return &result
+}
+
+func GetGroup(userID *uuid.UUID) *[]string {
+	db := services.DB
+	rows, err := db.Model(&model.ViewGroup{}).
+		Where(db.Where(&model.ViewGroup{
+			UserID: userID,
+		})).Rows()
+	result := []string{}
+	if nil == err {
+		for rows.Next() {
+			each := model.ViewGroup{}
+			db.ScanRows(rows, &each)
+			var desc string
+			if each.GroupID != nil {
+				desc = fmt.Sprint(*each.GroupID)
+			}
+			result = append(result, desc)
+		}
+		defer rows.Close()
+	}
+	return &result
+}
+
+

@@ -20,6 +20,7 @@ type Transaction struct {
 	Payment       *Payment   `json:"payment,omitempty" gorm:"foreignKey:PaymentID;references:ID"`
 	Category      *Category  `json:"category,omitempty" gorm:"foreignKey:CategoryID;references:ID"`
 	Balance       *Balance   `json:"balance,omitempty" gorm:"foreignKey:BalanceID;references:ID"`
+	Group         *Group     `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
 }
 
 // TransactionAPI Transaction API
@@ -36,10 +37,12 @@ type TransactionAPI struct {
 	ContactName  *string    `json:"contact_name,omitempty" example:"pak guru" gorm:"type:varchar(256)"` // Contact Name
 	Discount     *float64   `json:"discount,omitempty" example:"2000"`                                  // Discount
 	DiscountType *int       `json:"discount_type,omitempty" gorm:"type:smallint"`                       // 1 = percentage 2 = amount
+	Media        *string    `json:"media,omitempty" gorm:"type:varchar(256)"`                           // Media
 	UserID       *uuid.UUID `json:"user_id,omitempty" swaggertype:"string" format:"uuid"`               // UserID
 	PaymentID    *uuid.UUID `json:"payment_id,omitempty" swaggertype:"string" format:"uuid"`            // PaymentID
 	CategoryID   *uuid.UUID `json:"category_id,omitempty" swaggertype:"string" format:"uuid"`           // CategoryID
 	BalanceID    *uuid.UUID `json:"balance_id,omitempty" swaggertype:"string" format:"uuid"`            // BalanceID
+	GroupID      *uuid.UUID `json:"group_id,omitempty" swaggertype:"string" format:"uuid"`              // BalanceID
 }
 
 type TransactionMass struct {

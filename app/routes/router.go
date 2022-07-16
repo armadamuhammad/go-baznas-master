@@ -11,6 +11,7 @@ import (
 	"api/app/controller/login"
 	"api/app/controller/payment"
 	"api/app/controller/role"
+	"api/app/controller/setting"
 	"api/app/controller/transaction"
 	"api/app/controller/user"
 	"api/app/services"
@@ -100,6 +101,14 @@ func Handle(app *fiber.App) {
 	api.Get("/roles/:id", role.GetRoleID)
 	api.Delete("/roles/:id", role.DeleteRole)
 
+	// Setting
+	api.Post("/settings/view/category", setting.PostViewCategory)
+	api.Post("/settings/view/group", setting.PostViewGroup)
+	api.Put("/settings/user/:id/group/:group_id", setting.PutUserGroup)
+	api.Put("/settings/user/:id/role/:role_id", setting.PutUserRole)
+	api.Put("/settings/user/:id/verify", setting.PutUserVerify)
+	api.Put("/settings/user/:id/make-admin", setting.PutUserMakeAdmin)
+
 	// Transaction
 	api.Post("/transactions", transaction.PostTransaction)
 	api.Get("/transactions", transaction.GetTransaction)
@@ -113,6 +122,9 @@ func Handle(app *fiber.App) {
 	api.Get("/transaction/income", transaction.GetTransactionIncome)
 	api.Get("/transaction/outcome", transaction.GetTransactionOutcome)
 	api.Post("/transaction/mass", transaction.PostTransactionMass)
+	api.Get("/transactions/view/category", transaction.GetTransactionViewCategory)
+	api.Get("/transactions/view/group", transaction.GetTransactionViewGroup)
+
 
 	// User
 	api.Post("/users", user.PostUser)
@@ -120,7 +132,5 @@ func Handle(app *fiber.App) {
 	api.Put("/users/:id", user.PutUser)
 	api.Get("/users/:id", user.GetUserID)
 	api.Delete("/users/:id", user.DeleteUser)
-	api.Put("/users/:id/verify", user.PutUserVerify)
-	api.Put("/users/:id/make-admin", user.PutUserMakeAdmin)
 
 }

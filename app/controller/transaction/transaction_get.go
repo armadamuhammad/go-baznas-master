@@ -34,10 +34,9 @@ func GetTransaction(c *fiber.Ctx) error {
 		Joins("Payment").
 		Joins("Category").
 		Joins("Balance").
+		Joins("Group").
 		Preload("User.Role").
 		Preload("User.Group")
-	// Joins(`LEFT JOIN "user" a on a.id = "user".role_id`).
-	// Joins(`INNER JOIN "role" b on b.id = u.role_id`)
 
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
 

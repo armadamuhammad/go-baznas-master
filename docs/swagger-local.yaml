@@ -604,6 +604,12 @@ definitions:
       discount_type:
         description: 1 = percentage 2 = amount
         type: integer
+      group:
+        $ref: '#/definitions/model.Group'
+      group_id:
+        description: BalanceID
+        format: uuid
+        type: string
       id:
         description: model ID
         format: uuid
@@ -615,6 +621,9 @@ definitions:
         description: 1 = income 0 = uoutcome
         example: 1
         type: integer
+      media:
+        description: Media
+        type: string
       modifier_id:
         description: modifier id
         format: uuid
@@ -703,10 +712,17 @@ definitions:
       discount_type:
         description: 1 = percentage 2 = amount
         type: integer
+      group_id:
+        description: BalanceID
+        format: uuid
+        type: string
       is_income:
         description: 1 = income 0 = uoutcome
         example: 1
         type: integer
+      media:
+        description: Media
+        type: string
       name:
         description: Name
         example: pembayaran infaq
@@ -748,6 +764,10 @@ definitions:
         description: Address
         example: jl. Klaten
         type: string
+      assigned_id:
+        description: user/admin who assigned this user to any group
+        format: uuid
+        type: string
       created_at:
         description: created at automatically inserted on post
         format: date-time
@@ -769,6 +789,8 @@ definitions:
         type: string
       group:
         $ref: '#/definitions/model.Group'
+      group_assigned_by:
+        $ref: '#/definitions/model.User'
       group_id:
         description: GroupID
         format: uuid
@@ -860,6 +882,102 @@ definitions:
         example: armada_muhammad
         type: string
     type: object
+  model.UserAfterLogin:
+    properties:
+      address:
+        description: Address
+        example: jl. Klaten
+        type: string
+      assigned_id:
+        description: user/admin who assigned this user to any group
+        format: uuid
+        type: string
+      category_view:
+        items:
+          type: string
+        type: array
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      email:
+        description: Email
+        example: user@mail.com
+        type: string
+      first_name:
+        description: FirstName
+        type: string
+      gender:
+        description: Gender
+        example: male
+        type: string
+      group:
+        $ref: '#/definitions/model.Group'
+      group_assigned_by:
+        $ref: '#/definitions/model.User'
+      group_id:
+        description: GroupID
+        format: uuid
+        type: string
+      group_view:
+        items:
+          type: string
+        type: array
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      is_admin:
+        description: is admin
+        type: integer
+      join_date:
+        description: JoinDate
+        format: date-time
+        type: string
+      last_name:
+        description: LastName
+        type: string
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      role:
+        $ref: '#/definitions/model.Role'
+      role_id:
+        description: Role
+        format: uuid
+        type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
+      status:
+        description: Status
+        example: 0
+        type: integer
+      status_verified:
+        description: Status Verified
+        example: 0
+        type: integer
+      super:
+        description: is Super Admin
+        type: integer
+      surname:
+        description: Surname
+        type: string
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+      username:
+        description: Username
+        example: armada_muhammad
+        type: string
+    type: object
   model.UserLogin:
     properties:
       email:
@@ -873,6 +991,16 @@ definitions:
         type: string
       password_old:
         type: string
+    type: object
+  model.ViewAPI:
+    properties:
+      items:
+        description: UserID *uuid.UUID `json:"user_id,omitempty" swaggertype:"string"
+          format:"uuid"`
+        items:
+          format: uuid
+          type: string
+        type: array
     type: object
 host: localhost:8000
 info:
@@ -2706,7 +2834,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.User'
+            $ref: '#/definitions/model.UserAfterLogin'
         "400":
           description: Bad Request
           schema:
@@ -3194,6 +3322,288 @@ paths:
       summary: Update Role by id
       tags:
       - Role
+  /setting/user/{id}/make-admin:
+    post:
+      consumes:
+      - application/json
+      description: Update User by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update status User by id
+      tags:
+      - Setting
+  /settings/user/{id}/group/{group_id}:
+    put:
+      consumes:
+      - application/json
+      description: Assingn Group User
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Group ID
+        in: path
+        name: group_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Group User
+      tags:
+      - Setting
+  /settings/user/{id}/role/{role_id}:
+    put:
+      consumes:
+      - application/json
+      description: Assingn Role User
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Role ID
+        in: path
+        name: role_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update Role User
+      tags:
+      - Setting
+  /settings/user/{id}/verify:
+    post:
+      consumes:
+      - application/json
+      description: Update User by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update status User by id
+      tags:
+      - Setting
+  /settings/view/category:
+    post:
+      consumes:
+      - application/json
+      description: Create new setting view by caegory
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ViewAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new view by caegory
+      tags:
+      - Setting
+  /settings/view/group:
+    post:
+      consumes:
+      - application/json
+      description: Create new setting view by Group
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ViewAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new view by Group
+      tags:
+      - Setting
   /transaction/income/:
     get:
       consumes:
@@ -3682,6 +4092,80 @@ paths:
       summary: Get a Transaction by id
       tags:
       - Transaction
+  /transactions/view/category:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by category
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by category
+      tags:
+      - Transaction
+  /transactions/view/group:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by group user view
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get Transaction view by group user view
+      tags:
+      - Transaction
   /users:
     get:
       consumes:
@@ -3912,96 +4396,6 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Update User by id
-      tags:
-      - User
-  /users/{id}/make-admin:
-    post:
-      consumes:
-      - application/json
-      description: Update User by id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User-ID
-        type: string
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: User data
-          schema:
-            $ref: '#/definitions/model.User'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/lib.Response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/lib.Response'
-      summary: Update status User by id
-      tags:
-      - User
-  /users/{id}/verify:
-    post:
-      consumes:
-      - application/json
-      description: Update User by id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User-ID
-        type: string
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: User data
-          schema:
-            $ref: '#/definitions/model.User'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/lib.Response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/lib.Response'
-      summary: Update status User by id
       tags:
       - User
 schemes:

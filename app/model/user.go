@@ -13,14 +13,16 @@ type User struct {
 	Base
 	DataOwner
 	UserAPI
-	Status         *int             `json:"status,omitempty" example:"0" gorm:"type:smallint"`                                   // Status
-	StatusVerified *int             `json:"status_verified,omitempty" example:"0" gorm:"type:smallint"`                          // Status Verified
-	IsAdmin        *int             `json:"is_admin" gorm:"type:smallint"`                                                       // is admin
-	JoinDate       *strfmt.DateTime `json:"join_date,omitempty" format:"date-time" swaggertype:"string" gorm:"type:timestamptz"` // JoinDate
-	Super          *int             `json:"super" gorm:"type:smallint"`                                                          // is Super Admin
-	Password       *string          `json:"-" gorm:"type:varchar(256)"`                                                          // Password
-	Role           *Role            `json:"role,omitempty" gorm:"foreignKey:RoleID;references:ID"`
-	Group          *Group           `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
+	Status          *int             `json:"status,omitempty" example:"0" gorm:"type:smallint"`                                   // Status
+	StatusVerified  *int             `json:"status_verified,omitempty" example:"0" gorm:"type:smallint"`                          // Status Verified
+	IsAdmin         *int             `json:"is_admin" gorm:"type:smallint"`                                                       // is admin
+	JoinDate        *strfmt.DateTime `json:"join_date,omitempty" format:"date-time" swaggertype:"string" gorm:"type:timestamptz"` // JoinDate
+	Super           *int             `json:"super" gorm:"type:smallint"`                                                          // is Super Admin
+	Password        *string          `json:"-" gorm:"type:varchar(256)"`                                                          // Password
+	GroupAssignedID *uuid.UUID       `json:"assigned_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`    // user/admin who assigned this user to any group
+	Role            *Role            `json:"role,omitempty" gorm:"foreignKey:RoleID;references:ID"`
+	Group           *Group           `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
+	GroupAssigned   *User            `json:"group_assigned_by,omitempty" gorm:"foreignKey:GroupAssignedID;references:ID"`
 }
 
 // UserAPI User API
@@ -46,6 +48,12 @@ type UserLogin struct {
 type UserPassword struct {
 	PasswordOld *string `json:"password_old,omitempty"`
 	PasswordNew *string `json:"password_new,omitempty"`
+}
+
+type UserAfterLogin struct {
+	User
+	CategoryView *[]string `json:"category_view,omitempty"`
+	GroupView    *[]string `json:"group_view,omitempty"`
 }
 
 func (s *User) Seed() *[]User {

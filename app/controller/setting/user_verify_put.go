@@ -1,4 +1,4 @@
-package user
+package setting
 
 import (
 	"api/app/lib"
@@ -22,8 +22,8 @@ import (
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /users/{id}/verify [post]
-// @Tags User
+// @Router /settings/user/{id}/verify [post]
+// @Tags Setting
 func PutUserVerify(c *fiber.Ctx) error {
 	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))

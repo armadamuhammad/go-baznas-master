@@ -22,6 +22,8 @@ var Environment = map[string]interface{}{
 	"prefork":         false,
 	"user_anon":       "hambaallah",
 	"user_super":      "superadmin",
+	"def_group":       "MZKU",
+	"def_role":        "USER",
 	"parent_lv1":      "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 	"def_pass":        "password",
 }
