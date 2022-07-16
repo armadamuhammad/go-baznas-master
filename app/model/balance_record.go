@@ -10,8 +10,8 @@ type BalanceRecord struct {
 	Base
 	DataOwner
 	BalanceRecordAPI
-	Transaction *Transaction `json:"transaction,omitempty"`
-	Balance     *Balance     `json:"balance,omitempty"`
+	Transaction *Transaction `json:"transaction,omitempty" gorm:"foreignKey:TransactionID;references:ID"`
+	Balance     *Balance     `json:"balance,omitempty" gorm:"foreignKey:BalanceID;references:ID"`
 }
 
 // BalanceRecordAPI Balance Record API

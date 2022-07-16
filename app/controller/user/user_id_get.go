@@ -33,6 +33,9 @@ func GetUserID(c *fiber.Ctx) error {
 				ID: &id,
 			},
 		})).
+		Joins("Role").
+		Joins("Group").
+		Joins("GroupAssigned").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)

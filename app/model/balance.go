@@ -16,10 +16,10 @@ type Balance struct {
 
 // BalanceAPI Balance API
 type BalanceAPI struct {
-	Amount      *float64 `json:"amount,omitempty" example:"1000000"`                                                               // Saldo
-	Name        *string  `json:"name,omitempty" example:"Kas Amil" gorm:"type:varchar(256)"`                                       // Name
+	Amount      *float64 `json:"amount,omitempty" example:"1000000"`                                                           // Saldo
+	Name        *string  `json:"name,omitempty" example:"Kas Amil" gorm:"type:varchar(256)"`                                   // Name
 	Code        *string  `json:"code,omitempty" example:"KAML" gorm:"type:varchar(10);index:,unique,where:deleted_at is null"` // Code
-	Description *string  `json:"description,omitempty" gorm:"type:text"`                                                           // Description
+	Description *string  `json:"description,omitempty" gorm:"type:text"`                                                       // Description
 }
 
 // BalanceTotal struct

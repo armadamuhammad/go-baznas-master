@@ -9,8 +9,8 @@ type Account struct {
 
 // AccountAPI Account API
 type AccountAPI struct {
-	Name        *string `json:"name,omitempty" example:"Bank BCA"`                                                                         // Name
+	Name        *string `json:"name,omitempty" example:"Bank BCA"`                                                            // Name
 	Code        *string `json:"code,omitempty" example:"BBCA" gorm:"type:varchar(10);index:,unique,where:deleted_at is null"` // Code
-	Number      *string `json:"number,omitempty" example:"3425-3234-2341" gorm:"type:varchar(256)"`                                        // Number
-	Description *string `json:"description,omitempty" example:"lorem ipsum" gorm:"type:text"`                                              // Description
+	Number      *string `json:"number,omitempty" example:"3425-3234-2341" gorm:"type:varchar(256)"`                           // Number
+	Description *string `json:"description,omitempty" example:"lorem ipsum" gorm:"type:text"`                                 // Description
 }

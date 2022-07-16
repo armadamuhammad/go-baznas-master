@@ -29,7 +29,8 @@ func GetCategory(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
 
-	mod := db.Model(&model.Category{})
+	mod := db.Model(&model.Category{}).
+		Joins("Balance")
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Category{})
 
 	return lib.OK(c, page)

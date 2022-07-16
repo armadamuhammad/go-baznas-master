@@ -29,7 +29,10 @@ func GetUser(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
 
-	mod := db.Model(&model.User{})
+	mod := db.Model(&model.User{}).
+		Joins("Role").
+		Joins("Group").
+		Joins("GroupAssigned")
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.User{})
 
 	return lib.OK(c, page)

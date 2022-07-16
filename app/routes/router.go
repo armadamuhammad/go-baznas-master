@@ -125,7 +125,6 @@ func Handle(app *fiber.App) {
 	api.Get("/transactions/view/category", transaction.GetTransactionViewCategory)
 	api.Get("/transactions/view/group", transaction.GetTransactionViewGroup)
 
-
 	// User
 	api.Post("/users", user.PostUser)
 	api.Get("/users", user.GetUser)
