@@ -1,6 +1,7 @@
 package setting
 
 import (
+	"api/app/controller/user"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -27,6 +28,12 @@ import (
 func PutUserVerify(c *fiber.Ctx) error {
 	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))
+
+	userID := lib.GetXUserID(c)
+	ver, _ := user.GetUserData(userID)
+	if *ver.IsAdmin != 1 {
+		return lib.ErrorUnauthorized(c)
+	}
 
 	var data model.User
 	result := db.Model(&data).

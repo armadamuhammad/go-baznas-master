@@ -38,6 +38,8 @@ func GetTransactionID(c *fiber.Ctx) error {
 		Joins("Category").
 		Joins("Balance").
 		Joins("Group").
+		Preload("User.Role").
+		Preload("User.Group").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)

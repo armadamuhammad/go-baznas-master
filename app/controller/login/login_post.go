@@ -109,5 +109,3 @@ func GetGroup(userID *uuid.UUID) *[]string {
 	}
 	return &result
 }
-
-

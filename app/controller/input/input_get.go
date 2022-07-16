@@ -29,7 +29,10 @@ func GetInput(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
 
-	mod := db.Model(&model.Input{})
+	mod := db.Model(&model.Input{}).
+		Joins("Group").
+		Joins("User").
+		Joins("Category")
 
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Input{})
 

@@ -72,7 +72,10 @@ func GetTransactionCategory(c *fiber.Ctx) error {
 		Joins("User").
 		Joins("Payment").
 		Joins("Category").
-		Joins("Balance")
+		Joins("Balance").
+		Joins("Group").
+		Preload("User.Role").
+		Preload("User.Group")
 
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
 

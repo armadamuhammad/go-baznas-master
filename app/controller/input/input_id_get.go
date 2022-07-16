@@ -33,6 +33,9 @@ func GetInputID(c *fiber.Ctx) error {
 				ID: &id,
 			},
 		})).
+		Joins("Group").
+		Joins("User").
+		Joins("Category").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)

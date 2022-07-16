@@ -33,6 +33,8 @@ func GetBalanceRecordID(c *fiber.Ctx) error {
 				ID: &id,
 			},
 		})).
+		Joins("Balance").
+		Joins("Transaction").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)
