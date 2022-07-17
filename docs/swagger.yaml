@@ -3817,15 +3817,20 @@ paths:
       summary: Create new Transaction
       tags:
       - Transaction
-  /transactions/{date}/date:
+  /transactions/{from}/date/{to}:
     get:
       consumes:
       - application/json
       description: Get a Transaction by id
       parameters:
-      - description: Transaction ID
+      - description: Transaction date from
         in: path
-        name: id
+        name: from
+        required: true
+        type: string
+      - description: Transaction date to
+        in: path
+        name: to
         required: true
         type: string
       produces:
@@ -4027,6 +4032,80 @@ paths:
       - description: User ID
         in: path
         name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
+  /transactions/date/{date}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: Transaction date
+        in: path
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
+  /transactions/month/{month}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: Transaction month
+        in: path
+        name: month
         required: true
         type: string
       produces:

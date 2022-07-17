@@ -1,6 +1,10 @@
 package model
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/spf13/viper"
+)
 
 // Group Group
 type Group struct {
@@ -17,19 +21,20 @@ type GroupAPI struct {
 }
 
 func (s *Group) Seed() *[]Group {
+	def := viper.GetString("DEV_GROUP")
 	data := []Group{}
 	items := []string{
-		"Muzakki Umum|MZKU|default Grup untuk registered user",
+		"Muzakki Umum|default Grup untuk registered user",
 	}
 	for i := range items {
 		contents := strings.Split(items[i], "|")
 		var name string = contents[0]
-		var code string = contents[1]
-		var desc string = contents[2]
+		// var code string = contents[1]
+		var desc string = contents[1]
 		data = append(data, Group{
 			GroupAPI: GroupAPI{
 				Name:        &name,
-				Code:        &code,
+				Code:        &def,
 				Description: &desc,
 			},
 		})

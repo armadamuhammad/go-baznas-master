@@ -95,7 +95,7 @@ func (s *User) Seed() *[]User {
 				LastName:  lib.Strptr("admin"),
 				Surname:   nil,
 				Email:     lib.Strptr("superadmin@baznas.com"),
-				Username:  lib.Strptr("superadmin"),
+				Username:  lib.Strptr(viper.GetString("USER_SUPER")),
 				Address:   lib.Strptr("kantor baznas surakarta"),
 				Gender:    nil,
 				RoleID:    nil,
