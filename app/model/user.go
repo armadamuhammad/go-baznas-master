@@ -18,7 +18,7 @@ type User struct {
 	IsAdmin         *int             `json:"is_admin" gorm:"type:smallint"`                                                       // is admin
 	JoinDate        *strfmt.DateTime `json:"join_date,omitempty" format:"date-time" swaggertype:"string" gorm:"type:timestamptz"` // JoinDate
 	Super           *int             `json:"super" gorm:"type:smallint"`                                                          // is Super Admin
-	Password        *string          `json:"-" gorm:"type:varchar(256)"`                                                          // Password
+	Password        *string          `json:"password,omitempty" gorm:"type:varchar(256)"`                                         // Password
 	GroupAssignedID *uuid.UUID       `json:"assigned_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`    // user/admin who assigned this user to any group
 	Role            *Role            `json:"role,omitempty" gorm:"foreignKey:RoleID;references:ID"`
 	Group           *Group           `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
@@ -61,7 +61,7 @@ func (s *User) Seed() *[]User {
 	salt := "salt"
 	key := "CIPHER_SECRETKEY_MUST_HAVE_32BIT"
 	hamba := lib.PasswordEncrypt(viper.GetString("DEF_PASS"), salt, key)
-	super := lib.PasswordEncrypt("super", salt, key)
+	super := lib.PasswordEncrypt(viper.GetString("DEF_PASS"), salt, key)
 
 	seed := []User{
 		{
