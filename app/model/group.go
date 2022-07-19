@@ -15,13 +15,13 @@ type Group struct {
 
 // GroupAPI Group API
 type GroupAPI struct {
-	Name        *string `json:"name,omitempty" example:"SMA Negri 1" gorm:"type:varchar(256)"` // Name
-	Code        *string `json:"code,omitempty" example:"SMAN1S" gorm:"type:varchar(10)"`       // Code
-	Description *string `json:"description,omitempty" gorm:"type:text"`                        // Description
+	Name        *string `json:"name,omitempty" example:"SMA Negri 1" gorm:"type:varchar(256)"`                                 // Name
+	Code        *string `json:"code,omitempty" example:"SMAN1S" gorm:"type:varchar(10);index:,unique,where:deleted_at is null"` // Code
+	Description *string `json:"description,omitempty" gorm:"type:text"`                                                        // Description
 }
 
 func (s *Group) Seed() *[]Group {
-	def := viper.GetString("DEV_GROUP")
+	def := viper.GetString("DEF_GROUP")
 	data := []Group{}
 	items := []string{
 		"Muzakki Umum|default Grup untuk registered user",

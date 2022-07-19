@@ -60,6 +60,7 @@ func Login(c *fiber.Ctx) error {
 	}
 	var res model.UserAfterLogin
 	lib.Merge(data, &res)
+	res.Password = nil
 	res.CategoryView = GetCategory(res.ID)
 	res.GroupView = GetGroup(res.ID)
 
