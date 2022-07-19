@@ -56,5 +56,7 @@ func GetUserDefault() *uuid.UUID {
 		},
 	})).First(&data)
 
+	data.Password = nil
+
 	return data.ID
 }

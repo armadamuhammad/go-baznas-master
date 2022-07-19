@@ -106,6 +106,7 @@ func GetTransactionFromDateTo(c *fiber.Ctx) error {
 // @Failure default {object} lib.Response
 // @Router /transactions/month/{month} [get]
 // @Tags Transaction
+
 func GetTransactionMonth(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG

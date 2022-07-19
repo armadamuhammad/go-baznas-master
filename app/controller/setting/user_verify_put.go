@@ -23,7 +23,7 @@ import (
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /settings/user/{id}/verify [post]
+// @Router /settings/user/{id}/verify [put]
 // @Tags Setting
 func PutUserVerify(c *fiber.Ctx) error {
 	db := services.DB
