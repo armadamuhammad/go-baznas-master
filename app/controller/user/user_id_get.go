@@ -7,6 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // GetUserID godoc
@@ -42,4 +43,18 @@ func GetUserID(c *fiber.Ctx) error {
 	}
 
 	return lib.OK(c, data)
+}
+
+func GetUserDefault() *uuid.UUID {
+	db := services.DB
+
+	var data model.User
+	db.Model(&data). 
+	Where(db.Where(model.User{
+		UserAPI: model.UserAPI{
+			Username:  lib.Strptr(viper.GetString("USER_ANON")),
+		},
+	})).First(&data)
+
+	return data.ID
 }
