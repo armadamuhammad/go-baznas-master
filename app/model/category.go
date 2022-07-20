@@ -1,6 +1,11 @@
 package model
 
-import "github.com/google/uuid"
+import (
+	"strings"
+
+	"github.com/google/uuid"
+	"github.com/spf13/viper"
+)
 
 // Category Category
 type Category struct {
@@ -22,4 +27,31 @@ type CategoryAPI struct {
 	Description *string    `json:"description,omitempty" example:"lorem ipsum" gorm:"type:text"`                    // Description
 	ParentID    *uuid.UUID `json:"parent_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`  // ParentID
 	BalanceID   *uuid.UUID `json:"balance_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"` // BalanceID
+}
+
+func (s *Category) Seed() *[]Category {
+	data := []Category{}
+	items := []string{
+		"Aset|1|Kategori Aset",
+		"Kewajiban|2|Kategori Kewajiban",
+		"Saldo|3|Kategori Saldo",
+		"Penerimaan|4|Kategori Penerimaan",
+		"Penyaluran|5|Kategori Penyaluran",
+	}
+	for i := range items {
+		parent, _ := uuid.Parse(viper.GetString("PARENT_LV1"))
+		contents := strings.Split(items[i], "|")
+		var name string = contents[0]
+		var code string = contents[1]
+		var desc string = contents[2]
+		data = append(data, Category{
+			CategoryAPI: CategoryAPI{
+				Name:        &name,
+				Code:        &code,
+				Description: &desc,
+				ParentID:    &parent,
+			},
+		})
+	}
+	return &data
 }
