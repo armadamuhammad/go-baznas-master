@@ -39,7 +39,6 @@ func PutAccount(c *fiber.Ctx) error {
 	}
 
 	db := services.DB
-	// lang := lib.GetLanguage(c)
 	id, _ := uuid.Parse(c.Params("id"))
 
 	var data model.Account
@@ -55,7 +54,7 @@ func PutAccount(c *fiber.Ctx) error {
 	}
 
 	lib.Merge(api, &data)
-	// data.ModifierID = lib.GetXUserID(c)
+	data.ModifierID = lib.GetXUserID(c)
 
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
