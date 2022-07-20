@@ -7,6 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // GetBalanceID godoc
@@ -39,4 +40,17 @@ func GetBalanceID(c *fiber.Ctx) error {
 	}
 
 	return lib.OK(c, data)
+}
+
+func GetBalanceDefault() *uuid.UUID {
+	db := services.DB
+
+	var data model.Balance
+	db.Model(&data).
+		Where(db.Where(model.Balance{
+			BalanceAPI: model.BalanceAPI{
+				Code: lib.Strptr(viper.GetString("DEF_BALANCE")),
+			},
+		})).First(&data)
+	return data.ID
 }

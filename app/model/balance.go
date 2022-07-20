@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // Balance Balance
@@ -36,9 +37,10 @@ type BalanceTransfer struct {
 }
 
 func (s *Balance) Seed() *[]Balance {
+	def := viper.GetString("DEF_BALANCE")
 	data := []Balance{}
 	items := []string{
-		"kas Utama|KUTM|kas utama digunakan untuk transaksi umum",
+		"kas Utama|"+def+"|kas utama digunakan untuk transaksi umum",
 	}
 	for i := range items {
 		contents := strings.Split(items[i], "|")

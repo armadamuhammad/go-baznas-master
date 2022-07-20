@@ -8,6 +8,7 @@ var (
 	payment model.Payment
 	balance model.Balance
 	group   model.Group
+	category model.Category
 )
 
 // DataSeeds data to seeds
@@ -18,5 +19,6 @@ func DataSeeds() []interface{} {
 		payment.Seed(),
 		balance.Seed(),
 		group.Seed(),
+		category.Seed(),
 	}
 }

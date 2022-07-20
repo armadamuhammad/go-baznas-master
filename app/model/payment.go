@@ -1,6 +1,10 @@
 package model
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/spf13/viper"
+)
 
 // Payment Payment
 type Payment struct {
@@ -17,9 +21,10 @@ type PaymentAPI struct {
 }
 
 func (s *Payment) Seed() *[]Payment {
+	def := viper.GetString("DEF_PAYMENT")
 	data := []Payment{}
 	items := []string{
-		"Cash|CASH|pembayaran tunai",
+		"Cash|" + def + "|pembayaran tunai",
 		"Transfer Bank|TRFB|metode pembayaran transfer melalui bank",
 	}
 	for i := range items {

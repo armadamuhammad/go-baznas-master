@@ -7,6 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // GetPaymentID godoc
@@ -39,4 +40,19 @@ func GetPaymentID(c *fiber.Ctx) error {
 	}
 
 	return lib.OK(c, data)
+}
+
+func GetPaymentDefault() *uuid.UUID {
+	db := services.DB
+
+	var data model.Payment
+	db.Model(&data).
+		Where(db.Where(model.Payment{
+			PaymentAPI: model.PaymentAPI{
+				Code: lib.Strptr(viper.GetString("DEF_PAYMENT")),
+			},
+		})).
+		First(&data)
+
+	return data.ID
 }

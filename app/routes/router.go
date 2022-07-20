@@ -119,7 +119,7 @@ func Handle(app *fiber.App) {
 	api.Get("/transactions/category/:id", transaction.GetTransactionCategory)
 	api.Get("/transactions/balance/:id", transaction.GetTransactionBalance)
 	api.Get("/transactions/date/:date", transaction.GetTransactionDate)
-	api.Get("/transactions/month/:month", transaction.GetTransactionMonth)
+	// api.Get("/transactions/month/:month", transaction.GetTransactionMonth)
 	// api.Get("/transactions/year/:year", transaction.GetTransactionYear)
 	api.Get("/transactions/:from/date/:to", transaction.GetTransactionFromDateTo)
 	api.Get("/transaction/income", transaction.GetTransactionIncome)
