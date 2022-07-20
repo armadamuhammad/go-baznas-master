@@ -7,6 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // GetRoleID godoc
@@ -39,4 +40,17 @@ func GetRoleID(c *fiber.Ctx) error {
 	}
 
 	return lib.OK(c, data)
+}
+
+func GetRoleDefault() *uuid.UUID {
+	db := services.DB
+
+	var data model.Role
+	db.Model(&data).
+		Where(db.Where(model.Role{
+			RoleAPI: model.RoleAPI{
+				Code: lib.Strptr(viper.GetString("DEF_ROLE")),
+			},
+		})).First(&data)
+	return data.ID
 }

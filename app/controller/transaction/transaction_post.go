@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
 // PostTransaction godoc
@@ -49,13 +48,13 @@ func PostTransaction(c *fiber.Ctx) error {
 		First(&cat)
 
 	now := time.Now()
-	dummyUser, _ := uuid.Parse("cfe3c941-11f4-4f5d-b7f7-fe6a7b0c9ec0")
 	userID := lib.GetXUserID(c)
+	userDefault := user.GetUserDefault()
 
 	ver, _ := user.GetUserData(userID)
 	if nil == userID {
 		if cat.Anonym == lib.Intptr(1) {
-			data.UserID = &dummyUser
+			data.UserID = userDefault
 		} else {
 			return lib.ErrorUnauthorized(c)
 		}
@@ -77,8 +76,9 @@ func PostTransaction(c *fiber.Ctx) error {
 		return lib.ErrorBadRequest(c)
 	}
 	data.Date = &now
+	userGroup, _ := user.GetUserData(data.UserID)
 	if nil == data.GroupID {
-		data.GroupID = ver.GroupID
+		data.GroupID = userGroup.GroupID
 	}
 
 	if err := db.Create(&data).Error; nil != err {

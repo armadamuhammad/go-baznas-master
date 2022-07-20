@@ -7,6 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // GetGroupID godoc
@@ -39,4 +40,19 @@ func GetGroupID(c *fiber.Ctx) error {
 	}
 
 	return lib.OK(c, data)
+}
+
+func GetGroupDefault() *uuid.UUID {
+	db := services.DB
+
+	var data model.Group
+	db.Model(&data).
+		Where(db.Where(model.Group{
+			GroupAPI: model.GroupAPI{
+				Code: lib.Strptr(viper.GetString("DEF_GROUP")),
+			},
+		})).
+		First(&data)
+
+	return data.ID
 }

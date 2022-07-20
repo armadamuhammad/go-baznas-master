@@ -103,3 +103,44 @@ func GetTransactionFromDateTo(c *fiber.Ctx) error {
 
 	return lib.OK(c, &page)
 }
+
+// GetTransactionMonth godoc
+// @Summary Get a Transaction by id
+// @Description Get a Transaction by id
+// @Param month path string true "Transaction month"
+// @Accept  application/json
+// @Produce application/json
+// @Success 200 {object} model.Transaction Transaction data
+// @Failure 400 {object} lib.Response
+// @Failure 404 {object} lib.Response
+// @Failure 500 {object} lib.Response
+// @Failure default {object} lib.Response
+// @Router /transactions/month/{month} [get]
+// @Tags Transaction
+
+func GetTransactionMonth(c *fiber.Ctx) error {
+	db := services.DB
+	pg := services.PG
+
+	layout := "2006-01-02"
+	month := c.Params("month")
+	t, _ := time.Parse(layout, month)
+	fmt.Println(t)
+	// t.Format("2006-01-02")
+	// d := strfmt.Date(string(month))
+
+	data := model.Transaction{}
+	mod := db.Model(&data).
+		Where(`month(date) = ?`, t).
+		Joins("User").
+		Joins("Payment").
+		Joins("Category").
+		Joins("Balance").
+		Joins("Group").
+		Preload("User.Role").
+		Preload("User.Group")
+
+	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
+
+	return lib.OK(c, &page)
+}
