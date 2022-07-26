@@ -18,7 +18,7 @@ func TestPostAccount(t *testing.T) {
 
 	payload := `{
 		"name": null,
-		"code": null,
+		"code": "string",
 		"number": null,
 		"description": null
 	}`
