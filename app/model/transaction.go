@@ -21,6 +21,7 @@ type Transaction struct {
 	Category      *Category  `json:"category,omitempty" gorm:"foreignKey:CategoryID;references:ID"`
 	Balance       *Balance   `json:"balance,omitempty" gorm:"foreignKey:BalanceID;references:ID"`
 	Group         *Group     `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
+	Account       *Account   `json:"account,omitempty" gorm:"foreignKey:AccountID;references:ID"`
 }
 
 // TransactionAPI Transaction API
@@ -42,7 +43,8 @@ type TransactionAPI struct {
 	PaymentID    *uuid.UUID `json:"payment_id,omitempty" swaggertype:"string" format:"uuid"`            // PaymentID
 	CategoryID   *uuid.UUID `json:"category_id,omitempty" swaggertype:"string" format:"uuid"`           // CategoryID
 	BalanceID    *uuid.UUID `json:"balance_id,omitempty" swaggertype:"string" format:"uuid"`            // BalanceID
-	GroupID      *uuid.UUID `json:"group_id,omitempty" swaggertype:"string" format:"uuid"`              // BalanceID
+	GroupID      *uuid.UUID `json:"group_id,omitempty" swaggertype:"string" format:"uuid"`              // GroupID
+	AccountID    *uuid.UUID `json:"account_id,omitempty" swaggertype:"string" format:"uuid"`            // AccountID
 }
 
 type TransactionMass struct {
