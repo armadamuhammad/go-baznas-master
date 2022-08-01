@@ -33,6 +33,7 @@ func GetUser(c *fiber.Ctx) error {
 		Joins("Role").
 		Joins("Group").
 		Joins("GroupAssigned")
+	
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.User{})
 
 
