@@ -247,6 +247,8 @@ definitions:
         description: Name
         example: infaq
         type: string
+      parent:
+        $ref: '#/definitions/model.Category'
       parent_id:
         description: ParentID
         format: uuid
@@ -559,6 +561,12 @@ definitions:
     type: object
   model.Transaction:
     properties:
+      account:
+        $ref: '#/definitions/model.Account'
+      account_id:
+        description: AccountID
+        format: uuid
+        type: string
       amount:
         description: Income
         example: 5000
@@ -607,7 +615,7 @@ definitions:
       group:
         $ref: '#/definitions/model.Group'
       group_id:
-        description: BalanceID
+        description: GroupID
         format: uuid
         type: string
       id:
@@ -681,6 +689,10 @@ definitions:
     type: object
   model.TransactionAPI:
     properties:
+      account_id:
+        description: AccountID
+        format: uuid
+        type: string
       amount:
         description: Income
         example: 5000
@@ -713,7 +725,7 @@ definitions:
         description: 1 = percentage 2 = amount
         type: integer
       group_id:
-        description: BalanceID
+        description: GroupID
         format: uuid
         type: string
       is_income:
@@ -3328,51 +3340,6 @@ paths:
       summary: Update Role by id
       tags:
       - Role
-  /setting/user/{id}/make-admin:
-    post:
-      consumes:
-      - application/json
-      description: Update User by id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User-ID
-        type: string
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: User data
-          schema:
-            $ref: '#/definitions/model.User'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/lib.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/lib.Response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/lib.Response'
-      summary: Update status User by id
-      tags:
-      - Setting
   /settings/user/{id}/group/{group_id}:
     put:
       consumes:
@@ -3421,6 +3388,51 @@ paths:
           schema:
             $ref: '#/definitions/lib.Response'
       summary: Update Group User
+      tags:
+      - Setting
+  /settings/user/{id}/make-admin:
+    put:
+      consumes:
+      - application/json
+      description: Update User by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update status User by id
       tags:
       - Setting
   /settings/user/{id}/role/{role_id}:
@@ -3839,6 +3851,69 @@ paths:
         name: to
         required: true
         type: string
+      - description: User ID
+        in: header
+        name: X-User-ID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
+  /transactions/{from}/date/{to}/group/{group}/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id {account, category, balance, group} format
+        date {2022-12-30}
+      parameters:
+      - description: Transaction date from
+        in: path
+        name: from
+        required: true
+        type: string
+      - description: Transaction date to
+        in: path
+        name: to
+        required: true
+        type: string
+      - description: group filter
+        in: path
+        name: group
+        required: true
+        type: string
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User ID
+        in: header
+        name: X-User-ID
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -3992,13 +4067,50 @@ paths:
       summary: Update Transaction by id
       tags:
       - Transaction
+  /transactions/account/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Transaction by id
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a Transaction by id
+      tags:
+      - Transaction
   /transactions/balance/{id}:
     get:
       consumes:
       - application/json
       description: Get a Transaction by id
       parameters:
-      - description: User ID
+      - description: Balance ID
         in: path
         name: id
         required: true
@@ -4075,6 +4187,11 @@ paths:
       - description: Transaction date
         in: path
         name: date
+        required: true
+        type: string
+      - description: User ID
+        in: header
+        name: X-User-ID
         required: true
         type: string
       produces:

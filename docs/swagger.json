@@ -3537,9 +3537,9 @@
                 }
             }
         },
-        "/setting/user/{id}/make-admin": {
-            "post": {
-                "description": "Update User by id",
+        "/settings/user/{id}/group/{group_id}": {
+            "put": {
+                "description": "Assingn Group User",
                 "consumes": [
                     "application/json"
                 ],
@@ -3549,7 +3549,7 @@
                 "tags": [
                     "Setting"
                 ],
-                "summary": "Update status User by id",
+                "summary": "Update Group User",
                 "parameters": [
                     {
                         "type": "string",
@@ -3561,6 +3561,13 @@
                         "type": "string",
                         "description": "User ID",
                         "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Group ID",
+                        "name": "group_id",
                         "in": "path",
                         "required": true
                     }
@@ -3605,9 +3612,9 @@
                 }
             }
         },
-        "/settings/user/{id}/group/{group_id}": {
+        "/settings/user/{id}/make-admin": {
             "put": {
-                "description": "Assingn Group User",
+                "description": "Update User by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -3617,7 +3624,7 @@
                 "tags": [
                     "Setting"
                 ],
-                "summary": "Update Group User",
+                "summary": "Update status User by id",
                 "parameters": [
                     {
                         "type": "string",
@@ -3629,13 +3636,6 @@
                         "type": "string",
                         "description": "User ID",
                         "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Group ID",
-                        "name": "group_id",
                         "in": "path",
                         "required": true
                     }
@@ -4289,6 +4289,62 @@
                 }
             }
         },
+        "/transactions/account/{id}": {
+            "get": {
+                "description": "Get a Transaction by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get a Transaction by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/transactions/balance/{id}": {
             "get": {
                 "description": "Get a Transaction by id",
@@ -4305,7 +4361,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "User ID",
+                        "description": "Balance ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -4420,6 +4476,13 @@
                         "description": "Transaction date",
                         "name": "date",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -4651,6 +4714,97 @@
                         "description": "Transaction date to",
                         "name": "to",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{from}/date/{to}/group/{group}/{id}": {
+            "get": {
+                "description": "Get a Transaction by id {account, category, balance, group} format date {2022-12-30}",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get a Transaction by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Transaction date from",
+                        "name": "from",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Transaction date to",
+                        "name": "to",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "group filter",
+                        "name": "group",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -5555,6 +5709,9 @@
                     "type": "string",
                     "example": "infaq"
                 },
+                "parent": {
+                    "$ref": "#/definitions/model.Category"
+                },
                 "parent_id": {
                     "description": "ParentID",
                     "type": "string",
@@ -5963,6 +6120,14 @@
         "model.Transaction": {
             "type": "object",
             "properties": {
+                "account": {
+                    "$ref": "#/definitions/model.Account"
+                },
+                "account_id": {
+                    "description": "AccountID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "amount": {
                     "description": "Income",
                     "type": "number",
@@ -6025,7 +6190,7 @@
                     "$ref": "#/definitions/model.Group"
                 },
                 "group_id": {
-                    "description": "BalanceID",
+                    "description": "GroupID",
                     "type": "string",
                     "format": "uuid"
                 },
@@ -6121,6 +6286,11 @@
         "model.TransactionAPI": {
             "type": "object",
             "properties": {
+                "account_id": {
+                    "description": "AccountID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "amount": {
                     "description": "Income",
                     "type": "number",
@@ -6161,7 +6331,7 @@
                     "type": "integer"
                 },
                 "group_id": {
-                    "description": "BalanceID",
+                    "description": "GroupID",
                     "type": "string",
                     "format": "uuid"
                 },
