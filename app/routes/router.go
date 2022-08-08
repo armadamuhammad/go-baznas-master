@@ -108,6 +108,12 @@ func Handle(app *fiber.App) {
 	api.Put("/settings/user/:id/role/:role_id", setting.PutUserRole)
 	api.Put("/settings/user/:id/verify", setting.PutUserVerify)
 	api.Put("/settings/user/:id/make-admin", setting.PutUserMakeAdmin)
+	api.Put("/settings/balance/:id/enable", setting.PutBalanceEnable)
+	api.Put("/settings/account/:id/enable", setting.PutAccountEnable)
+	api.Put("/settings/category/:id/enable", setting.PutCategoryEnable)
+	api.Put("/settings/group/:id/enable", setting.PutGroupEnable)
+	api.Put("/settings/payment/:id/enable", setting.PutPaymentEnable)
+	api.Put("/settings/user/:id/enable", setting.PutUserEnable)
 
 	// Transaction
 	api.Post("/transactions", transaction.PostTransaction)

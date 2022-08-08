@@ -46,7 +46,11 @@ func PutUserMakeAdmin(c *fiber.Ctx) error {
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)
 	}
-	data.IsAdmin = lib.Intptr(1)
+	if *data.IsAdmin == 0 {
+		data.IsAdmin = lib.Intptr(1)
+	} else {
+		data.IsAdmin = lib.Intptr(0)
+	}
 
 	if err := db.Model(&data).Updates(&data).Error; nil != err {
 		return lib.ErrorConflict(c, err)
