@@ -1,6 +1,7 @@
 package model
 
 import (
+	"api/app/lib"
 	"time"
 
 	"github.com/go-openapi/strfmt"
@@ -12,6 +13,7 @@ import (
 type Base struct {
 	ID        *uuid.UUID       `json:"id,omitempty" gorm:"primaryKey;unique;type:varchar(36);not null" format:"uuid"`        // model ID
 	Sort      *int64           `json:"sort,omitempty" gorm:"default:0" example:"1"`                                          // sort (increment)
+	Status    *int             `json:"status,omitempty" gorm:"default:1" example:"1"`                                        // sort (increment)
 	CreatedAt *strfmt.DateTime `json:"created_at,omitempty" gorm:"type:timestamptz" format:"date-time" swaggertype:"string"` // created at automatically inserted on post
 	UpdatedAt *strfmt.DateTime `json:"updated_at,omitempty" gorm:"type:timestamptz" format:"date-time" swaggertype:"string"` // updated at automatically changed on put or add on post
 	DeletedAt gorm.DeletedAt   `json:"-" gorm:"index" swaggerignore:"true"`
@@ -32,6 +34,7 @@ func (b *Base) BeforeCreate(tx *gorm.DB) error {
 	id, e := uuid.NewRandom()
 	now := strfmt.DateTime(time.Now())
 	b.ID = &id
+	b.Status = lib.Intptr(1)
 	b.CreatedAt = &now
 	b.UpdatedAt = &now
 	return e

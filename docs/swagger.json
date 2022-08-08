@@ -3537,6 +3537,414 @@
                 }
             }
         },
+        "/settings/account/{id}/enable": {
+            "put": {
+                "description": "Update Account by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Update status Account by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Account"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings/balance/{id}/enable": {
+            "put": {
+                "description": "Update Balance by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Update status Balance by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Balance ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Balance data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Balance"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings/category/{id}/enable": {
+            "put": {
+                "description": "Update Category by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Update status Category by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings/group/{id}/enable": {
+            "put": {
+                "description": "Update Group by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Update status Group by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Group ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Group data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Group"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings/payment/{id}/enable": {
+            "put": {
+                "description": "Update Payment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Update status Payment by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Payment ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment data",
+                        "schema": {
+                            "$ref": "#/definitions/model.Payment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings/user/{id}/enable": {
+            "put": {
+                "description": "Update User by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Update status User by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User data",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/settings/user/{id}/group/{group_id}": {
             "put": {
                 "description": "Assingn Group User",
@@ -5449,6 +5857,11 @@
                     "type": "integer",
                     "example": 1
                 },
+                "status": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -5528,6 +5941,11 @@
                     "type": "integer",
                     "example": 1
                 },
+                "status": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -5601,6 +6019,11 @@
                     "format": "uuid"
                 },
                 "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
                     "description": "sort (increment)",
                     "type": "integer",
                     "example": 1
@@ -5722,6 +6145,11 @@
                     "type": "integer",
                     "example": 1
                 },
+                "status": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -5819,6 +6247,11 @@
                     "type": "integer",
                     "example": 1
                 },
+                "status": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -5890,6 +6323,11 @@
                     "format": "uuid"
                 },
                 "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
                     "description": "sort (increment)",
                     "type": "integer",
                     "example": 1
@@ -6026,6 +6464,11 @@
                     "type": "integer",
                     "example": 1
                 },
+                "status": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
                 "updated_at": {
                     "description": "updated at automatically changed on put or add on post",
                     "type": "string",
@@ -6089,6 +6532,11 @@
                     "type": "string"
                 },
                 "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
                     "description": "sort (increment)",
                     "type": "integer",
                     "example": 1
