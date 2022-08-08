@@ -18,7 +18,7 @@ func TestPutAccount(t *testing.T) {
 	initial := model.Account{
 		AccountAPI: model.AccountAPI{
 			Name:        nil,
-			Code:        nil,
+			Code:        lib.Strptr("string"),
 			Number:      nil,
 			Description: nil,
 		},
@@ -27,7 +27,7 @@ func TestPutAccount(t *testing.T) {
 	initial2 := model.Account{
 		AccountAPI: model.AccountAPI{
 			Name:        nil,
-			Code:        nil,
+			Code:        lib.Strptr("string"),
 			Number:      nil,
 			Description: nil,
 		},
@@ -40,7 +40,7 @@ func TestPutAccount(t *testing.T) {
 
 	payload := `{
 		"name": null,
-		"code": null,
+		"code": "null",
 		"number": null,
 		"description": null
 	}`

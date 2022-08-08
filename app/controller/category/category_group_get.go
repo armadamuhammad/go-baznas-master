@@ -39,7 +39,8 @@ func GetCategoryGroup(c *fiber.Ctx) error {
 					Level: lib.Intptr(1),
 				},
 			})).
-			Joins("Balance")
+			Joins("Balance").
+			Joins("Parent")
 		page := pg.With(mod).Request(c.Request()).Response(&[]model.Category{})
 
 		return lib.OK(c, page)

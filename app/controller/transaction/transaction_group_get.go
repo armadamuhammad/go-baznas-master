@@ -85,7 +85,7 @@ func GetTransactionCategory(c *fiber.Ctx) error {
 // GetTransactionBalance godoc
 // @Summary Get a Transaction by id
 // @Description Get a Transaction by id
-// @Param id path string true "User ID"
+// @Param id path string true "Balance ID"
 // @Accept  application/json
 // @Produce application/json
 // @Success 200 {object} model.Transaction Transaction data
@@ -114,6 +114,40 @@ func GetTransactionBalance(c *fiber.Ctx) error {
 		Joins("Group")
 
 	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
+	return lib.OK(c, page)
+}
 
+// GetTransactionAccount godoc
+// @Summary Get a Transaction by id
+// @Description Get a Transaction by id
+// @Param id path string true "Account ID"
+// @Accept  application/json
+// @Produce application/json
+// @Success 200 {object} model.Transaction Transaction data
+// @Failure 400 {object} lib.Response
+// @Failure 404 {object} lib.Response
+// @Failure 500 {object} lib.Response
+// @Failure default {object} lib.Response
+// @Router /transactions/account/{id} [get]
+// @Tags Transaction
+func GetTransactionAccount(c *fiber.Ctx) error {
+	db := services.DB
+	pg := services.PG
+	accountID, _ := uuid.Parse(c.Params("id"))
+
+	var data model.Transaction
+	mod := db.Model(&data).
+		Where(db.Where(model.Transaction{
+			TransactionAPI: model.TransactionAPI{
+				AccountID: &accountID,
+			},
+		})).
+		Joins("User").
+		Joins("Payment").
+		Joins("Category").
+		Joins("Balance").
+		Joins("Group")
+
+	page := pg.With(mod).Request(c.Request()).Response(&[]model.Transaction{})
 	return lib.OK(c, page)
 }

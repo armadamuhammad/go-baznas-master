@@ -4,7 +4,7 @@ package config
 var Environment = map[string]interface{}{
 	"app_id":          "6A6EF734-F557-4F7E-9C2A-32CD28E43420",
 	"app_version":     "v1.0.0",
-	"app_name":        "unknown",
+	"app_name":        "Baznas",
 	"app_description": "",
 	"port":            8000,
 	"endpoint":        "/api/v1",

@@ -137,6 +137,7 @@ func GetTransactionMonth(c *fiber.Ctx) error {
 		Joins("Category").
 		Joins("Balance").
 		Joins("Group").
+		Joins("Account").
 		Preload("User.Role").
 		Preload("User.Group")
 

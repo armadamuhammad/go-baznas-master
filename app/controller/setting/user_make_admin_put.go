@@ -23,7 +23,7 @@ import (
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /setting/user/{id}/make-admin [post]
+// @Router /settings/user/{id}/make-admin [put]
 // @Tags Setting
 func PutUserMakeAdmin(c *fiber.Ctx) error {
 	db := services.DB
