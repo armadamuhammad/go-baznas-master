@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// User User
+// User Model
 type User struct {
 	Base
 	DataOwner
@@ -23,6 +23,7 @@ type User struct {
 	Role            *Role            `json:"role,omitempty" gorm:"foreignKey:RoleID;references:ID"`
 	Group           *Group           `json:"group,omitempty" gorm:"foreignKey:GroupID;references:ID"`
 	GroupAssigned   *User            `json:"group_assigned_by,omitempty" gorm:"foreignKey:GroupAssignedID;references:ID"`
+	City            *City            `json:"city,omitempty" gorm:"foreignKey:CityID;references:ID"`
 }
 
 // UserAPI User API
@@ -36,6 +37,7 @@ type UserAPI struct {
 	Gender    *string    `json:"gender,omitempty" example:"male" gorm:"type:varchar(256)"`                                                              // Gender
 	RoleID    *uuid.UUID `json:"role_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                          // Role
 	GroupID   *uuid.UUID `json:"group_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                         // GroupID
+	CityID    *uuid.UUID `json:"city_id,omitempty" gorm:"type:varchar(36)" swaggertype:"string" format:"uuid"`                                          // CItyID
 }
 
 // UserLogin struct

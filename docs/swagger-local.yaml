@@ -315,6 +315,74 @@ definitions:
         format: uuid
         type: string
     type: object
+  model.City:
+    properties:
+      code:
+        description: Code
+        example: SKH
+        type: string
+      created_at:
+        description: created at automatically inserted on post
+        format: date-time
+        type: string
+      creator_id:
+        description: creator id
+        format: uuid
+        type: string
+      id:
+        description: model ID
+        format: uuid
+        type: string
+      latitude:
+        description: Latitude
+        type: string
+      longitude:
+        description: Longitude
+        type: string
+      modifier_id:
+        description: modifier id
+        format: uuid
+        type: string
+      name:
+        description: Name
+        type: string
+      postalcode:
+        description: PostalCode
+        example: "57465"
+        type: string
+      sort:
+        description: sort (increment)
+        example: 1
+        type: integer
+      status:
+        description: sort (increment)
+        example: 1
+        type: integer
+      updated_at:
+        description: updated at automatically changed on put or add on post
+        format: date-time
+        type: string
+    type: object
+  model.CityAPI:
+    properties:
+      code:
+        description: Code
+        example: SKH
+        type: string
+      latitude:
+        description: Latitude
+        type: string
+      longitude:
+        description: Longitude
+        type: string
+      name:
+        description: Name
+        type: string
+      postalcode:
+        description: PostalCode
+        example: "57465"
+        type: string
+    type: object
   model.Group:
     properties:
       code:
@@ -812,6 +880,12 @@ definitions:
         description: user/admin who assigned this user to any group
         format: uuid
         type: string
+      city:
+        $ref: '#/definitions/model.City'
+      city_id:
+        description: CItyID
+        format: uuid
+        type: string
       created_at:
         description: created at automatically inserted on post
         format: date-time
@@ -899,6 +973,10 @@ definitions:
         description: Address
         example: jl. Klaten
         type: string
+      city_id:
+        description: CItyID
+        format: uuid
+        type: string
       email:
         description: Email
         example: user@mail.com
@@ -943,6 +1021,12 @@ definitions:
         items:
           type: string
         type: array
+      city:
+        $ref: '#/definitions/model.City'
+      city_id:
+        description: CItyID
+        format: uuid
+        type: string
       created_at:
         description: created at automatically inserted on post
         format: date-time
@@ -2259,6 +2343,238 @@ paths:
       summary: Update Password user
       tags:
       - Login
+  /cities:
+    get:
+      consumes:
+      - application/json
+      description: List of City
+      parameters:
+      - description: Page number start from zero
+        in: query
+        name: page
+        type: integer
+      - description: Size per page, default `0`
+        in: query
+        name: size
+        type: integer
+      - description: Sort by field, adding dash (`-`) at the beginning means descending
+          and vice versa
+        in: query
+        name: sort
+        type: string
+      - description: Select specific fields with comma separated
+        in: query
+        name: fields
+        type: string
+      - description: custom filters, see [more details](https://github.com/morkid/paginate#filter-format)
+        in: query
+        name: filters
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Page'
+            - properties:
+                items:
+                  items:
+                    $ref: '#/definitions/model.City'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: List of City
+      tags:
+      - City
+    post:
+      consumes:
+      - application/json
+      description: Create new City
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: City data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CityAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: City data
+          schema:
+            $ref: '#/definitions/model.City'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Create new City
+      tags:
+      - City
+  /cities/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete City by id
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Delete City by id
+      tags:
+      - City
+    get:
+      consumes:
+      - application/json
+      description: Get a City by id
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.City'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Get a City by id
+      tags:
+      - City
+    put:
+      consumes:
+      - application/json
+      description: Update City by id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User-ID
+        type: string
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: City data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CityAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: City data
+          schema:
+            $ref: '#/definitions/model.City'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/lib.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/lib.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/lib.Response'
+      summary: Update City by id
+      tags:
+      - City
   /groups:
     get:
       consumes:

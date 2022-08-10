@@ -6,6 +6,7 @@ import (
 	"api/app/controller/balance"
 	"api/app/controller/balancerecord"
 	"api/app/controller/category"
+	"api/app/controller/city"
 	"api/app/controller/group"
 	"api/app/controller/input"
 	"api/app/controller/login"
@@ -65,6 +66,13 @@ func Handle(app *fiber.App) {
 	api.Delete("/categories/:id", category.DeleteCategory)
 	api.Get("/categories/group/:id", category.GetCategoryGroup)
 	api.Get("/categories/balance/:id", category.GetCategoryBalance)
+
+	// City
+	api.Post("/cities", city.PostCity)
+	api.Get("/cities", city.GetCity)
+	api.Put("/cities/:id", city.PutCity)
+	api.Get("/cities/:id", city.GetCityID)
+	api.Delete("/cities/:id", city.DeleteCity)
 
 	// Group
 	api.Post("/groups", group.PostGroup)
