@@ -3,11 +3,11 @@ package migrations
 import "api/app/model"
 
 var (
-	user    model.User
-	role    model.Role
-	payment model.Payment
-	balance model.Balance
-	group   model.Group
+	user     model.User
+	role     model.Role
+	payment  model.Payment
+	balance  model.Balance
+	group    model.Group
 	category model.Category
 )
 

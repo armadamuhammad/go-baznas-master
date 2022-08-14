@@ -48,6 +48,7 @@ func Login(c *fiber.Ctx) error {
 		Joins("Role").
 		Joins("Group").
 		Joins("GroupAssigned").
+		Joins("City").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)

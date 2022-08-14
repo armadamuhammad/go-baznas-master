@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"api/app/controller/login"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -11,6 +12,7 @@ import (
 // GetTransaction godoc
 // @Summary List of Transaction
 // @Description List of Transaction
+// @Param X-User-ID header string true "User ID"
 // @Param page query int false "Page number start from zero"
 // @Param size query int false "Size per page, default `0`"
 // @Param sort query string false "Sort by field, adding dash (`-`) at the beginning means descending and vice versa"
@@ -29,7 +31,12 @@ func GetTransaction(c *fiber.Ctx) error {
 	db := services.DB
 	pg := services.PG
 
+	userID := lib.GetXUserID(c)
+	categories := login.GetCategory(userID)
+	groups := login.GetGroup(userID)
+
 	mod := db.Model(&model.Transaction{}).
+		Where(`"transaction".category_id IN ? OR "transaction".group_id IN ?`, *categories, *groups).
 		Joins("User").
 		Joins("Payment").
 		Joins("Category").

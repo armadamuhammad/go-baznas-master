@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"api/app/controller/login"
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
@@ -25,6 +26,9 @@ import (
 func GetTransactionID(c *fiber.Ctx) error {
 	db := services.DB
 	id, _ := uuid.Parse(c.Params("id"))
+	userID := lib.GetXUserID(c)
+	categories := login.GetCategory(userID)
+	groups := login.GetGroup(userID)
 
 	var data model.Transaction
 	result := db.Model(&data).
@@ -33,6 +37,7 @@ func GetTransactionID(c *fiber.Ctx) error {
 				ID: &id,
 			},
 		})).
+		Where(`"transaction".category_id IN ? OR "transaction".group_id IN ?`, *categories, *groups).
 		Joins("User").
 		Joins("Payment").
 		Joins("Category").

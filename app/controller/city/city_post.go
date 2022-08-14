@@ -1,45 +1,43 @@
-package category
+package city
 
 import (
 	"api/app/lib"
 	"api/app/model"
 	"api/app/services"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
-	"github.com/spf13/viper"
 )
 
-// PostCategory godoc
-// @Summary Create new Category
-// @Description Create new Category
+// PostCity godoc
+// @Summary Create new City
+// @Description Create new City
 // @Param X-User-ID header string false "User ID"
-// @Param data body model.CategoryAPI true "Category data"
+// @Param data body model.CityAPI true "City data"
 // @Accept  application/json
 // @Produce application/json
-// @Success 200 {object} model.Category "Category data"
+// @Success 200 {object} model.City "City data"
 // @Failure 400 {object} lib.Response
 // @Failure 404 {object} lib.Response
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /categories [post]
-// @Tags Category
-func PostCategory(c *fiber.Ctx) error {
-	api := new(model.CategoryAPI)
+// @Router /cities [post]
+// @Tags City
+func PostCity(c *fiber.Ctx) error {
+	api := new(model.CityAPI)
 	if err := lib.BodyParser(c, api); nil != err {
 		return lib.ErrorBadRequest(c, err)
 	}
 
+	cityCode := *api.Code
+	length := len([]rune(cityCode))
+	log.Println(length)
+
 	db := services.DB
 
-	parentID, _ := uuid.Parse(viper.GetString("PARENT_LV1"))
-	var data model.Category
+	var data model.City
 	lib.Merge(api, &data)
-
-	if *data.Level == 1 {
-		data.ParentID = &parentID
-	}
 	data.CreatorID = lib.GetXUserID(c)
 
 	if err := db.Create(&data).Error; nil != err {

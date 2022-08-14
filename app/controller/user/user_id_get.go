@@ -37,6 +37,7 @@ func GetUserID(c *fiber.Ctx) error {
 		Joins("Role").
 		Joins("Group").
 		Joins("GroupAssigned").
+		Joins("City").
 		First(&data)
 	if result.RowsAffected < 1 {
 		return lib.ErrorNotFound(c)
@@ -49,12 +50,12 @@ func GetUserDefault() *uuid.UUID {
 	db := services.DB
 
 	var data model.User
-	db.Model(&data). 
-	Where(db.Where(model.User{
-		UserAPI: model.UserAPI{
-			Username:  lib.Strptr(viper.GetString("USER_ANON")),
-		},
-	})).First(&data)
+	db.Model(&data).
+		Where(db.Where(model.User{
+			UserAPI: model.UserAPI{
+				Username: lib.Strptr(viper.GetString("USER_ANON")),
+			},
+		})).First(&data)
 
 	data.Password = nil
 

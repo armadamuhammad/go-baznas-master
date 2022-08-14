@@ -40,7 +40,7 @@ func (s *Balance) Seed() *[]Balance {
 	def := viper.GetString("DEF_BALANCE")
 	data := []Balance{}
 	items := []string{
-		"kas Utama|"+def+"|kas utama digunakan untuk transaksi umum",
+		"kas Utama|" + def + "|kas utama digunakan untuk transaksi umum",
 	}
 	for i := range items {
 		contents := strings.Split(items[i], "|")

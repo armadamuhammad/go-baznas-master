@@ -1845,6 +1845,359 @@
                 }
             }
         },
+        "/cities": {
+            "get": {
+                "description": "List of City",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "City"
+                ],
+                "summary": "List of City",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number start from zero",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size per page, default `0`",
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort by field, adding dash (`-`) at the beginning means descending and vice versa",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Select specific fields with comma separated",
+                        "name": "fields",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "custom filters, see [more details](https://github.com/morkid/paginate#filter-format)",
+                        "name": "filters",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Page"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.City"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new City",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "City"
+                ],
+                "summary": "Create new City",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "description": "City data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CityAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "City data",
+                        "schema": {
+                            "$ref": "#/definitions/model.City"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/cities/{id}": {
+            "get": {
+                "description": "Get a City by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "City"
+                ],
+                "summary": "Get a City by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.City"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update City by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "City"
+                ],
+                "summary": "Update City by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "City data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CityAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "City data",
+                        "schema": {
+                            "$ref": "#/definitions/model.City"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete City by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "City"
+                ],
+                "summary": "Delete City by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/lib.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/groups": {
             "get": {
                 "description": "List of Group",
@@ -4550,6 +4903,13 @@
                 "summary": "List of Transaction",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "type": "integer",
                         "description": "Page number start from zero",
                         "name": "page",
@@ -4713,6 +5073,13 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Account ID",
                         "name": "id",
                         "in": "path",
@@ -4769,6 +5136,13 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Balance ID",
                         "name": "id",
                         "in": "path",
@@ -4823,6 +5197,13 @@
                 ],
                 "summary": "Get a Transaction by id",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "User ID",
@@ -4942,6 +5323,13 @@
                 ],
                 "summary": "Get a Transaction by id",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User-ID",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "User ID",
@@ -6205,6 +6593,95 @@
                 }
             }
         },
+        "model.City": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Code",
+                    "type": "string",
+                    "example": "SKH"
+                },
+                "created_at": {
+                    "description": "created at automatically inserted on post",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "creator_id": {
+                    "description": "creator id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "id": {
+                    "description": "model ID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "latitude": {
+                    "description": "Latitude",
+                    "type": "string"
+                },
+                "longitude": {
+                    "description": "Longitude",
+                    "type": "string"
+                },
+                "modifier_id": {
+                    "description": "modifier id",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string"
+                },
+                "postalcode": {
+                    "description": "PostalCode",
+                    "type": "string",
+                    "example": "57465"
+                },
+                "sort": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "description": "sort (increment)",
+                    "type": "integer",
+                    "example": 1
+                },
+                "updated_at": {
+                    "description": "updated at automatically changed on put or add on post",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "model.CityAPI": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Code",
+                    "type": "string",
+                    "example": "SKH"
+                },
+                "latitude": {
+                    "description": "Latitude",
+                    "type": "string"
+                },
+                "longitude": {
+                    "description": "Longitude",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string"
+                },
+                "postalcode": {
+                    "description": "PostalCode",
+                    "type": "string",
+                    "example": "57465"
+                }
+            }
+        },
         "model.Group": {
             "type": "object",
             "properties": {
@@ -6852,6 +7329,14 @@
                     "type": "string",
                     "format": "uuid"
                 },
+                "city": {
+                    "$ref": "#/definitions/model.City"
+                },
+                "city_id": {
+                    "description": "CItyID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "created_at": {
                     "description": "created at automatically inserted on post",
                     "type": "string",
@@ -6965,6 +7450,11 @@
                     "type": "string",
                     "example": "jl. Klaten"
                 },
+                "city_id": {
+                    "description": "CItyID",
+                    "type": "string",
+                    "format": "uuid"
+                },
                 "email": {
                     "description": "Email",
                     "type": "string",
@@ -7022,6 +7512,14 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "city": {
+                    "$ref": "#/definitions/model.City"
+                },
+                "city_id": {
+                    "description": "CItyID",
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "description": "created at automatically inserted on post",
