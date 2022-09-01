@@ -140,7 +140,7 @@ func Handle(app *fiber.App) {
 	api.Get("/transactions/:from/date/:to/group/:group/:id", transaction.GetTransactionFromDateToFilter)
 	api.Get("/transaction/income", transaction.GetTransactionIncome)
 	api.Get("/transaction/outcome", transaction.GetTransactionOutcome)
-	api.Post("/transaction/mass", transaction.PostTransactionMass)
+	api.Post("/transactions/mass", transaction.PostTransactionMass)
 	api.Get("/transactions/view/category", transaction.GetTransactionViewCategory)
 	api.Get("/transactions/view/group", transaction.GetTransactionViewGroup)
 
