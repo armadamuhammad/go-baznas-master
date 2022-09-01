@@ -24,7 +24,7 @@ import (
 // @Failure 409 {object} lib.Response
 // @Failure 500 {object} lib.Response
 // @Failure default {object} lib.Response
-// @Router /transaction/mass [post]
+// @Router /transactions/mass [post]
 // @Tags Transaction
 func PostTransactionMass(c *fiber.Ctx) error {
 	api := new(model.TransactionMass)
